@@ -114,3 +114,10 @@
 - Reused `QosEntitySections` and new shared `QosProfileFields` in both React Flow node and `QosProperties` sidebar, routed through `ContextProperties` and pure selection projection's `qos` field. Both views use existing narrow Zustand actions to update the same persisted profile.
 - QoS sidebar is single-column for narrow Properties widths; no DDS data schema, policy saving semantics, or Struct model changes.
 - Added regression `test:qos-interaction`; CI and browser E2E pending.
+
+## 2026-11-06 — QoS click support and Properties merged
+
+- [PR #5](https://github.com/nssang00/umaa_dev_studio/pull/5) squash-merged to `main` at [d9da836](https://github.com/nssang00/umaa_dev_studio/commit/d9da836ceed78cb2db014f671fbab8c5d9d371eb).
+- [PR head Actions 42054966263](https://github.com/nssang00/umaa_dev_studio/actions/runs/42054966263): **SUCCESS**.
+- [Post-merge Actions 42055125678](https://github.com/nssang00/umaa_dev_studio/actions/runs/42055125678): **SUCCESS**, complete `npm test` (including new `test:qos-interaction`), `npm run build` and artifact upload.
+- Browser-level direct click / input E2E is not run; pointer-event cause identified from React Flow source and regression statically checked against explicit wrapper-style override. Both QoS views share Zustand update actions and model.
