@@ -1,36 +1,22 @@
 import { Button, Descriptions, Divider, Empty, Space, Tag, Typography } from 'antd';
-import { useEditorStore } from '../stores/useEditorStore.js';
+import { useSelectionDetails } from '../hooks/useSelectionDetails.js';
 import { deriveEndpoints } from '../logic/endpoints.js';
 import { Inspector } from './Inspector.jsx';
 import { TypeProperties } from './TypeProperties.jsx';
 const {Text}=Typography;
 export function ContextProperties() {
-  const s=useEditorStore(x=>x.snapshot);
-  const selection=useEditorStore(x=>x.selection);
-  const select=useEditorStore(x=>x.select);
-  const highlightedComponentId=useEditorStore(x=>x.highlightedComponentId);
-  if(!s)return null;
-  const kind=selection?.kind;
-  if((kind==='diagram'||!kind)&&highlightedComponentId){
-    const component=s.components.find(c=>c.id===highlightedComponentId);
-    if(component){const bs=s.bindings.filter(b=>b.componentId===component.id);return <div className="inspector context-properties"><Text type="secondary" className="side-label">COMPONENT SELECTED ON CANVAS</Text><h3>{component.name}</h3><Descriptions size="small" bordered column={1}><Descriptions.Item label="Provider">{bs.filter(b=>b.role==='provider').length}</Descriptions.Item><Descriptions.Item label="Consumer">{bs.filter(b=>b.role==='consumer').length}</Descriptions.Item></Descriptions><Button style={{marginTop:12}} type="primary" block onClick={()=>select({kind:'component',id:component.id})}>Component 편집 열기</Button><Text className="small-hint">더블클릭으로도 Component 편집기로 이동할 수 있습니다. Single-click은 Assembly 캔버스를 유지합니다.</Text></div>;}
+  const { snapshot:s, selection, select, details } = useSelectionDetails();
+  if (!details) return null;
+  const { kind, focusedComponent, focusedBindings, name, svc, op, topic } = details;
+  if (focusedComponent) {
+    const component = focusedComponent, bs = focusedBindings;
+    return <div className="inspector context-properties"><Text type="secondary" className="side-label">COMPONENT SELECTED ON CANVAS</Text><h3>{component.name}</h3><Descriptions size="small" bordered column={1}><Descriptions.Item label="Provider">{bs.filter(b=>b.role==='provider').length}</Descriptions.Item><Descriptions.Item label="Consumer">{bs.filter(b=>b.role==='consumer').length}</Descriptions.Item></Descriptions><Button style={{marginTop:12}} type="primary" block onClick={()=>select({kind:'component',id:component.id})}>Component 편집 열기</Button><Text className="small-hint">더블클릭으로도 Component 편집기로 이동할 수 있습니다. Single-click은 Assembly 캔버스를 유지합니다.</Text></div>;
   }
   if(['component','binding'].includes(kind))return <Inspector/>;
-  if(['message','dataType'].includes(kind)){
-    const type=kind==='message'?s.messages.find(x=>x.id===selection.id):s.dataTypes.find(x=>x.id===selection.id);
-    return type?<TypeProperties key={type.id} snapshot={s} type={type} kind={kind} selection={selection}/>:null;
+  if (['message', 'dataType'].includes(kind)) {
+    const type = details.type;
+    return type ? <TypeProperties key={type.id} snapshot={s} type={type} kind={kind} selection={selection}/> : null;
   }
-  const name=kind==='service'?s.services.find(x=>x.id===selection.id)?.name:
-    kind==='message'?s.messages.find(x=>x.id===selection.id)?.name:
-    kind==='dataType'?s.dataTypes.find(x=>x.id===selection.id)?.name:
-    kind==='topic'?s.topics.find(x=>x.id===selection.id)?.name:
-    kind==='qos'?s.qosProfiles.find(x=>x.id===selection.id)?.name:
-    kind==='connection'?'DDS Communication':kind==='operation'?s.operations.find(x=>x.id===selection.id)?.name:
-    kind==='functionalArea'?s.functionalAreas.find(x=>x.id===selection.id)?.name:kind==='assetLibrary'?'Asset Library':kind==='dataPatterns'?'Data Patterns':'System Diagram';
-  const svc=kind==='service'?s.services.find(x=>x.id===selection.id):null;
-  const op=kind==='operation'?s.operations.find(x=>x.id===selection.id):null;
-  const topic=kind==='topic'?s.topics.find(x=>x.id===selection.id):null;
-  const type=kind==='message'?s.messages.find(x=>x.id===selection.id):kind==='dataType'?s.dataTypes.find(x=>x.id===selection.id):null;
   return <div className="inspector context-properties"><Text type="secondary" className="side-label">SELECTION PROPERTIES</Text><h3>{name}</h3>
     {svc&&<><Space wrap><Tag>{svc.functionalArea}</Tag><Tag color={svc.source==='custom'?'purple':'blue'}>{svc.source}</Tag></Space>
       <Descriptions size="small" bordered column={1} style={{marginTop:14}}><Descriptions.Item label="Namespace">{svc.namespace}</Descriptions.Item><Descriptions.Item label="Pattern template">{svc.flowControl}</Descriptions.Item><Descriptions.Item label="Operations">{s.operations.filter(o=>o.serviceId===svc.id).length}</Descriptions.Item><Descriptions.Item label="Usage">{s.bindings.filter(b=>b.serviceId===svc.id).length} bindings</Descriptions.Item></Descriptions></>}

@@ -1,14 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, Badge, Button, ConfigProvider, Divider, Dropdown, Flex, Form, Input, Layout, Modal, Select, Space, Spin, Table, Tabs, Tag, Tooltip, Typography, message } from 'antd';
 import { ApiOutlined, ApartmentOutlined, AppstoreOutlined, CloudDownloadOutlined, DatabaseOutlined, DownloadOutlined, FileAddOutlined, PlusOutlined, ReloadOutlined, SaveOutlined, SafetyCertificateOutlined, ShareAltOutlined, UploadOutlined, FolderAddOutlined, ControlOutlined } from '@ant-design/icons';
-import { WorkspaceWorkbench } from './components/WorkspaceWorkbench.jsx';
-import { StudioNavigator } from './components/StudioNavigator.jsx';
-import { JourneyGuide } from './components/JourneyGuide.jsx';
 import { GenerationPanel } from './components/GenerationPanel.jsx';
-import { ContextProperties } from './components/ContextProperties.jsx';
-import { ProjectExplorer } from './components/ProjectExplorer.jsx';
 import { StudioShell } from './components/StudioShell.jsx';
-import { BottomPanel } from './components/BottomPanel.jsx';
+import { WorkbenchPanelRenderer } from './layouts/WorkbenchPanelRenderer.jsx';
 import { validateWorkspace } from './logic/validation.js';
 import { useEditorStore } from './stores/useEditorStore.js';
 import { canPersistLocally } from './repository/mockRepository.js';
@@ -126,20 +121,25 @@ export default function App() {
       </Header>
       {!snapshot || loading ? <Content className="loading-content"><Spin size="large" tip="Mock 프로젝트 로딩 중"><div style={{ width: 300, height: 160 }}/></Spin></Content> : <StudioShell
         explorer={<>
-          <StudioNavigator onNewComponent={()=>setComponentModal(true)} onNewService={()=>setServiceModal(true)} onCreate={kind=>kind==='component'?setComponentModal(true):kind==='service'?setServiceModal(true):setCreateKind(kind)}/>
+          <WorkbenchPanelRenderer panelId="explorer" viewProps={{
+            onNewComponent: () => setComponentModal(true),
+            onNewService: () => setServiceModal(true),
+            onCreate: kind => kind === 'component' ? setComponentModal(true) : kind === 'service' ? setServiceModal(true) : setCreateKind(kind),
+          }}/>
           <div className="side-footer"><Text type="secondary">Project 편집 가능 · 표준 ICD 읽기 전용</Text><br/><Text type="secondary" style={{fontSize:11}}>{canUseLocalStorage?'브라우저 Mock 저장소 · JSON 백업 지원':'localStorage 제한 · JSON 백업 권장'}</Text></div>
         </>}
-        workbench={<WorkspaceWorkbench onNewComponent={()=>setComponentModal(true)} onNewService={()=>setServiceModal(true)} onGenerate={openGenerator} onCreate={setCreateKind}/>}
-        bottomPanel={<BottomPanel/>}
-        properties={<>
-          {selection?.kind==='component'?<JourneyGuide onGenerate={openGenerator}/>:<ContextProperties/>}
-          {(!selection||['diagram','build'].includes(selection.kind))&&<><Divider style={{margin:'10px 0'}}/>
-            <div className="project-settings"><Text strong>빌드 대상 / DDS 설정</Text>
-              <div style={{marginTop:10}}><Text type="secondary">운영체제</Text><Select style={{width:'100%',marginTop:4}} value={snapshot.project.targetPlatform} onChange={changePlatform} options={[{label:'Linux (.so)',value:'linux'},{label:'Windows (.dll)',value:'windows'}]}/></div>
-              <div style={{marginTop:10}}><Text type="secondary">DDS Vendor</Text><Select style={{width:'100%',marginTop:4}} value={snapshot.project.ddsVendor} onChange={changeVendor} options={[{label:'eProsima Fast DDS',value:'fastdds'},{label:'RTI Connext DDS',value:'connext'}]}/></div>
-              <div style={{marginTop:14}}><Badge status={issues.some(i=>i.severity==='error')?'error':issues.length?'warning':'success'} text={<Text type="secondary">정적 검사 {issues.filter(i=>i.severity==='error').length} errors / {issues.filter(i=>i.severity==='warning').length} warnings</Text>}/></div>
-            </div></>}
-        </>}
+        workbench={<WorkbenchPanelRenderer panelId="workbench" viewProps={{
+          onNewComponent: () => setComponentModal(true),
+          onNewService: () => setServiceModal(true),
+          onGenerate: openGenerator,
+          onCreate: setCreateKind,
+        }}/>}
+        bottomPanel={<WorkbenchPanelRenderer panelId="bottom"/>}
+        properties={<WorkbenchPanelRenderer panelId="properties" viewProps={{
+          selection, project: snapshot.project, issues, onGenerate: openGenerator,
+          onChangePlatform: changePlatform, onChangeVendor: changeVendor,
+        }}/>}
+
       />}
     </Layout>
     <Modal title="새 Component 만들기" open={componentModal} okText="생성하고 시작" destroyOnClose onCancel={() => setComponentModal(false)} onOk={async () => {

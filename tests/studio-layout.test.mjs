@@ -23,5 +23,7 @@ for (const fragment of ['CaretUpOutlined', 'CaretDownOutlined', 'aria-expanded',
   assert.ok(panel.includes(fragment), `Missing console control: ${fragment}`);
 }
 assert.match(app, /<StudioShell/);
-assert.match(app, /bottomPanel=\{<BottomPanel\/>\}/);
+assert.match(app, /bottomPanel=\{<WorkbenchPanelRenderer panelId="bottom"\/>\}/);
+const registry = readFileSync(new URL("../src/layouts/workbenchPanels.config.js", import.meta.url), "utf8");
+assert.match(registry, /BottomPanel/);
 console.log('PASS resizable Explorer/Properties constraints + console caret + shell composition');
