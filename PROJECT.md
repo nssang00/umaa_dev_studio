@@ -9,3 +9,5 @@
 - Tests: model tests, UI-structure tests, layout constraint tests; run all affected regression tests for each change.
 - Environment: Node.js 22, GitHub-hosted Ubuntu runner.
 - Credentials: never commit credentials, local browser storage, generated bundles or `node_modules`.
+
+- UI composition: `src/layouts/workbenchPanels.config.js` registers feature views; `WorkbenchPanelRenderer.jsx` instantiates them through public props. `SelectionPropertiesPanel.jsx` owns right-panel composition. Keep StudioShell geometry-only.
