@@ -2,11 +2,11 @@ import { useMemo, useState } from 'react';
 import { Alert, Button, Descriptions, Empty, Form, Select, Space, Table, Tabs, Tag, Typography, message } from 'antd';
 import { ArrowLeftOutlined, ApiOutlined, CodeOutlined, LinkOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEditorStore } from '../stores/useEditorStore.js';
-import { CustomServiceEditor, QosEditor, RuntimeSettings } from './DesignDetails.jsx';
+import { CustomServiceEditor, RuntimeSettings } from './DesignDetails.jsx';
 import { TypeWorkbench } from './TypeWorkbench.jsx';
 import { ContractGraph } from './ContractGraph.jsx';
 import { IcdFlowView } from './IcdFlowView.jsx';
-import { QosUsageDiagram } from './QosUsageDiagram.jsx';
+import { QosProfileDiagram } from './QosProfileDiagram.jsx';
 import { SERVICE_CATEGORIES, categoryForService, categoryLabel, flowLabel } from '../model/icdConcepts.js';
 const {Text}=Typography;
 const actionLabel={publish:'DDS Publish',subscribe:'DDS Subscribe',dispose:'DDS Dispose'};
@@ -100,4 +100,4 @@ export function FunctionalAreaWorkbench({id}) {
     {area.id==='PO'&&<Alert type="info" showIcon message="PO는 8개 Functional Area 분류에 포함되지만, 별도 공개 PO ICD는 확인되지 않았습니다."/>}
   </div>;
 }
-export function QosWorkbench({id}) {return <div className="center-workbench"><Text className="editor-eyebrow" type="secondary">DDS QOS PROFILE · OMG DDS-JSON 참고</Text><Tabs items={[{key:'policy',label:'QoS Policies',children:<QosEditor profileId={id}/>},{key:'usage',label:'DDS Entity QoS / Profile References',children:<QosUsageDiagram profileId={id}/>}]} /><div className="editor-note">QoS Profile 정의는 프로젝트의 설계 메타데이터입니다. DDS 벤더별 적용 및 Requested/Offered 검증은 아직 구현하지 않았습니다.</div></div>;}
+export function QosWorkbench({id}) {return <div className="center-workbench"><Text className="editor-eyebrow" type="secondary">QOS PROFILE · EDITABLE ENTITY SECTIONS</Text><QosProfileDiagram profileId={id}/></div>;}

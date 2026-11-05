@@ -68,3 +68,10 @@
 - Last PR-head GitHub Actions [42039952234](https://github.com/nssang00/umaa_dev_studio/actions/runs/42039952234): **SUCCESS**.
 - Post-merge `main` GitHub Actions [42040084458](https://github.com/nssang00/umaa_dev_studio/actions/runs/42040084458): **SUCCESS** for `npm ci`, complete `npm test` (including QoS concept and Struct-wide tests), `npm run build` and artifact upload.
 - Known limitations: no actual DDS per-entity QoS persistence/application or Requested/Offered validator; browser E2E interactions not yet exercised on runner.
+
+## 2026-11-05 — QoS nested editor checkpoint
+
+- Replaced separate QoS policy and concept/reference tabs with one React Flow `QosProfileDiagram` node. It contains six open/close entity sections, each with nested policy accordion and editable typed fields.
+- Added pure `qosPolicies` design catalog and independent `editQosEntityField` store command; migration preserves existing profile properties and seeds entity sections from legacy values without overwriting existing nested edits.
+- QoS per-entity values are saved in profile JSON, not DDS runtime. `test:qos-editor` covers default sections, migration, typed field validation, persistence, no-op, and UI wiring.
+- CI pending; old conceptual graph remains as unused source/history, no longer primary UI.

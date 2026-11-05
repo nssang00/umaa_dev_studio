@@ -16,6 +16,8 @@ for(const phrase of ['Services','Topics','Data Types','QoS'])assert.ok(library.i
 for(const phrase of ['large-list-element','specialization'])assert.ok(read('../src/model/icdConcepts.js').includes(phrase));
 assert.ok(patterns.includes('ReactFlow')&&patterns.includes('addTopicRelation'));
 assert.ok(flow.includes('Status / Report는 Flow Control 종류가 아닙니다.'));
-assert.ok(service.includes('IcdFlowView') && service.includes('QosUsageDiagram'));
+assert.ok(service.includes('IcdFlowView') && service.includes('QosProfileDiagram'));
 assert.ok(qos.includes('ReactFlow'));
+assert.ok(read('../src/components/QosProfileDiagram.jsx').includes('ReactFlow'));
+assert.ok(read('../src/components/QosEntitySections.jsx').includes('QosPolicyAccordion'));
 console.log('PASS: Component-first UI, first-class Asset Library, ICD Flow Control, Data Patterns and QoS relationship diagram wired');

@@ -14,3 +14,5 @@
 
 - QoS UI: six DDS QoS entity section concepts are a separate pure graph from real stored Profile references; diagram must not imply entity-level policy assignment where none is stored.
 - Struct Properties: all declared fields, name and UML parent edited in a single draft and committed via one validated `editStructDefinition` transaction; inherited fields remain parent-owned, mock baseline remains unmodified.
+
+- QoS Profiles: six nested policy object sections are editable inside one diagram node. Policy catalog in `src/model/qosPolicies.js` is a limited project-design schema; do not claim OMG DDS-JSON compliance. Legacy flat fields are preserved on import.
