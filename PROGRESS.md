@@ -23,3 +23,9 @@
 - Kept existing accessible/persisted StudioShell rather than replacing it with Splitter; unchanged dependencies and domain model.
 - Added a central feature panel registry and moved Properties composition out of App, retaining existing Explorer, Editor, settings and Console UI.
 - Added regression wiring tests; CI pending. Next: extract Properties selection details as pure model and hook.
+
+## 2026-11-05 — selection details, checkpoint 2
+
+- Extracted read-only `describeSelection` projection from `ContextProperties` to `src/model/selectionDetails.js` and `src/hooks/useSelectionDetails.js` Zustand adapter.
+- Preserved source schema, selection behavior, TypeProperties routing, focused Component overview and existing UI labels.
+- Added unit test of all supported selection kinds, focused bindings, missing IDs and non-mutation. Actions verification pending.

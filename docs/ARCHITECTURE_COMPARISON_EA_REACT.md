@@ -25,3 +25,7 @@ Keep Explorer / Workspace / Properties / Console behavior, keyboard resize and l
 ## Follow-up
 
 Move ContextProperties selection display calculations to a pure model and hook; then consider shared diagram visual primitives without changing P/C handles. Browser drag / caret E2E remains separate from static tests.
+
+## Checkpoint 2: selection details
+
+`ContextProperties` now consumes `useSelectionDetails`. The hook is the only Zustand bridge; `describeSelection` is a pure, testable projection over an existing snapshot and selected entity. Specialized TypeProperties/Inspector editing and UMAA domain write commands are unchanged.
