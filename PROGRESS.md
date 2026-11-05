@@ -100,4 +100,10 @@
 
 - Styling only: retained a single outer border per Struct field and per QoS entity; changed nested QoS policy cards into thin dividers with no individual outline.
 - Removed Ant Design Collapse root frame on these editors and reduced nested padding 15–25%. Kept input field borders, label readability, focus/keyboard behavior, and data/update logic unchanged.
-- Added `test:editor-density` CSS hierarchy regression. CI and browser visual inspection pending.
+- Added `test:editor-density` CSS hierarchy regression. Browser visual inspection is still pending (static tests and build do not prove appearance).
+
+## 2026-11-06 — editor border cleanup verified
+
+- [PR #4](https://github.com/nssang00/umaa_dev_studio/pull/4) squash-merged to `main` at [1927ccf](https://github.com/nssang00/umaa_dev_studio/commit/1927ccf7f5eaec1d05415fb9cfe6ee3fb2e68189).
+- [Post-merge Actions 42053476761](https://github.com/nssang00/umaa_dev_studio/actions/runs/42053476761): **SUCCESS**, including full `npm test` (new CSS hierarchy test), `npm run build`, and artifact upload.
+- Visual appearance and interaction of expanded panels in an actual browser were not E2E-tested; this was a scoped CSS-only adjustment.
