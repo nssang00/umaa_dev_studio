@@ -1,0 +1,27 @@
+import assert from 'node:assert/strict';
+import { seedWorkspace } from '../src/model/seed.js';
+import { componentProgress, issueDestination } from '../src/logic/journeyModel.js';
+
+const s = structuredClone(seedWorkspace);
+const autopilot = componentProgress(s, 'autopilot');
+assert.equal(autopilot.component.name, 'Autopilot');
+assert.equal(autopilot.bindings.length, 14);
+assert.equal(autopilot.providers.length, 7);
+assert.equal(autopilot.consumers.length, 7);
+assert.equal(autopilot.endpoints.length, 32);
+assert.equal(autopilot.hasConfig, true);
+assert.equal(autopilot.canGenerate, true);
+assert.equal(componentProgress(s,'unknown').canGenerate,false);
+assert.equal(issueDestination(s,{entityId: s.services[0].id}).kind,'service');
+assert.equal(issueDestination(s,{entityId: 'missing'}),null);
+s.components.push({id:'brand-new',name:'Brand New',source:'project',description:''});
+s.componentRuntime['brand-new'] = {...s.componentRuntime.autopilot};
+const fresh = componentProgress(s,'brand-new');
+assert.equal(fresh.bindings.length,0);
+assert.equal(fresh.canGenerate,false);
+s.bindings.push({id:'test-binding',componentId:'brand-new',serviceId:s.services[0].id,role:'consumer'});
+const combined = componentProgress(s,'brand-new');
+assert.equal(combined.bindings.length,1);
+assert.equal(combined.canGenerate,true);
+assert.equal(issueDestination(s,{entityId:'test-binding'}).kind,'binding');
+console.log('PASS Component journey: progress, 7P/7C, readiness, new/templated composition and issue navigation');

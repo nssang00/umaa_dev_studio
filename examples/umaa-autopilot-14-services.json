@@ -1,0 +1,1706 @@
+{
+  "project": {
+    "id": "demo-usv",
+    "name": "UMAA 6.0 Autopilot Component Reference Assembly",
+    "standardVersion": "UMAA 6.0",
+    "targetPlatform": "linux",
+    "ddsVendor": "fastdds"
+  },
+  "functionalAreas": [
+    {
+      "id": "MM",
+      "name": "Mission Management",
+      "icd": "UMAA-SPEC-MMICD-v6.0"
+    },
+    {
+      "id": "MO",
+      "name": "Maneuver Operations",
+      "icd": "UMAA-SPEC-MOICD-v6.0"
+    },
+    {
+      "id": "EO",
+      "name": "Engineering Operations",
+      "icd": "UMAA-SPEC-EOICD-v6.0"
+    },
+    {
+      "id": "SEM",
+      "name": "Sensor and Effector Management",
+      "icd": "UMAA-SPEC-SEMICD-v6.0"
+    },
+    {
+      "id": "CO",
+      "name": "Communications Operations",
+      "icd": "UMAA-SPEC-COICD-v6.0"
+    },
+    {
+      "id": "SA",
+      "name": "Situational Awareness",
+      "icd": "UMAA-SPEC-SAICD-v6.0"
+    },
+    {
+      "id": "PO",
+      "name": "Processing Operations",
+      "icd": "No separate public ICD verified"
+    },
+    {
+      "id": "SO",
+      "name": "Support Operations",
+      "icd": "UMAA-SPEC-SOICD-v6.0"
+    }
+  ],
+  "components": [
+    {
+      "id": "nav",
+      "name": "USV Navigation",
+      "description": "GlobalPose/Speed/Velocity 상태 보고 (공개 참조 컴포넌트)"
+    },
+    {
+      "id": "autopilot",
+      "name": "Autopilot",
+      "description": "Component Definitions v1.0 §3.1.3의 7 Provider / 7 Consumer 전체 Service 바인딩"
+    },
+    {
+      "id": "mission",
+      "name": "Mission Executor",
+      "description": "임무 관리, 기동 명령 소비 및 상태 서비스 소비"
+    },
+    {
+      "id": "weather",
+      "name": "Weather",
+      "description": "WindStatus 제공 (공개 참조 컴포넌트)"
+    },
+    {
+      "id": "water",
+      "name": "Water Environment",
+      "description": "WaterCurrentStatus 제공 (공개 참조 컴포넌트)"
+    },
+    {
+      "id": "logging",
+      "name": "Logging",
+      "description": "LogReport Consumer 전용 컴포넌트 예시"
+    },
+    {
+      "id": "colregs",
+      "name": "COLREGS and Hazard Avoidance",
+      "description": "기동·항법 서비스 제공/소비 참조 구성"
+    }
+  ],
+  "services": [
+    {
+      "id": "svc-GlobalPoseStatus",
+      "name": "GlobalPoseStatus",
+      "functionalArea": "SA",
+      "namespace": "UMAA::SA::GlobalPoseStatus",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "request-reply",
+      "description": "전역 위치 및 자세 정보"
+    },
+    {
+      "id": "svc-SpeedStatus",
+      "name": "SpeedStatus",
+      "functionalArea": "SA",
+      "namespace": "UMAA::SA::SpeedStatus",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "request-reply",
+      "description": "자함 순간 속력"
+    },
+    {
+      "id": "svc-VelocityStatus",
+      "name": "VelocityStatus",
+      "functionalArea": "SA",
+      "namespace": "UMAA::SA::VelocityStatus",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "request-reply",
+      "description": "선속도 및 회전각속도"
+    },
+    {
+      "id": "svc-WindStatus",
+      "name": "WindStatus",
+      "functionalArea": "SA",
+      "namespace": "UMAA::SA::WindStatus",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "request-reply",
+      "description": "풍향·풍속 정보"
+    },
+    {
+      "id": "svc-WaterCurrentStatus",
+      "name": "WaterCurrentStatus",
+      "functionalArea": "SA",
+      "namespace": "UMAA::SA::WaterCurrentStatus",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "request-reply",
+      "description": "해류 상태"
+    },
+    {
+      "id": "svc-HealthReport",
+      "name": "HealthReport",
+      "functionalArea": "SO",
+      "namespace": "UMAA::SO::HealthReport",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "request-reply",
+      "description": "자원·코드 건강 상태"
+    },
+    {
+      "id": "svc-LogReport",
+      "name": "LogReport",
+      "functionalArea": "SO",
+      "namespace": "UMAA::SO::LogReport",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "request-reply",
+      "description": "운용 로그 보고"
+    },
+    {
+      "id": "svc-UVPlatformSpecs",
+      "name": "UVPlatformSpecs",
+      "functionalArea": "EO",
+      "namespace": "UMAA::EO::UVPlatformSpecs",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "request-reply",
+      "description": "자함 운용능력 및 물리적 제원"
+    },
+    {
+      "id": "svc-ConditionalReport",
+      "name": "ConditionalReport",
+      "functionalArea": "MM",
+      "namespace": "UMAA::MM::ConditionalReport",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "request-reply",
+      "description": "미션 조건 집합, Large Set으로 표현"
+    },
+    {
+      "id": "svc-ActiveConstraintsControl",
+      "name": "ActiveConstraintsControl",
+      "functionalArea": "MM",
+      "namespace": "UMAA::MM::ActiveConstraintsControl",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "command-response",
+      "description": "활성 제약조건 설정; MM ICD 6.1.1 (Command, Status, Ack)"
+    },
+    {
+      "id": "svc-MissionPlanConstraintControl",
+      "name": "MissionPlanConstraintControl",
+      "functionalArea": "MM",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "command-response",
+      "description": "임무계획 제약조건 추가/삭제; MM ICD 6.1.4 (Add/Delete 별개 메시지)"
+    },
+    {
+      "id": "svc-GlobalVectorControl",
+      "name": "GlobalVectorControl",
+      "functionalArea": "MO",
+      "namespace": "UMAA::MO::GlobalVectorControl",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "command-response",
+      "description": "전역 벡터 기동 명령 및 상태"
+    },
+    {
+      "id": "svc-GlobalHoverControl",
+      "name": "GlobalHoverControl",
+      "functionalArea": "MO",
+      "namespace": "UMAA::MO::GlobalHoverControl",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "command-response",
+      "description": "위치·반경 유지 명령 및 상태"
+    },
+    {
+      "id": "svc-PrimitiveDriverControl",
+      "name": "PrimitiveDriverControl",
+      "functionalArea": "MO",
+      "namespace": "UMAA::MO::PrimitiveDriverControl",
+      "source": "standard",
+      "version": "6.0",
+      "flowControl": "command-response",
+      "description": "6자유도 노력(Effort) 기반 직접 기동 제어; MO ICD 6.1.7"
+    }
+  ],
+  "operations": [
+    {
+      "id": "op-svc-GlobalPoseStatus-reportGlobalPose",
+      "serviceId": "svc-GlobalPoseStatus",
+      "name": "reportGlobalPose",
+      "topicId": "topic-svc-GlobalPoseStatus-GlobalPoseReportType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-GlobalPoseStatus-queryGlobalPose",
+      "serviceId": "svc-GlobalPoseStatus",
+      "name": "queryGlobalPose",
+      "topicId": "topic-svc-GlobalPoseStatus-GlobalPoseReportType",
+      "action": "subscribe",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-SpeedStatus-reportSpeed",
+      "serviceId": "svc-SpeedStatus",
+      "name": "reportSpeed",
+      "topicId": "topic-svc-SpeedStatus-SpeedReportType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-SpeedStatus-querySpeed",
+      "serviceId": "svc-SpeedStatus",
+      "name": "querySpeed",
+      "topicId": "topic-svc-SpeedStatus-SpeedReportType",
+      "action": "subscribe",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-VelocityStatus-reportVelocity",
+      "serviceId": "svc-VelocityStatus",
+      "name": "reportVelocity",
+      "topicId": "topic-svc-VelocityStatus-VelocityReportType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-VelocityStatus-queryVelocity",
+      "serviceId": "svc-VelocityStatus",
+      "name": "queryVelocity",
+      "topicId": "topic-svc-VelocityStatus-VelocityReportType",
+      "action": "subscribe",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-WindStatus-reportWind",
+      "serviceId": "svc-WindStatus",
+      "name": "reportWind",
+      "topicId": "topic-svc-WindStatus-WindReportType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-WindStatus-queryWind",
+      "serviceId": "svc-WindStatus",
+      "name": "queryWind",
+      "topicId": "topic-svc-WindStatus-WindReportType",
+      "action": "subscribe",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-WaterCurrentStatus-reportWaterCurrent",
+      "serviceId": "svc-WaterCurrentStatus",
+      "name": "reportWaterCurrent",
+      "topicId": "topic-svc-WaterCurrentStatus-WaterCurrentReportType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-WaterCurrentStatus-queryWaterCurrent",
+      "serviceId": "svc-WaterCurrentStatus",
+      "name": "queryWaterCurrent",
+      "topicId": "topic-svc-WaterCurrentStatus-WaterCurrentReportType",
+      "action": "subscribe",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-HealthReport-reportHealth",
+      "serviceId": "svc-HealthReport",
+      "name": "reportHealth",
+      "topicId": "topic-svc-HealthReport-HealthReportType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-HealthReport-queryHealth",
+      "serviceId": "svc-HealthReport",
+      "name": "queryHealth",
+      "topicId": "topic-svc-HealthReport-HealthReportType",
+      "action": "subscribe",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-LogReport-reportLogReport",
+      "serviceId": "svc-LogReport",
+      "name": "reportLogReport",
+      "topicId": "topic-svc-LogReport-LogReportType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-LogReport-queryLogReport",
+      "serviceId": "svc-LogReport",
+      "name": "queryLogReport",
+      "topicId": "topic-svc-LogReport-LogReportType",
+      "action": "subscribe",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-UVPlatformSpecs-reportUVPlatformCapabilities",
+      "serviceId": "svc-UVPlatformSpecs",
+      "name": "reportUVPlatformCapabilities",
+      "topicId": "topic-svc-UVPlatformSpecs-UVPlatformCapabilitiesReportType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-UVPlatformSpecs-queryUVPlatformCapabilities",
+      "serviceId": "svc-UVPlatformSpecs",
+      "name": "queryUVPlatformCapabilities",
+      "topicId": "topic-svc-UVPlatformSpecs-UVPlatformCapabilitiesReportType",
+      "action": "subscribe",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-UVPlatformSpecs-reportUVPlatformSpecs",
+      "serviceId": "svc-UVPlatformSpecs",
+      "name": "reportUVPlatformSpecs",
+      "topicId": "topic-svc-UVPlatformSpecs-UVPlatformSpecsReportType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-UVPlatformSpecs-queryUVPlatformSpecs",
+      "serviceId": "svc-UVPlatformSpecs",
+      "name": "queryUVPlatformSpecs",
+      "topicId": "topic-svc-UVPlatformSpecs-UVPlatformSpecsReportType",
+      "action": "subscribe",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-ConditionalReport-reportConditional",
+      "serviceId": "svc-ConditionalReport",
+      "name": "reportConditional",
+      "topicId": "topic-svc-ConditionalReport-ConditionalReportType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-ConditionalReport-queryConditional",
+      "serviceId": "svc-ConditionalReport",
+      "name": "queryConditional",
+      "topicId": "topic-svc-ConditionalReport-ConditionalReportType",
+      "action": "subscribe",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-ActiveConstraintsControl-setActiveConstraints",
+      "serviceId": "svc-ActiveConstraintsControl",
+      "name": "setActiveConstraints",
+      "topicId": "topic-svc-ActiveConstraintsControl-ActiveConstraintsCommandType",
+      "action": "publish",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-ActiveConstraintsControl-reportActiveConstraintsCommandStatus",
+      "serviceId": "svc-ActiveConstraintsControl",
+      "name": "reportActiveConstraintsCommandStatus",
+      "topicId": "topic-svc-ActiveConstraintsControl-ActiveConstraintsCommandStatusType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-ActiveConstraintsControl-reportActiveConstraintsCommandAck",
+      "serviceId": "svc-ActiveConstraintsControl",
+      "name": "reportActiveConstraintsCommandAck",
+      "topicId": "topic-svc-ActiveConstraintsControl-ActiveConstraintsCommandAckReportType",
+      "action": "publish",
+      "actor": "provider",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-ActiveConstraintsControl-queryActiveConstraintsCommandAck",
+      "serviceId": "svc-ActiveConstraintsControl",
+      "name": "queryActiveConstraintsCommandAck",
+      "topicId": "topic-svc-ActiveConstraintsControl-ActiveConstraintsCommandAckReportType",
+      "action": "subscribe",
+      "actor": "consumer",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-ActiveConstraintsControl-cancelActiveConstraintsCommand",
+      "serviceId": "svc-ActiveConstraintsControl",
+      "name": "cancelActiveConstraintsCommand",
+      "topicId": "topic-svc-ActiveConstraintsControl-ActiveConstraintsCommandType",
+      "action": "dispose",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-MissionPlanConstraintControl-setMissionPlanConstraintAdd",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "name": "setMissionPlanConstraintAdd",
+      "topicId": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandType",
+      "action": "publish",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-MissionPlanConstraintControl-reportMissionPlanConstraintAddCommandStatus",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "name": "reportMissionPlanConstraintAddCommandStatus",
+      "topicId": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandStatusType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-MissionPlanConstraintControl-reportMissionPlanConstraintAddCommandAck",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "name": "reportMissionPlanConstraintAddCommandAck",
+      "topicId": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandAckReportType",
+      "action": "publish",
+      "actor": "provider",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-MissionPlanConstraintControl-queryMissionPlanConstraintAddCommandAck",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "name": "queryMissionPlanConstraintAddCommandAck",
+      "topicId": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandAckReportType",
+      "action": "subscribe",
+      "actor": "consumer",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-MissionPlanConstraintControl-cancelMissionPlanConstraintAddCommand",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "name": "cancelMissionPlanConstraintAddCommand",
+      "topicId": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandType",
+      "action": "dispose",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-MissionPlanConstraintControl-setMissionPlanConstraintDelete",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "name": "setMissionPlanConstraintDelete",
+      "topicId": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandType",
+      "action": "publish",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-MissionPlanConstraintControl-reportMissionPlanConstraintDeleteCommandStatus",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "name": "reportMissionPlanConstraintDeleteCommandStatus",
+      "topicId": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandStatusType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-MissionPlanConstraintControl-reportMissionPlanConstraintDeleteCommandAck",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "name": "reportMissionPlanConstraintDeleteCommandAck",
+      "topicId": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandAckReportType",
+      "action": "publish",
+      "actor": "provider",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-MissionPlanConstraintControl-queryMissionPlanConstraintDeleteCommandAck",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "name": "queryMissionPlanConstraintDeleteCommandAck",
+      "topicId": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandAckReportType",
+      "action": "subscribe",
+      "actor": "consumer",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-MissionPlanConstraintControl-cancelMissionPlanConstraintDeleteCommand",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "name": "cancelMissionPlanConstraintDeleteCommand",
+      "topicId": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandType",
+      "action": "dispose",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-GlobalVectorControl-setGlobalVector",
+      "serviceId": "svc-GlobalVectorControl",
+      "name": "setGlobalVector",
+      "topicId": "topic-svc-GlobalVectorControl-GlobalVectorCommandType",
+      "action": "publish",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-GlobalVectorControl-reportGlobalVectorCommandStatus",
+      "serviceId": "svc-GlobalVectorControl",
+      "name": "reportGlobalVectorCommandStatus",
+      "topicId": "topic-svc-GlobalVectorControl-GlobalVectorCommandStatusType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-GlobalVectorControl-reportGlobalVectorCommandAck",
+      "serviceId": "svc-GlobalVectorControl",
+      "name": "reportGlobalVectorCommandAck",
+      "topicId": "topic-svc-GlobalVectorControl-GlobalVectorCommandAckReportType",
+      "action": "publish",
+      "actor": "provider",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-GlobalVectorControl-reportGlobalVectorExecutionStatus",
+      "serviceId": "svc-GlobalVectorControl",
+      "name": "reportGlobalVectorExecutionStatus",
+      "topicId": "topic-svc-GlobalVectorControl-GlobalVectorExecutionStatusReportType",
+      "action": "publish",
+      "actor": "provider",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-GlobalVectorControl-queryGlobalVectorCommandAck",
+      "serviceId": "svc-GlobalVectorControl",
+      "name": "queryGlobalVectorCommandAck",
+      "topicId": "topic-svc-GlobalVectorControl-GlobalVectorCommandAckReportType",
+      "action": "subscribe",
+      "actor": "consumer",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-GlobalVectorControl-queryGlobalVectorExecutionStatus",
+      "serviceId": "svc-GlobalVectorControl",
+      "name": "queryGlobalVectorExecutionStatus",
+      "topicId": "topic-svc-GlobalVectorControl-GlobalVectorExecutionStatusReportType",
+      "action": "subscribe",
+      "actor": "consumer",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-GlobalVectorControl-cancelGlobalVectorCommand",
+      "serviceId": "svc-GlobalVectorControl",
+      "name": "cancelGlobalVectorCommand",
+      "topicId": "topic-svc-GlobalVectorControl-GlobalVectorCommandType",
+      "action": "dispose",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-GlobalHoverControl-setGlobalHover",
+      "serviceId": "svc-GlobalHoverControl",
+      "name": "setGlobalHover",
+      "topicId": "topic-svc-GlobalHoverControl-GlobalHoverCommandType",
+      "action": "publish",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-GlobalHoverControl-reportGlobalHoverCommandStatus",
+      "serviceId": "svc-GlobalHoverControl",
+      "name": "reportGlobalHoverCommandStatus",
+      "topicId": "topic-svc-GlobalHoverControl-GlobalHoverCommandStatusType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-GlobalHoverControl-reportGlobalHoverCommandAck",
+      "serviceId": "svc-GlobalHoverControl",
+      "name": "reportGlobalHoverCommandAck",
+      "topicId": "topic-svc-GlobalHoverControl-GlobalHoverCommandAckReportType",
+      "action": "publish",
+      "actor": "provider",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-GlobalHoverControl-reportGlobalHoverExecutionStatus",
+      "serviceId": "svc-GlobalHoverControl",
+      "name": "reportGlobalHoverExecutionStatus",
+      "topicId": "topic-svc-GlobalHoverControl-GlobalHoverExecutionStatusReportType",
+      "action": "publish",
+      "actor": "provider",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-GlobalHoverControl-queryGlobalHoverCommandAck",
+      "serviceId": "svc-GlobalHoverControl",
+      "name": "queryGlobalHoverCommandAck",
+      "topicId": "topic-svc-GlobalHoverControl-GlobalHoverCommandAckReportType",
+      "action": "subscribe",
+      "actor": "consumer",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-GlobalHoverControl-queryGlobalHoverExecutionStatus",
+      "serviceId": "svc-GlobalHoverControl",
+      "name": "queryGlobalHoverExecutionStatus",
+      "topicId": "topic-svc-GlobalHoverControl-GlobalHoverExecutionStatusReportType",
+      "action": "subscribe",
+      "actor": "consumer",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-GlobalHoverControl-cancelGlobalHoverCommand",
+      "serviceId": "svc-GlobalHoverControl",
+      "name": "cancelGlobalHoverCommand",
+      "topicId": "topic-svc-GlobalHoverControl-GlobalHoverCommandType",
+      "action": "dispose",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-PrimitiveDriverControl-setPrimitiveDriver",
+      "serviceId": "svc-PrimitiveDriverControl",
+      "name": "setPrimitiveDriver",
+      "topicId": "topic-svc-PrimitiveDriverControl-PrimitiveDriverCommandType",
+      "action": "publish",
+      "actor": "consumer"
+    },
+    {
+      "id": "op-svc-PrimitiveDriverControl-reportPrimitiveDriverCommandStatus",
+      "serviceId": "svc-PrimitiveDriverControl",
+      "name": "reportPrimitiveDriverCommandStatus",
+      "topicId": "topic-svc-PrimitiveDriverControl-PrimitiveDriverCommandStatusType",
+      "action": "publish",
+      "actor": "provider"
+    },
+    {
+      "id": "op-svc-PrimitiveDriverControl-reportPrimitiveDriverCommandAck",
+      "serviceId": "svc-PrimitiveDriverControl",
+      "name": "reportPrimitiveDriverCommandAck",
+      "topicId": "topic-svc-PrimitiveDriverControl-PrimitiveDriverCommandAckReportType",
+      "action": "publish",
+      "actor": "provider",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-PrimitiveDriverControl-reportPrimitiveDriverExecutionStatus",
+      "serviceId": "svc-PrimitiveDriverControl",
+      "name": "reportPrimitiveDriverExecutionStatus",
+      "topicId": "topic-svc-PrimitiveDriverControl-PrimitiveDriverExecutionStatusReportType",
+      "action": "publish",
+      "actor": "provider",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-PrimitiveDriverControl-queryPrimitiveDriverCommandAck",
+      "serviceId": "svc-PrimitiveDriverControl",
+      "name": "queryPrimitiveDriverCommandAck",
+      "topicId": "topic-svc-PrimitiveDriverControl-PrimitiveDriverCommandAckReportType",
+      "action": "subscribe",
+      "actor": "consumer",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-PrimitiveDriverControl-queryPrimitiveDriverExecutionStatus",
+      "serviceId": "svc-PrimitiveDriverControl",
+      "name": "queryPrimitiveDriverExecutionStatus",
+      "topicId": "topic-svc-PrimitiveDriverControl-PrimitiveDriverExecutionStatusReportType",
+      "action": "subscribe",
+      "actor": "consumer",
+      "optionalConsumer": true
+    },
+    {
+      "id": "op-svc-PrimitiveDriverControl-cancelPrimitiveDriverCommand",
+      "serviceId": "svc-PrimitiveDriverControl",
+      "name": "cancelPrimitiveDriverCommand",
+      "topicId": "topic-svc-PrimitiveDriverControl-PrimitiveDriverCommandType",
+      "action": "dispose",
+      "actor": "consumer"
+    }
+  ],
+  "interfaces": [
+    {
+      "id": "if-GlobalPoseStatus",
+      "serviceId": "svc-GlobalPoseStatus",
+      "name": "GlobalPoseStatus Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-GlobalPoseStatus-reportGlobalPose",
+        "op-svc-GlobalPoseStatus-queryGlobalPose"
+      ]
+    },
+    {
+      "id": "if-SpeedStatus",
+      "serviceId": "svc-SpeedStatus",
+      "name": "SpeedStatus Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-SpeedStatus-reportSpeed",
+        "op-svc-SpeedStatus-querySpeed"
+      ]
+    },
+    {
+      "id": "if-VelocityStatus",
+      "serviceId": "svc-VelocityStatus",
+      "name": "VelocityStatus Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-VelocityStatus-reportVelocity",
+        "op-svc-VelocityStatus-queryVelocity"
+      ]
+    },
+    {
+      "id": "if-WindStatus",
+      "serviceId": "svc-WindStatus",
+      "name": "WindStatus Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-WindStatus-reportWind",
+        "op-svc-WindStatus-queryWind"
+      ]
+    },
+    {
+      "id": "if-WaterCurrentStatus",
+      "serviceId": "svc-WaterCurrentStatus",
+      "name": "WaterCurrentStatus Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-WaterCurrentStatus-reportWaterCurrent",
+        "op-svc-WaterCurrentStatus-queryWaterCurrent"
+      ]
+    },
+    {
+      "id": "if-HealthReport",
+      "serviceId": "svc-HealthReport",
+      "name": "HealthReport Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-HealthReport-reportHealth",
+        "op-svc-HealthReport-queryHealth"
+      ]
+    },
+    {
+      "id": "if-LogReport",
+      "serviceId": "svc-LogReport",
+      "name": "LogReport Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-LogReport-reportLogReport",
+        "op-svc-LogReport-queryLogReport"
+      ]
+    },
+    {
+      "id": "if-UVPlatformSpecs",
+      "serviceId": "svc-UVPlatformSpecs",
+      "name": "UVPlatformSpecs Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-UVPlatformSpecs-reportUVPlatformCapabilities",
+        "op-svc-UVPlatformSpecs-queryUVPlatformCapabilities",
+        "op-svc-UVPlatformSpecs-reportUVPlatformSpecs",
+        "op-svc-UVPlatformSpecs-queryUVPlatformSpecs"
+      ]
+    },
+    {
+      "id": "if-ConditionalReport",
+      "serviceId": "svc-ConditionalReport",
+      "name": "ConditionalReport Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-ConditionalReport-reportConditional",
+        "op-svc-ConditionalReport-queryConditional"
+      ]
+    },
+    {
+      "id": "if-ActiveConstraintsControl",
+      "serviceId": "svc-ActiveConstraintsControl",
+      "name": "ActiveConstraintsControl Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-ActiveConstraintsControl-setActiveConstraints",
+        "op-svc-ActiveConstraintsControl-reportActiveConstraintsCommandStatus",
+        "op-svc-ActiveConstraintsControl-reportActiveConstraintsCommandAck",
+        "op-svc-ActiveConstraintsControl-queryActiveConstraintsCommandAck",
+        "op-svc-ActiveConstraintsControl-cancelActiveConstraintsCommand"
+      ]
+    },
+    {
+      "id": "if-MissionPlanConstraintControl",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "name": "MissionPlanConstraintControl Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-MissionPlanConstraintControl-setMissionPlanConstraintAdd",
+        "op-svc-MissionPlanConstraintControl-reportMissionPlanConstraintAddCommandStatus",
+        "op-svc-MissionPlanConstraintControl-reportMissionPlanConstraintAddCommandAck",
+        "op-svc-MissionPlanConstraintControl-queryMissionPlanConstraintAddCommandAck",
+        "op-svc-MissionPlanConstraintControl-cancelMissionPlanConstraintAddCommand",
+        "op-svc-MissionPlanConstraintControl-setMissionPlanConstraintDelete",
+        "op-svc-MissionPlanConstraintControl-reportMissionPlanConstraintDeleteCommandStatus",
+        "op-svc-MissionPlanConstraintControl-reportMissionPlanConstraintDeleteCommandAck",
+        "op-svc-MissionPlanConstraintControl-queryMissionPlanConstraintDeleteCommandAck",
+        "op-svc-MissionPlanConstraintControl-cancelMissionPlanConstraintDeleteCommand"
+      ]
+    },
+    {
+      "id": "if-GlobalVectorControl",
+      "serviceId": "svc-GlobalVectorControl",
+      "name": "GlobalVectorControl Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-GlobalVectorControl-setGlobalVector",
+        "op-svc-GlobalVectorControl-reportGlobalVectorCommandStatus",
+        "op-svc-GlobalVectorControl-reportGlobalVectorCommandAck",
+        "op-svc-GlobalVectorControl-reportGlobalVectorExecutionStatus",
+        "op-svc-GlobalVectorControl-queryGlobalVectorCommandAck",
+        "op-svc-GlobalVectorControl-queryGlobalVectorExecutionStatus",
+        "op-svc-GlobalVectorControl-cancelGlobalVectorCommand"
+      ]
+    },
+    {
+      "id": "if-GlobalHoverControl",
+      "serviceId": "svc-GlobalHoverControl",
+      "name": "GlobalHoverControl Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-GlobalHoverControl-setGlobalHover",
+        "op-svc-GlobalHoverControl-reportGlobalHoverCommandStatus",
+        "op-svc-GlobalHoverControl-reportGlobalHoverCommandAck",
+        "op-svc-GlobalHoverControl-reportGlobalHoverExecutionStatus",
+        "op-svc-GlobalHoverControl-queryGlobalHoverCommandAck",
+        "op-svc-GlobalHoverControl-queryGlobalHoverExecutionStatus",
+        "op-svc-GlobalHoverControl-cancelGlobalHoverCommand"
+      ]
+    },
+    {
+      "id": "if-PrimitiveDriverControl",
+      "serviceId": "svc-PrimitiveDriverControl",
+      "name": "PrimitiveDriverControl Svc IF · InterfaceBlock",
+      "description": "ICD Service Operation 전체를 묶는 InterfaceBlock 탐색 투영. 공식 SysML/SoaML 모델의 고유 식별자는 포함하지 않습니다.",
+      "operationIds": [
+        "op-svc-PrimitiveDriverControl-setPrimitiveDriver",
+        "op-svc-PrimitiveDriverControl-reportPrimitiveDriverCommandStatus",
+        "op-svc-PrimitiveDriverControl-reportPrimitiveDriverCommandAck",
+        "op-svc-PrimitiveDriverControl-reportPrimitiveDriverExecutionStatus",
+        "op-svc-PrimitiveDriverControl-queryPrimitiveDriverCommandAck",
+        "op-svc-PrimitiveDriverControl-queryPrimitiveDriverExecutionStatus",
+        "op-svc-PrimitiveDriverControl-cancelPrimitiveDriverCommand"
+      ]
+    }
+  ],
+  "topics": [
+    {
+      "id": "topic-svc-GlobalPoseStatus-GlobalPoseReportType",
+      "name": "GlobalPoseReportType",
+      "messageTypeId": "type-svc-GlobalPoseStatus-GlobalPoseReportType"
+    },
+    {
+      "id": "topic-svc-SpeedStatus-SpeedReportType",
+      "name": "SpeedReportType",
+      "messageTypeId": "type-svc-SpeedStatus-SpeedReportType"
+    },
+    {
+      "id": "topic-svc-VelocityStatus-VelocityReportType",
+      "name": "VelocityReportType",
+      "messageTypeId": "type-svc-VelocityStatus-VelocityReportType"
+    },
+    {
+      "id": "topic-svc-WindStatus-WindReportType",
+      "name": "WindReportType",
+      "messageTypeId": "type-svc-WindStatus-WindReportType"
+    },
+    {
+      "id": "topic-svc-WaterCurrentStatus-WaterCurrentReportType",
+      "name": "WaterCurrentReportType",
+      "messageTypeId": "type-svc-WaterCurrentStatus-WaterCurrentReportType"
+    },
+    {
+      "id": "topic-svc-HealthReport-HealthReportType",
+      "name": "HealthReportType",
+      "messageTypeId": "type-svc-HealthReport-HealthReportType"
+    },
+    {
+      "id": "topic-svc-LogReport-LogReportType",
+      "name": "LogReportType",
+      "messageTypeId": "type-svc-LogReport-LogReportType"
+    },
+    {
+      "id": "topic-svc-UVPlatformSpecs-UVPlatformCapabilitiesReportType",
+      "name": "UVPlatformCapabilitiesReportType",
+      "messageTypeId": "type-svc-UVPlatformSpecs-UVPlatformCapabilitiesReportType"
+    },
+    {
+      "id": "topic-svc-UVPlatformSpecs-UVPlatformSpecsReportType",
+      "name": "UVPlatformSpecsReportType",
+      "messageTypeId": "type-svc-UVPlatformSpecs-UVPlatformSpecsReportType"
+    },
+    {
+      "id": "topic-svc-ConditionalReport-ConditionalReportType",
+      "name": "ConditionalReportType",
+      "messageTypeId": "type-svc-ConditionalReport-ConditionalReportType"
+    },
+    {
+      "id": "topic-svc-ConditionalReport-ConditionalReportTypeConditionalsSetElement",
+      "name": "ConditionalReportTypeConditionalsSetElement",
+      "messageTypeId": "type-svc-ConditionalReport-ConditionalReportTypeConditionalsSetElement"
+    },
+    {
+      "id": "topic-svc-ActiveConstraintsControl-ActiveConstraintsCommandType",
+      "name": "ActiveConstraintsCommandType",
+      "messageTypeId": "type-svc-ActiveConstraintsControl-ActiveConstraintsCommandType"
+    },
+    {
+      "id": "topic-svc-ActiveConstraintsControl-ActiveConstraintsCommandStatusType",
+      "name": "ActiveConstraintsCommandStatusType",
+      "messageTypeId": "type-svc-ActiveConstraintsControl-ActiveConstraintsCommandStatusType"
+    },
+    {
+      "id": "topic-svc-ActiveConstraintsControl-ActiveConstraintsCommandAckReportType",
+      "name": "ActiveConstraintsCommandAckReportType",
+      "messageTypeId": "type-svc-ActiveConstraintsControl-ActiveConstraintsCommandAckReportType"
+    },
+    {
+      "id": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandType",
+      "name": "MissionPlanConstraintAddCommandType",
+      "messageTypeId": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandType"
+    },
+    {
+      "id": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandStatusType",
+      "name": "MissionPlanConstraintAddCommandStatusType",
+      "messageTypeId": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandStatusType"
+    },
+    {
+      "id": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandAckReportType",
+      "name": "MissionPlanConstraintAddCommandAckReportType",
+      "messageTypeId": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandAckReportType"
+    },
+    {
+      "id": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandType",
+      "name": "MissionPlanConstraintDeleteCommandType",
+      "messageTypeId": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandType"
+    },
+    {
+      "id": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandStatusType",
+      "name": "MissionPlanConstraintDeleteCommandStatusType",
+      "messageTypeId": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandStatusType"
+    },
+    {
+      "id": "topic-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandAckReportType",
+      "name": "MissionPlanConstraintDeleteCommandAckReportType",
+      "messageTypeId": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandAckReportType"
+    },
+    {
+      "id": "topic-svc-GlobalVectorControl-GlobalVectorCommandType",
+      "name": "GlobalVectorCommandType",
+      "messageTypeId": "type-svc-GlobalVectorControl-GlobalVectorCommandType"
+    },
+    {
+      "id": "topic-svc-GlobalVectorControl-GlobalVectorCommandStatusType",
+      "name": "GlobalVectorCommandStatusType",
+      "messageTypeId": "type-svc-GlobalVectorControl-GlobalVectorCommandStatusType"
+    },
+    {
+      "id": "topic-svc-GlobalVectorControl-GlobalVectorCommandAckReportType",
+      "name": "GlobalVectorCommandAckReportType",
+      "messageTypeId": "type-svc-GlobalVectorControl-GlobalVectorCommandAckReportType"
+    },
+    {
+      "id": "topic-svc-GlobalVectorControl-GlobalVectorExecutionStatusReportType",
+      "name": "GlobalVectorExecutionStatusReportType",
+      "messageTypeId": "type-svc-GlobalVectorControl-GlobalVectorExecutionStatusReportType"
+    },
+    {
+      "id": "topic-svc-GlobalHoverControl-GlobalHoverCommandType",
+      "name": "GlobalHoverCommandType",
+      "messageTypeId": "type-svc-GlobalHoverControl-GlobalHoverCommandType"
+    },
+    {
+      "id": "topic-svc-GlobalHoverControl-GlobalHoverCommandStatusType",
+      "name": "GlobalHoverCommandStatusType",
+      "messageTypeId": "type-svc-GlobalHoverControl-GlobalHoverCommandStatusType"
+    },
+    {
+      "id": "topic-svc-GlobalHoverControl-GlobalHoverCommandAckReportType",
+      "name": "GlobalHoverCommandAckReportType",
+      "messageTypeId": "type-svc-GlobalHoverControl-GlobalHoverCommandAckReportType"
+    },
+    {
+      "id": "topic-svc-GlobalHoverControl-GlobalHoverExecutionStatusReportType",
+      "name": "GlobalHoverExecutionStatusReportType",
+      "messageTypeId": "type-svc-GlobalHoverControl-GlobalHoverExecutionStatusReportType"
+    },
+    {
+      "id": "topic-svc-PrimitiveDriverControl-PrimitiveDriverCommandType",
+      "name": "PrimitiveDriverCommandType",
+      "messageTypeId": "type-svc-PrimitiveDriverControl-PrimitiveDriverCommandType"
+    },
+    {
+      "id": "topic-svc-PrimitiveDriverControl-PrimitiveDriverCommandStatusType",
+      "name": "PrimitiveDriverCommandStatusType",
+      "messageTypeId": "type-svc-PrimitiveDriverControl-PrimitiveDriverCommandStatusType"
+    },
+    {
+      "id": "topic-svc-PrimitiveDriverControl-PrimitiveDriverCommandAckReportType",
+      "name": "PrimitiveDriverCommandAckReportType",
+      "messageTypeId": "type-svc-PrimitiveDriverControl-PrimitiveDriverCommandAckReportType"
+    },
+    {
+      "id": "topic-svc-PrimitiveDriverControl-PrimitiveDriverExecutionStatusReportType",
+      "name": "PrimitiveDriverExecutionStatusReportType",
+      "messageTypeId": "type-svc-PrimitiveDriverControl-PrimitiveDriverExecutionStatusReportType"
+    }
+  ],
+  "messages": [
+    {
+      "id": "type-svc-GlobalPoseStatus-GlobalPoseReportType",
+      "name": "GlobalPoseReportType",
+      "namespace": "UMAA::SA::GlobalPoseStatus",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "SA ICD 6.0 official IDL: UMAA::SA::GlobalPoseStatus::GlobalPoseReportType"
+    },
+    {
+      "id": "type-svc-SpeedStatus-SpeedReportType",
+      "name": "SpeedReportType",
+      "namespace": "UMAA::SA::SpeedStatus",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "SA ICD 6.0 official IDL: UMAA::SA::SpeedStatus::SpeedReportType"
+    },
+    {
+      "id": "type-svc-VelocityStatus-VelocityReportType",
+      "name": "VelocityReportType",
+      "namespace": "UMAA::SA::VelocityStatus",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "SA ICD 6.0 official IDL: UMAA::SA::VelocityStatus::VelocityReportType"
+    },
+    {
+      "id": "type-svc-WindStatus-WindReportType",
+      "name": "WindReportType",
+      "namespace": "UMAA::SA::WindStatus",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "SA ICD 6.0 official IDL: UMAA::SA::WindStatus::WindReportType"
+    },
+    {
+      "id": "type-svc-WaterCurrentStatus-WaterCurrentReportType",
+      "name": "WaterCurrentReportType",
+      "namespace": "UMAA::SA::WaterCurrentStatus",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "SA ICD 6.0 official IDL: UMAA::SA::WaterCurrentStatus::WaterCurrentReportType"
+    },
+    {
+      "id": "type-svc-HealthReport-HealthReportType",
+      "name": "HealthReportType",
+      "namespace": "UMAA::SO::HealthReport",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "SO ICD 6.0 official IDL: UMAA::SO::HealthReport::HealthReportType"
+    },
+    {
+      "id": "type-svc-LogReport-LogReportType",
+      "name": "LogReportType",
+      "namespace": "UMAA::SO::LogReport",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "SO ICD 6.0 official IDL: UMAA::SO::LogReport::LogReportType"
+    },
+    {
+      "id": "type-svc-UVPlatformSpecs-UVPlatformCapabilitiesReportType",
+      "name": "UVPlatformCapabilitiesReportType",
+      "namespace": "UMAA::EO::UVPlatformSpecs",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "EO ICD 6.0 official IDL: UMAA::EO::UVPlatformSpecs::UVPlatformCapabilitiesReportType"
+    },
+    {
+      "id": "type-svc-UVPlatformSpecs-UVPlatformSpecsReportType",
+      "name": "UVPlatformSpecsReportType",
+      "namespace": "UMAA::EO::UVPlatformSpecs",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "EO ICD 6.0 official IDL: UMAA::EO::UVPlatformSpecs::UVPlatformSpecsReportType"
+    },
+    {
+      "id": "type-svc-ConditionalReport-ConditionalReportType",
+      "name": "ConditionalReportType",
+      "namespace": "UMAA::MM::ConditionalReport",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::ConditionalReport::ConditionalReportType"
+    },
+    {
+      "id": "type-svc-ConditionalReport-ConditionalReportTypeConditionalsSetElement",
+      "name": "ConditionalReportTypeConditionalsSetElement",
+      "namespace": "UMAA::MM::ConditionalReport",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::ConditionalReport::ConditionalReportTypeConditionalsSetElement"
+    },
+    {
+      "id": "type-svc-ActiveConstraintsControl-ActiveConstraintsCommandType",
+      "name": "ActiveConstraintsCommandType",
+      "namespace": "UMAA::MM::ActiveConstraintsControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::ActiveConstraintsControl::ActiveConstraintsCommandType"
+    },
+    {
+      "id": "type-svc-ActiveConstraintsControl-ActiveConstraintsCommandStatusType",
+      "name": "ActiveConstraintsCommandStatusType",
+      "namespace": "UMAA::MM::ActiveConstraintsControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::ActiveConstraintsControl::ActiveConstraintsCommandStatusType"
+    },
+    {
+      "id": "type-svc-ActiveConstraintsControl-ActiveConstraintsCommandAckReportType",
+      "name": "ActiveConstraintsCommandAckReportType",
+      "namespace": "UMAA::MM::ActiveConstraintsControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::ActiveConstraintsControl::ActiveConstraintsCommandAckReportType"
+    },
+    {
+      "id": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandType",
+      "name": "MissionPlanConstraintAddCommandType",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::MissionPlanConstraintControl::MissionPlanConstraintAddCommandType"
+    },
+    {
+      "id": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandStatusType",
+      "name": "MissionPlanConstraintAddCommandStatusType",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::MissionPlanConstraintControl::MissionPlanConstraintAddCommandStatusType"
+    },
+    {
+      "id": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandAckReportType",
+      "name": "MissionPlanConstraintAddCommandAckReportType",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::MissionPlanConstraintControl::MissionPlanConstraintAddCommandAckReportType"
+    },
+    {
+      "id": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandType",
+      "name": "MissionPlanConstraintDeleteCommandType",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::MissionPlanConstraintControl::MissionPlanConstraintDeleteCommandType"
+    },
+    {
+      "id": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandStatusType",
+      "name": "MissionPlanConstraintDeleteCommandStatusType",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::MissionPlanConstraintControl::MissionPlanConstraintDeleteCommandStatusType"
+    },
+    {
+      "id": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandAckReportType",
+      "name": "MissionPlanConstraintDeleteCommandAckReportType",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::MissionPlanConstraintControl::MissionPlanConstraintDeleteCommandAckReportType"
+    },
+    {
+      "id": "type-svc-GlobalVectorControl-GlobalVectorCommandType",
+      "name": "GlobalVectorCommandType",
+      "namespace": "UMAA::MO::GlobalVectorControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalVectorControl::GlobalVectorCommandType"
+    },
+    {
+      "id": "type-svc-GlobalVectorControl-GlobalVectorCommandStatusType",
+      "name": "GlobalVectorCommandStatusType",
+      "namespace": "UMAA::MO::GlobalVectorControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalVectorControl::GlobalVectorCommandStatusType"
+    },
+    {
+      "id": "type-svc-GlobalVectorControl-GlobalVectorCommandAckReportType",
+      "name": "GlobalVectorCommandAckReportType",
+      "namespace": "UMAA::MO::GlobalVectorControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalVectorControl::GlobalVectorCommandAckReportType"
+    },
+    {
+      "id": "type-svc-GlobalVectorControl-GlobalVectorExecutionStatusReportType",
+      "name": "GlobalVectorExecutionStatusReportType",
+      "namespace": "UMAA::MO::GlobalVectorControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalVectorControl::GlobalVectorExecutionStatusReportType"
+    },
+    {
+      "id": "type-svc-GlobalHoverControl-GlobalHoverCommandType",
+      "name": "GlobalHoverCommandType",
+      "namespace": "UMAA::MO::GlobalHoverControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalHoverControl::GlobalHoverCommandType"
+    },
+    {
+      "id": "type-svc-GlobalHoverControl-GlobalHoverCommandStatusType",
+      "name": "GlobalHoverCommandStatusType",
+      "namespace": "UMAA::MO::GlobalHoverControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalHoverControl::GlobalHoverCommandStatusType"
+    },
+    {
+      "id": "type-svc-GlobalHoverControl-GlobalHoverCommandAckReportType",
+      "name": "GlobalHoverCommandAckReportType",
+      "namespace": "UMAA::MO::GlobalHoverControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalHoverControl::GlobalHoverCommandAckReportType"
+    },
+    {
+      "id": "type-svc-GlobalHoverControl-GlobalHoverExecutionStatusReportType",
+      "name": "GlobalHoverExecutionStatusReportType",
+      "namespace": "UMAA::MO::GlobalHoverControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalHoverControl::GlobalHoverExecutionStatusReportType"
+    },
+    {
+      "id": "type-svc-PrimitiveDriverControl-PrimitiveDriverCommandType",
+      "name": "PrimitiveDriverCommandType",
+      "namespace": "UMAA::MO::PrimitiveDriverControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::PrimitiveDriverControl::PrimitiveDriverCommandType"
+    },
+    {
+      "id": "type-svc-PrimitiveDriverControl-PrimitiveDriverCommandStatusType",
+      "name": "PrimitiveDriverCommandStatusType",
+      "namespace": "UMAA::MO::PrimitiveDriverControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::PrimitiveDriverControl::PrimitiveDriverCommandStatusType"
+    },
+    {
+      "id": "type-svc-PrimitiveDriverControl-PrimitiveDriverCommandAckReportType",
+      "name": "PrimitiveDriverCommandAckReportType",
+      "namespace": "UMAA::MO::PrimitiveDriverControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::PrimitiveDriverControl::PrimitiveDriverCommandAckReportType"
+    },
+    {
+      "id": "type-svc-PrimitiveDriverControl-PrimitiveDriverExecutionStatusReportType",
+      "name": "PrimitiveDriverExecutionStatusReportType",
+      "namespace": "UMAA::MO::PrimitiveDriverControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::PrimitiveDriverControl::PrimitiveDriverExecutionStatusReportType"
+    }
+  ],
+  "topicRelations": [
+    {
+      "id": "rel-conditional-large-set",
+      "kind": "large-set-element",
+      "parentTopicId": "topic-svc-ConditionalReport-ConditionalReportType",
+      "relatedTopicId": "topic-svc-ConditionalReport-ConditionalReportTypeConditionalsSetElement",
+      "description": "ConditionalReportType.conditionals Large Set의 요소 Topic. Metadata/Element의 동기화 규칙은 ICD 3.8 참조."
+    }
+  ],
+  "bindings": [
+    {
+      "id": "bind-nav-GlobalPoseStatus-provider",
+      "componentId": "nav",
+      "serviceId": "svc-GlobalPoseStatus",
+      "role": "provider"
+    },
+    {
+      "id": "bind-autopilot-GlobalPoseStatus-consumer",
+      "componentId": "autopilot",
+      "serviceId": "svc-GlobalPoseStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-mission-GlobalPoseStatus-consumer",
+      "componentId": "mission",
+      "serviceId": "svc-GlobalPoseStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-colregs-GlobalPoseStatus-consumer",
+      "componentId": "colregs",
+      "serviceId": "svc-GlobalPoseStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-nav-SpeedStatus-provider",
+      "componentId": "nav",
+      "serviceId": "svc-SpeedStatus",
+      "role": "provider"
+    },
+    {
+      "id": "bind-autopilot-SpeedStatus-consumer",
+      "componentId": "autopilot",
+      "serviceId": "svc-SpeedStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-mission-SpeedStatus-consumer",
+      "componentId": "mission",
+      "serviceId": "svc-SpeedStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-colregs-SpeedStatus-consumer",
+      "componentId": "colregs",
+      "serviceId": "svc-SpeedStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-nav-VelocityStatus-provider",
+      "componentId": "nav",
+      "serviceId": "svc-VelocityStatus",
+      "role": "provider"
+    },
+    {
+      "id": "bind-autopilot-VelocityStatus-consumer",
+      "componentId": "autopilot",
+      "serviceId": "svc-VelocityStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-mission-VelocityStatus-consumer",
+      "componentId": "mission",
+      "serviceId": "svc-VelocityStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-colregs-VelocityStatus-consumer",
+      "componentId": "colregs",
+      "serviceId": "svc-VelocityStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-weather-WindStatus-provider",
+      "componentId": "weather",
+      "serviceId": "svc-WindStatus",
+      "role": "provider"
+    },
+    {
+      "id": "bind-autopilot-WindStatus-consumer",
+      "componentId": "autopilot",
+      "serviceId": "svc-WindStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-mission-WindStatus-consumer",
+      "componentId": "mission",
+      "serviceId": "svc-WindStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-water-WaterCurrentStatus-provider",
+      "componentId": "water",
+      "serviceId": "svc-WaterCurrentStatus",
+      "role": "provider"
+    },
+    {
+      "id": "bind-autopilot-WaterCurrentStatus-consumer",
+      "componentId": "autopilot",
+      "serviceId": "svc-WaterCurrentStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-mission-WaterCurrentStatus-consumer",
+      "componentId": "mission",
+      "serviceId": "svc-WaterCurrentStatus",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-autopilot-GlobalVectorControl-provider",
+      "componentId": "autopilot",
+      "serviceId": "svc-GlobalVectorControl",
+      "role": "provider"
+    },
+    {
+      "id": "bind-mission-GlobalVectorControl-consumer",
+      "componentId": "mission",
+      "serviceId": "svc-GlobalVectorControl",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-autopilot-GlobalHoverControl-provider",
+      "componentId": "autopilot",
+      "serviceId": "svc-GlobalHoverControl",
+      "role": "provider"
+    },
+    {
+      "id": "bind-mission-GlobalHoverControl-consumer",
+      "componentId": "mission",
+      "serviceId": "svc-GlobalHoverControl",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-colregs-GlobalHoverControl-consumer",
+      "componentId": "colregs",
+      "serviceId": "svc-GlobalHoverControl",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-autopilot-UVPlatformSpecs-provider",
+      "componentId": "autopilot",
+      "serviceId": "svc-UVPlatformSpecs",
+      "role": "provider"
+    },
+    {
+      "id": "bind-mission-UVPlatformSpecs-consumer",
+      "componentId": "mission",
+      "serviceId": "svc-UVPlatformSpecs",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-colregs-UVPlatformSpecs-consumer",
+      "componentId": "colregs",
+      "serviceId": "svc-UVPlatformSpecs",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-mission-ConditionalReport-provider",
+      "componentId": "mission",
+      "serviceId": "svc-ConditionalReport",
+      "role": "provider"
+    },
+    {
+      "id": "bind-autopilot-ConditionalReport-consumer",
+      "componentId": "autopilot",
+      "serviceId": "svc-ConditionalReport",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-colregs-ConditionalReport-consumer",
+      "componentId": "colregs",
+      "serviceId": "svc-ConditionalReport",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-logging-LogReport-consumer",
+      "componentId": "logging",
+      "serviceId": "svc-LogReport",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-nav-LogReport-provider",
+      "componentId": "nav",
+      "serviceId": "svc-LogReport",
+      "role": "provider"
+    },
+    {
+      "id": "bind-autopilot-LogReport-provider",
+      "componentId": "autopilot",
+      "serviceId": "svc-LogReport",
+      "role": "provider"
+    },
+    {
+      "id": "bind-mission-LogReport-provider",
+      "componentId": "mission",
+      "serviceId": "svc-LogReport",
+      "role": "provider"
+    },
+    {
+      "id": "bind-weather-LogReport-provider",
+      "componentId": "weather",
+      "serviceId": "svc-LogReport",
+      "role": "provider"
+    },
+    {
+      "id": "bind-water-LogReport-provider",
+      "componentId": "water",
+      "serviceId": "svc-LogReport",
+      "role": "provider"
+    },
+    {
+      "id": "bind-colregs-LogReport-provider",
+      "componentId": "colregs",
+      "serviceId": "svc-LogReport",
+      "role": "provider"
+    },
+    {
+      "id": "bind-autopilot-ActiveConstraintsControl-provider",
+      "componentId": "autopilot",
+      "serviceId": "svc-ActiveConstraintsControl",
+      "role": "provider"
+    },
+    {
+      "id": "bind-mission-ActiveConstraintsControl-consumer",
+      "componentId": "mission",
+      "serviceId": "svc-ActiveConstraintsControl",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-autopilot-PrimitiveDriverControl-provider",
+      "componentId": "autopilot",
+      "serviceId": "svc-PrimitiveDriverControl",
+      "role": "provider"
+    },
+    {
+      "id": "bind-mission-MissionPlanConstraintControl-provider",
+      "componentId": "mission",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "role": "provider"
+    },
+    {
+      "id": "bind-autopilot-MissionPlanConstraintControl-consumer",
+      "componentId": "autopilot",
+      "serviceId": "svc-MissionPlanConstraintControl",
+      "role": "consumer"
+    },
+    {
+      "id": "bind-nav-HealthReport-provider",
+      "componentId": "nav",
+      "serviceId": "svc-HealthReport",
+      "role": "provider"
+    },
+    {
+      "id": "bind-autopilot-HealthReport-provider",
+      "componentId": "autopilot",
+      "serviceId": "svc-HealthReport",
+      "role": "provider"
+    },
+    {
+      "id": "bind-mission-HealthReport-provider",
+      "componentId": "mission",
+      "serviceId": "svc-HealthReport",
+      "role": "provider"
+    }
+  ],
+  "connections": [
+    {
+      "id": "conn-GlobalPoseStatus-nav-autopilot",
+      "providerBindingId": "bind-nav-GlobalPoseStatus-provider",
+      "consumerBindingId": "bind-autopilot-GlobalPoseStatus-consumer"
+    },
+    {
+      "id": "conn-GlobalPoseStatus-nav-mission",
+      "providerBindingId": "bind-nav-GlobalPoseStatus-provider",
+      "consumerBindingId": "bind-mission-GlobalPoseStatus-consumer"
+    },
+    {
+      "id": "conn-GlobalPoseStatus-nav-colregs",
+      "providerBindingId": "bind-nav-GlobalPoseStatus-provider",
+      "consumerBindingId": "bind-colregs-GlobalPoseStatus-consumer"
+    },
+    {
+      "id": "conn-SpeedStatus-nav-autopilot",
+      "providerBindingId": "bind-nav-SpeedStatus-provider",
+      "consumerBindingId": "bind-autopilot-SpeedStatus-consumer"
+    },
+    {
+      "id": "conn-SpeedStatus-nav-mission",
+      "providerBindingId": "bind-nav-SpeedStatus-provider",
+      "consumerBindingId": "bind-mission-SpeedStatus-consumer"
+    },
+    {
+      "id": "conn-SpeedStatus-nav-colregs",
+      "providerBindingId": "bind-nav-SpeedStatus-provider",
+      "consumerBindingId": "bind-colregs-SpeedStatus-consumer"
+    },
+    {
+      "id": "conn-VelocityStatus-nav-autopilot",
+      "providerBindingId": "bind-nav-VelocityStatus-provider",
+      "consumerBindingId": "bind-autopilot-VelocityStatus-consumer"
+    },
+    {
+      "id": "conn-VelocityStatus-nav-mission",
+      "providerBindingId": "bind-nav-VelocityStatus-provider",
+      "consumerBindingId": "bind-mission-VelocityStatus-consumer"
+    },
+    {
+      "id": "conn-VelocityStatus-nav-colregs",
+      "providerBindingId": "bind-nav-VelocityStatus-provider",
+      "consumerBindingId": "bind-colregs-VelocityStatus-consumer"
+    },
+    {
+      "id": "conn-WindStatus-weather-autopilot",
+      "providerBindingId": "bind-weather-WindStatus-provider",
+      "consumerBindingId": "bind-autopilot-WindStatus-consumer"
+    },
+    {
+      "id": "conn-WindStatus-weather-mission",
+      "providerBindingId": "bind-weather-WindStatus-provider",
+      "consumerBindingId": "bind-mission-WindStatus-consumer"
+    },
+    {
+      "id": "conn-WaterCurrentStatus-water-autopilot",
+      "providerBindingId": "bind-water-WaterCurrentStatus-provider",
+      "consumerBindingId": "bind-autopilot-WaterCurrentStatus-consumer"
+    },
+    {
+      "id": "conn-WaterCurrentStatus-water-mission",
+      "providerBindingId": "bind-water-WaterCurrentStatus-provider",
+      "consumerBindingId": "bind-mission-WaterCurrentStatus-consumer"
+    },
+    {
+      "id": "conn-GlobalVectorControl-autopilot-mission",
+      "providerBindingId": "bind-autopilot-GlobalVectorControl-provider",
+      "consumerBindingId": "bind-mission-GlobalVectorControl-consumer"
+    },
+    {
+      "id": "conn-GlobalHoverControl-autopilot-mission",
+      "providerBindingId": "bind-autopilot-GlobalHoverControl-provider",
+      "consumerBindingId": "bind-mission-GlobalHoverControl-consumer"
+    },
+    {
+      "id": "conn-GlobalHoverControl-autopilot-colregs",
+      "providerBindingId": "bind-autopilot-GlobalHoverControl-provider",
+      "consumerBindingId": "bind-colregs-GlobalHoverControl-consumer"
+    },
+    {
+      "id": "conn-UVPlatformSpecs-autopilot-mission",
+      "providerBindingId": "bind-autopilot-UVPlatformSpecs-provider",
+      "consumerBindingId": "bind-mission-UVPlatformSpecs-consumer"
+    },
+    {
+      "id": "conn-UVPlatformSpecs-autopilot-colregs",
+      "providerBindingId": "bind-autopilot-UVPlatformSpecs-provider",
+      "consumerBindingId": "bind-colregs-UVPlatformSpecs-consumer"
+    },
+    {
+      "id": "conn-ConditionalReport-mission-autopilot",
+      "providerBindingId": "bind-mission-ConditionalReport-provider",
+      "consumerBindingId": "bind-autopilot-ConditionalReport-consumer"
+    },
+    {
+      "id": "conn-ConditionalReport-mission-colregs",
+      "providerBindingId": "bind-mission-ConditionalReport-provider",
+      "consumerBindingId": "bind-colregs-ConditionalReport-consumer"
+    },
+    {
+      "id": "conn-LogReport-nav-logging",
+      "providerBindingId": "bind-nav-LogReport-provider",
+      "consumerBindingId": "bind-logging-LogReport-consumer"
+    },
+    {
+      "id": "conn-LogReport-autopilot-logging",
+      "providerBindingId": "bind-autopilot-LogReport-provider",
+      "consumerBindingId": "bind-logging-LogReport-consumer"
+    },
+    {
+      "id": "conn-LogReport-mission-logging",
+      "providerBindingId": "bind-mission-LogReport-provider",
+      "consumerBindingId": "bind-logging-LogReport-consumer"
+    },
+    {
+      "id": "conn-LogReport-weather-logging",
+      "providerBindingId": "bind-weather-LogReport-provider",
+      "consumerBindingId": "bind-logging-LogReport-consumer"
+    },
+    {
+      "id": "conn-LogReport-water-logging",
+      "providerBindingId": "bind-water-LogReport-provider",
+      "consumerBindingId": "bind-logging-LogReport-consumer"
+    },
+    {
+      "id": "conn-LogReport-colregs-logging",
+      "providerBindingId": "bind-colregs-LogReport-provider",
+      "consumerBindingId": "bind-logging-LogReport-consumer"
+    },
+    {
+      "id": "conn-ActiveConstraintsControl-autopilot-mission",
+      "providerBindingId": "bind-autopilot-ActiveConstraintsControl-provider",
+      "consumerBindingId": "bind-mission-ActiveConstraintsControl-consumer"
+    },
+    {
+      "id": "conn-MissionPlanConstraintControl-mission-autopilot",
+      "providerBindingId": "bind-mission-MissionPlanConstraintControl-provider",
+      "consumerBindingId": "bind-autopilot-MissionPlanConstraintControl-consumer"
+    }
+  ],
+  "positions": {}
+}

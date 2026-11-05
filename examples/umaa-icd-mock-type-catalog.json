@@ -1,0 +1,1360 @@
+{
+  "version": "0.8.1",
+  "standardVersion": "UMAA 6.0",
+  "kind": "ICD-derived mock",
+  "warning": "ICD attribute table projection only. This is not an official IDL distribution and must not be compiled as canonical DDS types.",
+  "messages": [
+    {
+      "id": "type-svc-GlobalPoseStatus-GlobalPoseReportType",
+      "name": "GlobalPoseReportType",
+      "namespace": "UMAA::SA::GlobalPoseStatus",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "altitude",
+          "type": "MSLAltitude",
+          "optional": true
+        },
+        {
+          "name": "altitudeAGL",
+          "type": "DistanceAGL",
+          "optional": true
+        },
+        {
+          "name": "altitudeASF",
+          "type": "DistanceASF",
+          "optional": true
+        },
+        {
+          "name": "altitudeGeodetic",
+          "type": "GeodeticAltitude",
+          "optional": true
+        },
+        {
+          "name": "attitude",
+          "type": "Orientation3DNEDType"
+        },
+        {
+          "name": "attitudeCovariance",
+          "type": "CovarianceOrientationNEDType",
+          "optional": true
+        },
+        {
+          "name": "course",
+          "type": "CourseTrueNorth"
+        },
+        {
+          "name": "depth",
+          "type": "DistanceBSL",
+          "optional": true
+        },
+        {
+          "name": "navigationSolution",
+          "type": "NavigationSolutionEnumType"
+        },
+        {
+          "name": "position",
+          "type": "GeoPosition2D"
+        },
+        {
+          "name": "positionCovariance",
+          "type": "CovariancePositionNEDType",
+          "optional": true
+        }
+      ],
+      "externalIdlPath": "SA ICD 6.0 official IDL: UMAA::SA::GlobalPoseStatus::GlobalPoseReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.1.6.1, Table 19",
+      "baseType": "UMAA::UMAAStatus"
+    },
+    {
+      "id": "type-svc-SpeedStatus-SpeedReportType",
+      "name": "SpeedReportType",
+      "namespace": "UMAA::SA::SpeedStatus",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "mode",
+          "type": "VehicleSpeedModeEnumType",
+          "optional": true
+        },
+        {
+          "name": "speedOverGround",
+          "type": "GroundSpeed",
+          "optional": true
+        },
+        {
+          "name": "speedThroughAir",
+          "type": "IndicatedAirspeed",
+          "optional": true
+        },
+        {
+          "name": "speedThroughWater",
+          "type": "SpeedLocalWaterMass",
+          "optional": true
+        }
+      ],
+      "externalIdlPath": "SA ICD 6.0 official IDL: UMAA::SA::SpeedStatus::SpeedReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.1.10.1, Table 27",
+      "baseType": "UMAA::UMAAStatus"
+    },
+    {
+      "id": "type-svc-VelocityStatus-VelocityReportType",
+      "name": "VelocityReportType",
+      "namespace": "UMAA::SA::VelocityStatus",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "attitudeRate",
+          "type": "OrientationVel3D"
+        },
+        {
+          "name": "attitudeRateCovariance",
+          "type": "CovarianceOrientationVelocityNEDType",
+          "optional": true
+        },
+        {
+          "name": "velocity",
+          "type": "Velocity3DPlatformNEDType"
+        },
+        {
+          "name": "velocityCovariance",
+          "type": "CovarianceVelocityNEDType",
+          "optional": true
+        }
+      ],
+      "externalIdlPath": "SA ICD 6.0 official IDL: UMAA::SA::VelocityStatus::VelocityReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.1.12.1, Table 31",
+      "baseType": "UMAA::UMAAStatus"
+    },
+    {
+      "id": "type-svc-WindStatus-WindReportType",
+      "name": "WindReportType",
+      "namespace": "UMAA::SA::WindStatus",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "relativeAverageDirection",
+          "type": "RelativeAngle",
+          "optional": true
+        },
+        {
+          "name": "relativeAverageSpeed",
+          "type": "Speed",
+          "optional": true
+        },
+        {
+          "name": "relativeInstantaneousDirection",
+          "type": "RelativeAngle",
+          "optional": true
+        },
+        {
+          "name": "relativeInstantaneousSpeed",
+          "type": "Speed",
+          "optional": true
+        },
+        {
+          "name": "relativeMaximumDirection",
+          "type": "RelativeAngle",
+          "optional": true
+        },
+        {
+          "name": "relativeMaximumSpeed",
+          "type": "Speed",
+          "optional": true
+        },
+        {
+          "name": "relativeMinimumDirection",
+          "type": "RelativeAngle",
+          "optional": true
+        },
+        {
+          "name": "relativeMinimumSpeed",
+          "type": "Speed",
+          "optional": true
+        },
+        {
+          "name": "straightDeckCrossSpeed",
+          "type": "Speed",
+          "optional": true
+        },
+        {
+          "name": "straightDeckHeadSpeed",
+          "type": "Speed",
+          "optional": true
+        },
+        {
+          "name": "trueMaximumDirection",
+          "type": "AzimuthTrueNorthAngle",
+          "optional": true
+        },
+        {
+          "name": "trueMaximumSpeed",
+          "type": "GroundSpeed",
+          "optional": true
+        },
+        {
+          "name": "trueMinimumDirection",
+          "type": "AzimuthTrueNorthAngle",
+          "optional": true
+        },
+        {
+          "name": "trueMinimumSpeed",
+          "type": "GroundSpeed",
+          "optional": true
+        }
+      ],
+      "externalIdlPath": "SA ICD 6.0 official IDL: UMAA::SA::WindStatus::WindReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.1.14.1, Table 35",
+      "baseType": "UMAA::UMAAStatus",
+      "mockNote": "Wind 필드 중 ICD에 등장하는 대표 항목을 선택했으며 전체 메시지 완전성은 보장하지 않음"
+    },
+    {
+      "id": "type-svc-WaterCurrentStatus-WaterCurrentReportType",
+      "name": "WaterCurrentReportType",
+      "namespace": "UMAA::SA::WaterCurrentStatus",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "currentDirection",
+          "type": "HeadingTrueNorthAngle"
+        },
+        {
+          "name": "currentSpeed",
+          "type": "Speed"
+        }
+      ],
+      "externalIdlPath": "SA ICD 6.0 official IDL: UMAA::SA::WaterCurrentStatus::WaterCurrentReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.1.13.1, Table 33",
+      "baseType": "UMAA::UMAAStatus"
+    },
+    {
+      "id": "type-svc-HealthReport-HealthReportType",
+      "name": "HealthReportType",
+      "namespace": "UMAA::SO::HealthReport",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "logTime",
+          "type": "DateTime"
+        },
+        {
+          "name": "severity",
+          "type": "ErrorConditionEnumType"
+        },
+        {
+          "name": "status",
+          "type": "StringLongDescription",
+          "optional": true
+        },
+        {
+          "name": "code",
+          "type": "ErrorCodeEnumType",
+          "key": true
+        },
+        {
+          "name": "resourceID",
+          "type": "IdentifierType",
+          "key": true
+        }
+      ],
+      "externalIdlPath": "SO ICD 6.0 official IDL: UMAA::SO::HealthReport::HealthReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SO ICD 6.0 §5.1.1.1, Table 9",
+      "baseType": "UMAA::UMAAStatus"
+    },
+    {
+      "id": "type-svc-LogReport-LogReportType",
+      "name": "LogReportType",
+      "namespace": "UMAA::SO::LogReport",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "entry",
+          "type": "StringLongDescription"
+        },
+        {
+          "name": "level",
+          "type": "LogLevelEnumType"
+        }
+      ],
+      "externalIdlPath": "SO ICD 6.0 official IDL: UMAA::SO::LogReport::LogReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SO ICD 6.0 §5.1.2.1, Table 11",
+      "baseType": "UMAA::UMAAStatus"
+    },
+    {
+      "id": "type-svc-UVPlatformSpecs-UVPlatformCapabilitiesReportType",
+      "name": "UVPlatformCapabilitiesReportType",
+      "namespace": "UMAA::EO::UVPlatformSpecs",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "minWaterDepth",
+          "type": "DistanceBSL"
+        },
+        {
+          "name": "surfaceCapabilities",
+          "type": "SurfaceCapabilityLimitsType"
+        },
+        {
+          "name": "towingCapacity",
+          "type": "MassMetricTon",
+          "optional": true
+        },
+        {
+          "name": "underwaterCapabilities",
+          "type": "UnderwaterCapabilityLimitsType",
+          "optional": true
+        }
+      ],
+      "externalIdlPath": "EO ICD 6.0 official IDL: UMAA::EO::UVPlatformSpecs::UVPlatformCapabilitiesReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "EO ICD 6.0 §6.1.14, Table 41",
+      "baseType": "UMAA::UMAAStatus"
+    },
+    {
+      "id": "type-svc-UVPlatformSpecs-UVPlatformSpecsReportType",
+      "name": "UVPlatformSpecsReportType",
+      "namespace": "UMAA::EO::UVPlatformSpecs",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "aftDistance",
+          "type": "Distance"
+        },
+        {
+          "name": "beamAtWaterline",
+          "type": "Distance"
+        },
+        {
+          "name": "bottomDistance",
+          "type": "Distance"
+        },
+        {
+          "name": "centerOfBuoyancy",
+          "type": "Position3DBodyXYZ"
+        },
+        {
+          "name": "centerOfGravity",
+          "type": "Position3DBodyXYZ"
+        },
+        {
+          "name": "diameter",
+          "type": "Distance",
+          "optional": true
+        },
+        {
+          "name": "displacement",
+          "type": "MassMetricTon"
+        },
+        {
+          "name": "draft",
+          "type": "Distance"
+        },
+        {
+          "name": "forwardDistance",
+          "type": "Distance"
+        },
+        {
+          "name": "lengthAtWaterline",
+          "type": "Distance"
+        },
+        {
+          "name": "name",
+          "type": "StringShortDescription"
+        },
+        {
+          "name": "portDistance",
+          "type": "Distance"
+        },
+        {
+          "name": "referenceFrameOrigin",
+          "type": "ReferenceFrameOriginEnumType"
+        },
+        {
+          "name": "starboardDistance",
+          "type": "Distance"
+        },
+        {
+          "name": "topDistance",
+          "type": "Distance"
+        },
+        {
+          "name": "weightInWater",
+          "type": "MassMetricTon",
+          "optional": true
+        },
+        {
+          "name": "weightLight",
+          "type": "MassMetricTon"
+        },
+        {
+          "name": "weightLoaded",
+          "type": "MassMetricTon"
+        }
+      ],
+      "externalIdlPath": "EO ICD 6.0 official IDL: UMAA::EO::UVPlatformSpecs::UVPlatformSpecsReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "EO ICD 6.0 §6.1.14, Table 42",
+      "baseType": "UMAA::UMAAStatus"
+    },
+    {
+      "id": "type-svc-ConditionalReport-ConditionalReportType",
+      "name": "ConditionalReportType",
+      "namespace": "UMAA::MM::ConditionalReport",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "conditionals",
+          "type": "LargeSet<ConditionalType>"
+        }
+      ],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::ConditionalReport::ConditionalReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MM ICD 6.0 §6.1.3.1, Table 20",
+      "baseType": "UMAA::UMAAStatus",
+      "mockNote": "conditionals→setID Large Set: Metadata/Element 별도 Topic 및 동기화 요구. 일반 sequence가 아님."
+    },
+    {
+      "id": "type-svc-ConditionalReport-ConditionalReportTypeConditionalsSetElement",
+      "name": "ConditionalReportTypeConditionalsSetElement",
+      "namespace": "UMAA::MM::ConditionalReport",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "element",
+          "type": "ConditionalType"
+        },
+        {
+          "name": "setID",
+          "type": "NumericGUID",
+          "key": true
+        },
+        {
+          "name": "elementID",
+          "type": "NumericGUID",
+          "key": true
+        },
+        {
+          "name": "elementTimestamp",
+          "type": "DateTime"
+        }
+      ],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::ConditionalReport::ConditionalReportTypeConditionalsSetElement",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MM ICD 6.0 §3.8.6, Table 5 + §6.1.3.1",
+      "baseType": null,
+      "mockNote": "MM ICD의 일반 LargeSet Element 템플릿을 ConditionalType에 적용한 설계용 예시. 공식 생성 IDL과 미대조."
+    },
+    {
+      "id": "type-svc-ActiveConstraintsControl-ActiveConstraintsCommandType",
+      "name": "ActiveConstraintsCommandType",
+      "namespace": "UMAA::MM::ActiveConstraintsControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "constraintConditionalIDs",
+          "type": "sequence<NumericGUID>"
+        }
+      ],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::ActiveConstraintsControl::ActiveConstraintsCommandType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MM ICD 6.0 §6.1.1, Table 11",
+      "baseType": "UMAA::UMAACommand"
+    },
+    {
+      "id": "type-svc-ActiveConstraintsControl-ActiveConstraintsCommandStatusType",
+      "name": "ActiveConstraintsCommandStatusType",
+      "namespace": "UMAA::MM::ActiveConstraintsControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::ActiveConstraintsControl::ActiveConstraintsCommandStatusType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MM ICD 6.0 §6.1.1",
+      "baseType": "UMAA::UMAACommandStatus"
+    },
+    {
+      "id": "type-svc-ActiveConstraintsControl-ActiveConstraintsCommandAckReportType",
+      "name": "ActiveConstraintsCommandAckReportType",
+      "namespace": "UMAA::MM::ActiveConstraintsControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "command",
+          "type": "ActiveConstraintsCommandType"
+        }
+      ],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::ActiveConstraintsControl::ActiveConstraintsCommandAckReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MM ICD 6.0 §6.1.1",
+      "baseType": "UMAA::UMAACommandStatusBase"
+    },
+    {
+      "id": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandType",
+      "name": "MissionPlanConstraintAddCommandType",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "constraint",
+          "type": "ConstraintType"
+        }
+      ],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::MissionPlanConstraintControl::MissionPlanConstraintAddCommandType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MM ICD 6.0 §6.1.4.5, Table 26",
+      "baseType": "UMAA::UMAACommand"
+    },
+    {
+      "id": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandStatusType",
+      "name": "MissionPlanConstraintAddCommandStatusType",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::MissionPlanConstraintControl::MissionPlanConstraintAddCommandStatusType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MM ICD 6.0 §6.1.4.2, Table 23",
+      "baseType": "UMAA::UMAACommandStatus"
+    },
+    {
+      "id": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintAddCommandAckReportType",
+      "name": "MissionPlanConstraintAddCommandAckReportType",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "command",
+          "type": "MissionPlanConstraintAddCommandType"
+        }
+      ],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::MissionPlanConstraintControl::MissionPlanConstraintAddCommandAckReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MM ICD 6.0 §6.1.4.1, Table 22",
+      "baseType": "UMAA::UMAACommandStatusBase"
+    },
+    {
+      "id": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandType",
+      "name": "MissionPlanConstraintDeleteCommandType",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "constraintID",
+          "type": "NumericGUID",
+          "optional": true
+        }
+      ],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::MissionPlanConstraintControl::MissionPlanConstraintDeleteCommandType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MM ICD 6.0 §6.1.4.6, Table 27",
+      "baseType": "UMAA::UMAACommand"
+    },
+    {
+      "id": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandStatusType",
+      "name": "MissionPlanConstraintDeleteCommandStatusType",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::MissionPlanConstraintControl::MissionPlanConstraintDeleteCommandStatusType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MM ICD 6.0 §6.1.4.4, Table 25",
+      "baseType": "UMAA::UMAACommandStatus"
+    },
+    {
+      "id": "type-svc-MissionPlanConstraintControl-MissionPlanConstraintDeleteCommandAckReportType",
+      "name": "MissionPlanConstraintDeleteCommandAckReportType",
+      "namespace": "UMAA::MM::MissionPlanConstraintControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "command",
+          "type": "MissionPlanConstraintDeleteCommandType"
+        }
+      ],
+      "externalIdlPath": "MM ICD 6.0 official IDL: UMAA::MM::MissionPlanConstraintControl::MissionPlanConstraintDeleteCommandAckReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MM ICD 6.0 §6.1.4.3, Table 24",
+      "baseType": "UMAA::UMAACommandStatusBase"
+    },
+    {
+      "id": "type-svc-GlobalVectorControl-GlobalVectorCommandType",
+      "name": "GlobalVectorCommandType",
+      "namespace": "UMAA::MO::GlobalVectorControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "depthChangePitch",
+          "type": "PitchYNEDRequirement",
+          "optional": true
+        },
+        {
+          "name": "direction",
+          "type": "DirectionRequirementVariantType"
+        },
+        {
+          "name": "directionMode",
+          "type": "DirectionModeEnumType"
+        },
+        {
+          "name": "elevation",
+          "type": "ElevationRequirementVariantType",
+          "optional": true
+        },
+        {
+          "name": "endTime",
+          "type": "DateTime",
+          "optional": true
+        },
+        {
+          "name": "speed",
+          "type": "SpeedRequirementVariantType"
+        }
+      ],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalVectorControl::GlobalVectorCommandType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MO ICD 6.0 §6.1.5.4, Table 26",
+      "baseType": "UMAA::UMAACommand"
+    },
+    {
+      "id": "type-svc-GlobalVectorControl-GlobalVectorCommandStatusType",
+      "name": "GlobalVectorCommandStatusType",
+      "namespace": "UMAA::MO::GlobalVectorControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalVectorControl::GlobalVectorCommandStatusType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MO ICD 6.0 §6.1.5.2, Table 24",
+      "baseType": "UMAA::UMAACommandStatus"
+    },
+    {
+      "id": "type-svc-GlobalVectorControl-GlobalVectorCommandAckReportType",
+      "name": "GlobalVectorCommandAckReportType",
+      "namespace": "UMAA::MO::GlobalVectorControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "command",
+          "type": "GlobalVectorCommandType"
+        }
+      ],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalVectorControl::GlobalVectorCommandAckReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MO ICD 6.0 §6.1.5.1, Table 23",
+      "baseType": "UMAA::UMAACommandStatusBase"
+    },
+    {
+      "id": "type-svc-GlobalVectorControl-GlobalVectorExecutionStatusReportType",
+      "name": "GlobalVectorExecutionStatusReportType",
+      "namespace": "UMAA::MO::GlobalVectorControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "directionAchieved",
+          "type": "boolean"
+        },
+        {
+          "name": "elevationAchieved",
+          "type": "boolean"
+        },
+        {
+          "name": "speedAchieved",
+          "type": "boolean"
+        }
+      ],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalVectorControl::GlobalVectorExecutionStatusReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MO ICD 6.0 §6.1.5.3, Table 25",
+      "baseType": "UMAA::UMAACommandStatusBase"
+    },
+    {
+      "id": "type-svc-GlobalHoverControl-GlobalHoverCommandType",
+      "name": "GlobalHoverCommandType",
+      "namespace": "UMAA::MO::GlobalHoverControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "controlPriority",
+          "type": "HoverKindEnumType"
+        },
+        {
+          "name": "elevation",
+          "type": "ElevationRequirementVariantType",
+          "optional": true
+        },
+        {
+          "name": "endTime",
+          "type": "DateTime",
+          "optional": true
+        },
+        {
+          "name": "heading",
+          "type": "DirectionRequirementVariantType",
+          "optional": true
+        },
+        {
+          "name": "hoverRadius",
+          "type": "DistanceRequirementType"
+        },
+        {
+          "name": "position",
+          "type": "GeoPosition2D"
+        },
+        {
+          "name": "transitElevation",
+          "type": "ElevationVariantType",
+          "optional": true
+        },
+        {
+          "name": "transitSpeed",
+          "type": "SpeedVariantType"
+        }
+      ],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalHoverControl::GlobalHoverCommandType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MO ICD 6.0 §6.1.4.4, Table 21",
+      "baseType": "UMAA::UMAACommand"
+    },
+    {
+      "id": "type-svc-GlobalHoverControl-GlobalHoverCommandStatusType",
+      "name": "GlobalHoverCommandStatusType",
+      "namespace": "UMAA::MO::GlobalHoverControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalHoverControl::GlobalHoverCommandStatusType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MO ICD 6.0 §6.1.4.2, Table 19",
+      "baseType": "UMAA::UMAACommandStatus"
+    },
+    {
+      "id": "type-svc-GlobalHoverControl-GlobalHoverCommandAckReportType",
+      "name": "GlobalHoverCommandAckReportType",
+      "namespace": "UMAA::MO::GlobalHoverControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "command",
+          "type": "GlobalHoverCommandType"
+        }
+      ],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalHoverControl::GlobalHoverCommandAckReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MO ICD 6.0 §6.1.4.1, Table 18",
+      "baseType": "UMAA::UMAACommandStatusBase"
+    },
+    {
+      "id": "type-svc-GlobalHoverControl-GlobalHoverExecutionStatusReportType",
+      "name": "GlobalHoverExecutionStatusReportType",
+      "namespace": "UMAA::MO::GlobalHoverControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "globalHoverState",
+          "type": "GlobalHoverStateType"
+        },
+        {
+          "name": "timeHoverAchieved",
+          "type": "DateTime"
+        },
+        {
+          "name": "timeHoverCompleted",
+          "type": "DateTime",
+          "optional": true
+        }
+      ],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::GlobalHoverControl::GlobalHoverExecutionStatusReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MO ICD 6.0 §6.1.4.3, Table 20",
+      "baseType": "UMAA::UMAACommandStatusBase"
+    },
+    {
+      "id": "type-svc-PrimitiveDriverControl-PrimitiveDriverCommandType",
+      "name": "PrimitiveDriverCommandType",
+      "namespace": "UMAA::MO::PrimitiveDriverControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "propulsiveLinearEffort",
+          "type": "LinearEffort"
+        },
+        {
+          "name": "propulsiveRotationalEffort",
+          "type": "RotationalEffort"
+        },
+        {
+          "name": "resistiveLinearEffort",
+          "type": "LinearEffort"
+        },
+        {
+          "name": "resistiveRotationalEffort",
+          "type": "RotationalEffort"
+        }
+      ],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::PrimitiveDriverControl::PrimitiveDriverCommandType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MO ICD 6.0 §6.1.7.4, Table 36",
+      "baseType": "UMAA::UMAACommand"
+    },
+    {
+      "id": "type-svc-PrimitiveDriverControl-PrimitiveDriverCommandStatusType",
+      "name": "PrimitiveDriverCommandStatusType",
+      "namespace": "UMAA::MO::PrimitiveDriverControl",
+      "source": "standard",
+      "fields": [],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::PrimitiveDriverControl::PrimitiveDriverCommandStatusType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MO ICD 6.0 §6.1.7.2, Table 34",
+      "baseType": "UMAA::UMAACommandStatus"
+    },
+    {
+      "id": "type-svc-PrimitiveDriverControl-PrimitiveDriverCommandAckReportType",
+      "name": "PrimitiveDriverCommandAckReportType",
+      "namespace": "UMAA::MO::PrimitiveDriverControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "command",
+          "type": "PrimitiveDriverCommandType"
+        }
+      ],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::PrimitiveDriverControl::PrimitiveDriverCommandAckReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MO ICD 6.0 §6.1.7.1, Table 33",
+      "baseType": "UMAA::UMAACommandStatusBase"
+    },
+    {
+      "id": "type-svc-PrimitiveDriverControl-PrimitiveDriverExecutionStatusReportType",
+      "name": "PrimitiveDriverExecutionStatusReportType",
+      "namespace": "UMAA::MO::PrimitiveDriverControl",
+      "source": "standard",
+      "fields": [
+        {
+          "name": "propulsiveLinearEffort",
+          "type": "LinearEffort"
+        },
+        {
+          "name": "propulsiveRotationalEffort",
+          "type": "RotationalEffort"
+        },
+        {
+          "name": "resistiveLinearEffort",
+          "type": "LinearEffort"
+        },
+        {
+          "name": "resistiveRotationalEffort",
+          "type": "RotationalEffort"
+        }
+      ],
+      "externalIdlPath": "MO ICD 6.0 official IDL: UMAA::MO::PrimitiveDriverControl::PrimitiveDriverExecutionStatusReportType",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MO ICD 6.0 §6.1.7.3, Table 35",
+      "baseType": "UMAA::UMAACommandStatusBase"
+    }
+  ],
+  "dataTypes": [
+    {
+      "id": "umaa-common-UCSMDEInterfaceSet",
+      "name": "UCSMDEInterfaceSet",
+      "namespace": "UMAA",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.1, Table 36",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "timeStamp",
+          "type": "DateTime"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-UMAACommand",
+      "name": "UMAACommand",
+      "namespace": "UMAA",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.2, Table 37",
+      "baseType": "UMAA::UCSMDEInterfaceSet",
+      "fields": [
+        {
+          "name": "source",
+          "type": "IdentifierType",
+          "key": true
+        },
+        {
+          "name": "destination",
+          "type": "IdentifierType",
+          "key": true
+        },
+        {
+          "name": "sessionID",
+          "type": "NumericGUID",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-UMAAStatus",
+      "name": "UMAAStatus",
+      "namespace": "UMAA",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.3, Table 38",
+      "baseType": "UMAA::UCSMDEInterfaceSet",
+      "fields": [
+        {
+          "name": "source",
+          "type": "IdentifierType",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-UMAACommandStatusBase",
+      "name": "UMAACommandStatusBase",
+      "namespace": "UMAA",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.4, Table 39",
+      "baseType": "UMAA::UCSMDEInterfaceSet",
+      "fields": [
+        {
+          "name": "source",
+          "type": "IdentifierType",
+          "key": true
+        },
+        {
+          "name": "sessionID",
+          "type": "NumericGUID",
+          "key": true
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-UMAACommandStatus",
+      "name": "UMAACommandStatus",
+      "namespace": "UMAA",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.5, Table 40",
+      "baseType": "UMAA::UMAACommandStatusBase",
+      "fields": [
+        {
+          "name": "commandStatus",
+          "type": "CommandStatusEnumType"
+        },
+        {
+          "name": "commandStatusReason",
+          "type": "CommandStatusReasonEnumType"
+        },
+        {
+          "name": "logMessage",
+          "type": "StringLongDescription"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-DateTime",
+      "name": "DateTime",
+      "namespace": "UMAA::Common::Measurement",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.6, Table 41",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "seconds",
+          "type": "DateTimeSeconds"
+        },
+        {
+          "name": "nanoseconds",
+          "type": "DateTimeNanoSeconds"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-GeoPosition2D",
+      "name": "GeoPosition2D",
+      "namespace": "UMAA::Common::Measurement",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.14, Table 49",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "geodeticLatitude",
+          "type": "GeodeticLatitude"
+        },
+        {
+          "name": "geodeticLongitude",
+          "type": "GeodeticLongitude"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-IdentifierType",
+      "name": "IdentifierType",
+      "namespace": "UMAA::Common",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.15, Table 50",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "id",
+          "type": "NumericGUID"
+        },
+        {
+          "name": "parentID",
+          "type": "NumericGUID"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-Orientation3DNEDType",
+      "name": "Orientation3DNEDType",
+      "namespace": "UMAA::Common::Orientation",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.17, Table 52",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "pitch",
+          "type": "PitchYNEDType"
+        },
+        {
+          "name": "roll",
+          "type": "RollXNEDType"
+        },
+        {
+          "name": "yaw",
+          "type": "YawZNEDType"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-OrientationVel3D",
+      "name": "OrientationVel3D",
+      "namespace": "UMAA::Common::Measurement",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.18, Table 53",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "pitchRate",
+          "type": "PitchRate"
+        },
+        {
+          "name": "rollRate",
+          "type": "RollRate"
+        },
+        {
+          "name": "yawRate",
+          "type": "YawRate"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-PitchYNEDType",
+      "name": "PitchYNEDType",
+      "namespace": "UMAA::Common::Orientation",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.19, Table 54",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "pitch",
+          "type": "PitchHalfAngle"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-RollXNEDType",
+      "name": "RollXNEDType",
+      "namespace": "UMAA::Common::Orientation",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.20, Table 55",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "roll",
+          "type": "RollAngle"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-Velocity3DPlatformNEDType",
+      "name": "Velocity3DPlatformNEDType",
+      "namespace": "UMAA::Common::Measurement",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.21, Table 56",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "downSpeed",
+          "type": "DownSpeed"
+        },
+        {
+          "name": "eastSpeed",
+          "type": "EastSpeed"
+        },
+        {
+          "name": "northSpeed",
+          "type": "NorthSpeed"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-CovarianceOrientationNEDType",
+      "name": "CovarianceOrientationNEDType",
+      "namespace": "UMAA::Common::Measurement",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.8, Table 43",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "rpRp",
+          "type": "CovarOrientationNED"
+        },
+        {
+          "name": "rpRy",
+          "type": "CovarOrientationNED",
+          "optional": true
+        },
+        {
+          "name": "rrRp",
+          "type": "CovarOrientationNED",
+          "optional": true
+        },
+        {
+          "name": "rrRr",
+          "type": "CovarOrientationNED"
+        },
+        {
+          "name": "rrRy",
+          "type": "CovarOrientationNED",
+          "optional": true
+        },
+        {
+          "name": "ryRy",
+          "type": "CovarOrientationNED"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-CovariancePositionNEDType",
+      "name": "CovariancePositionNEDType",
+      "namespace": "UMAA::Common::Measurement",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.11, Table 46",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "pdPd",
+          "type": "CovarPosNED",
+          "optional": true
+        },
+        {
+          "name": "pePd",
+          "type": "CovarPosNED",
+          "optional": true
+        },
+        {
+          "name": "pePe",
+          "type": "CovarPosNED"
+        },
+        {
+          "name": "pnPd",
+          "type": "CovarPosNED",
+          "optional": true
+        },
+        {
+          "name": "pnPe",
+          "type": "CovarPosNED",
+          "optional": true
+        },
+        {
+          "name": "pnPn",
+          "type": "CovarPosNED"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-CovarianceVelocityNEDType",
+      "name": "CovarianceVelocityNEDType",
+      "namespace": "UMAA::Common::Measurement",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "SA ICD 6.0 §6.2.13, Table 48",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "vdVd",
+          "type": "CovarVelNED",
+          "optional": true
+        },
+        {
+          "name": "veVd",
+          "type": "CovarVelNED",
+          "optional": true
+        },
+        {
+          "name": "veVe",
+          "type": "CovarVelNED"
+        },
+        {
+          "name": "vnVd",
+          "type": "CovarVelNED",
+          "optional": true
+        },
+        {
+          "name": "vnVe",
+          "type": "CovarVelNED",
+          "optional": true
+        },
+        {
+          "name": "vnVn",
+          "type": "CovarVelNED"
+        }
+      ]
+    },
+    {
+      "id": "umaa-common-LargeSetMetadata",
+      "name": "LargeSetMetadata",
+      "namespace": "UMAA::Common",
+      "source": "standard",
+      "kind": "struct",
+      "mock": true,
+      "provenance": "icd-attribute-table-mock",
+      "reference": "MM ICD 6.0 §3.8.6, Table 4",
+      "baseType": null,
+      "fields": [
+        {
+          "name": "setID",
+          "type": "NumericGUID"
+        },
+        {
+          "name": "updateElementID",
+          "type": "NumericGUID"
+        },
+        {
+          "name": "updateElementTimestamp",
+          "type": "DateTime",
+          "optional": true
+        },
+        {
+          "name": "size",
+          "type": "LargeCollectionSize"
+        }
+      ],
+      "mockNote": "ICD의 일반적인 LargeSetMetadata 정의를 탐색용 Struct로 표현"
+    }
+  ]
+}

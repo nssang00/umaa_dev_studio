@@ -1,0 +1,39 @@
+{
+  "name": "umaa-web-ide-js-autopilot",
+  "private": true,
+  "version": "0.9.1",
+  "type": "module",
+  "scripts": {
+    "start": "npm run build",
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "dev": "npm run watch",
+    "check:static": "node scripts/verify-static.mjs",
+    "test:icd": "node tests/autopilot.test.mjs",
+    "test:design": "node tests/design-model.test.mjs",
+    "test:layout": "node tests/layout.test.mjs",
+    "test": "npm run check:static && npm run test:icd && npm run test:design && npm run test:layout && npm run test:workbench && npm run test:graphs && npm run test:idl-mock && npm run test:preview && npm run test:icd-assets && npm run test:type-override && npm run test:icd-ui",
+    "test:workbench": "node tests/workbench-model.test.mjs",
+    "test:graphs": "node tests/graph-editing.test.mjs",
+    "test:struct-ui": "node tests/struct-console-layout.test.mjs",
+    "test:preview": "node tests/preview-runtime-check.mjs",
+    "test:core": "npm run check:static && npm run test:icd && npm run test:design && npm run test:workbench && npm run test:graphs && npm run test:idl-mock && npm run test:struct-ui && npm run test:preview",
+    "test:idl-mock": "node tests/idl-mock-types.test.mjs",
+    "test:icd-assets": "node tests/icd-assets.test.mjs",
+    "test:type-override": "node tests/type-override.test.mjs",
+    "test:icd-ui": "node tests/icd-ui-wiring.test.mjs"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.6.1",
+    "@dagrejs/dagre": "^3.0.0",
+    "@xyflow/react": "^12.9.0",
+    "antd": "^5.25.0",
+    "jszip": "^3.10.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^5.0.6"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.2"
+  }
+}
