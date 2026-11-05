@@ -1,15 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, Badge, Button, ConfigProvider, Divider, Dropdown, Flex, Form, Input, Layout, Modal, Select, Space, Spin, Table, Tabs, Tag, Tooltip, Typography, message } from 'antd';
 import { ApiOutlined, ApartmentOutlined, AppstoreOutlined, CloudDownloadOutlined, DatabaseOutlined, DownloadOutlined, FileAddOutlined, PlusOutlined, ReloadOutlined, SaveOutlined, SafetyCertificateOutlined, ShareAltOutlined, UploadOutlined, FolderAddOutlined, ControlOutlined } from '@ant-design/icons';
-import { WorkspaceWorkbench } from './components/WorkspaceWorkbench.jsx';
-import { StudioNavigator } from './components/StudioNavigator.jsx';
-import { JourneyGuide } from './components/JourneyGuide.jsx';
 import { GenerationPanel } from './components/GenerationPanel.jsx';
-import { ContextProperties } from './components/ContextProperties.jsx';
-import { ProjectExplorer } from './components/ProjectExplorer.jsx';
 import { StudioShell } from './components/StudioShell.jsx';
 import { WorkbenchPanelRenderer } from './layouts/WorkbenchPanelRenderer.jsx';
-import { BottomPanel } from './components/BottomPanel.jsx';
 import { validateWorkspace } from './logic/validation.js';
 import { useEditorStore } from './stores/useEditorStore.js';
 import { canPersistLocally } from './repository/mockRepository.js';

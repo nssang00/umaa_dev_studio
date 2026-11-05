@@ -29,3 +29,10 @@
 - Extracted read-only `describeSelection` projection from `ContextProperties` to `src/model/selectionDetails.js` and `src/hooks/useSelectionDetails.js` Zustand adapter.
 - Preserved source schema, selection behavior, TypeProperties routing, focused Component overview and existing UI labels.
 - Added unit test of all supported selection kinds, focused bindings, missing IDs and non-mutation. Actions verification pending.
+
+## CI verification — EA React comparison refactor
+
+- Checkpoint 1: GitHub Actions run [42034345699](https://github.com/nssang00/umaa_dev_studio/actions/runs/42034345699) **SUCCESS** (`npm ci`, full `npm test`, `npm run build`).
+- Checkpoint 2: GitHub Actions run [42034622967](https://github.com/nssang00/umaa_dev_studio/actions/runs/42034622967) **SUCCESS** (full tests including `test:selection`; React build).
+- Final import cleanup changes are pending final CI run; do not report final commit verified until CI succeeds.
+- Browser interaction E2E for dragging panes and clicking Console carets remains unverified. No domain schema, DDS runtime or persistence behavior changes intended.
