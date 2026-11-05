@@ -13,7 +13,7 @@
     "test:design": "node tests/design-model.test.mjs",
     "test:layout": "node tests/layout.test.mjs",
     "test:studio-layout": "node tests/studio-layout.test.mjs",
-    "test": "npm run check:static && npm run test:icd && npm run test:design && npm run test:layout && npm run test:workbench && npm run test:graphs && npm run test:idl-mock && npm run test:preview && npm run test:icd-assets && npm run test:type-override && npm run test:icd-ui && npm run test:struct-ui && npm run test:studio-layout && npm run test:panels && npm run test:selection && npm run test:qos-diagram",
+    "test": "npm run check:static && npm run test:icd && npm run test:design && npm run test:layout && npm run test:workbench && npm run test:graphs && npm run test:idl-mock && npm run test:preview && npm run test:icd-assets && npm run test:type-override && npm run test:icd-ui && npm run test:struct-ui && npm run test:studio-layout && npm run test:panels && npm run test:selection && npm run test:qos-diagram && npm run test:struct-batch && npm run test:struct-panel",
     "test:workbench": "node tests/workbench-model.test.mjs",
     "test:graphs": "node tests/graph-editing.test.mjs",
     "test:struct-ui": "node tests/struct-console-layout.test.mjs",
@@ -25,7 +25,9 @@
     "test:icd-ui": "node tests/icd-ui-wiring.test.mjs",
     "test:panels": "node tests/composable-panels.test.mjs",
     "test:selection": "node tests/selection-details.test.mjs",
-    "test:qos-diagram": "node tests/qos-diagram.test.mjs"
+    "test:qos-diagram": "node tests/qos-diagram.test.mjs",
+    "test:struct-batch": "node tests/struct-batch.test.mjs",
+    "test:struct-panel": "node tests/struct-properties-wiring.test.mjs"
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",

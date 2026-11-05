@@ -3,6 +3,7 @@ import { Button, Checkbox, Collapse, Descriptions, Divider, Form, Input, Popconf
 import { PlusOutlined, UndoOutlined } from '@ant-design/icons';
 import { useEditorStore } from '../stores/useEditorStore.js';
 import { effectiveTypeFields } from '../model/mockIdlCatalog.js';
+import { StructPropertiesEditor } from './StructPropertiesEditor.jsx';
 const {Text}=Typography;
 const identifier=/^[A-Za-z_][A-Za-z0-9_]*$/;
 
@@ -11,6 +12,7 @@ export function TypeProperties({ snapshot, type, kind, selection }) {
   const applyField=useEditorStore(s=>s.applyTypeFieldEdit);
   const updateType=useEditorStore(s=>s.updateTypeDefinition);
   const restoreType=useEditorStore(s=>s.restoreTypeOverride);
+  const saveStruct=useEditorStore(s=>s.updateStructDefinition);
   const [form]=Form.useForm();
   const [metaForm]=Form.useForm();
   const isEnum=type.kind==='enum';
@@ -42,6 +44,22 @@ export function TypeProperties({ snapshot, type, kind, selection }) {
     let v;try{v=await metaForm.validateFields();}catch{return;}
     if(!updateType(kind,type.id,{name:v.name,baseType:v.baseType||null})){message.error('이름 중복, 잘못된 부모 구조체 또는 상속 순환을 확인하세요.');return;}
     message.success('Type Definition 저장');
+  }
+  if (!isEnum) {
+    return <StructPropertiesEditor key={type.id} snapshot={snapshot} type={type}
+      selectedFieldName={selection.fieldName} requestAdd={creating}
+      onApply={async patch=>{
+        if(!saveStruct(kind,type.id,patch)){
+          message.error('중복 필드, 상속 충돌, 식별자·IDL Type 또는 상속 순환을 확인하세요.');
+          return false;
+        }
+        select({kind,id:type.id});
+        message.success(type.source==='custom'?'Struct 전체 저장':'Struct 프로젝트 Override 저장');
+        return true;
+      }}
+      onRestore={()=>{
+        if(restoreType(kind,type.id)){select({kind,id:type.id});message.success('ICD Mock 원본으로 복원했습니다.');}
+      }}/>;
   }
   return <div className="inspector context-properties type-properties">
     <Text type="secondary" className="side-label">TYPE PROPERTIES</Text><h3>{type.name}</h3>

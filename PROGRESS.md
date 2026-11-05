@@ -48,3 +48,10 @@
 - New pure `qosDiagram` projection expresses six DDS entity QoS sections and containment/Topic usage topology. Unlike profile references, this graph is explicitly conceptual.
 - Keeps true Profile base references and Component Runtime selections in a separate read-only diagram; does not imply per-entity policy assignment or DDS runtime support.
 - Regression added: `test:qos-diagram`; CI verification pending.
+
+## 2026-11-05 — Struct-wide Properties (checkpoint 2)
+
+- `StructPropertiesEditor` is a self-contained editable draft of Struct identity, optional parent, and all declared fields; one save dispatches one validated model mutation.
+- `editStructDefinition` applies metadata + fields atomically, prevents duplicate/inherited field IDs, invalid annotations and inheritance cycles, and preserves ICD Mock baseline/Project Override.
+- Existing enum member editor is unchanged; UML field selection still highlights the row, not a distinct Properties editor.
+- Added `test:struct-batch` and `test:struct-panel`; CI verification pending.
