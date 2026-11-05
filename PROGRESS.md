@@ -42,3 +42,9 @@
 - PR [#1](https://github.com/nssang00/umaa_dev_studio/pull/1) squash-merged into `main` at [baef58f](https://github.com/nssang00/umaa_dev_studio/commit/baef58f92fb4060c0ac747035920b6b2f0d885e0).
 - Post-merge `main` GitHub Actions [42034950825](https://github.com/nssang00/umaa_dev_studio/actions/runs/42034950825): **SUCCESS** (`npm ci`, full `npm test`, `npm run build`, upload artifact).
 - Next: browser-based drag / keyboard / caret E2E. Existing graph node component (`StudioGraphNode`) is already reused by TypeGraph and ContractGraph; avoid adding a redundant node abstraction. Separate domain editors only as shared UI behavior is verified.
+
+## 2026-11-05 — QoS entity concept graph (checkpoint 1)
+
+- New pure `qosDiagram` projection expresses six DDS entity QoS sections and containment/Topic usage topology. Unlike profile references, this graph is explicitly conceptual.
+- Keeps true Profile base references and Component Runtime selections in a separate read-only diagram; does not imply per-entity policy assignment or DDS runtime support.
+- Regression added: `test:qos-diagram`; CI verification pending.
