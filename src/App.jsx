@@ -7,45 +7,14 @@ import { JourneyGuide } from './components/JourneyGuide.jsx';
 import { GenerationPanel } from './components/GenerationPanel.jsx';
 import { ContextProperties } from './components/ContextProperties.jsx';
 import { ProjectExplorer } from './components/ProjectExplorer.jsx';
+import { StudioShell } from './components/StudioShell.jsx';
+import { BottomPanel } from './components/BottomPanel.jsx';
 import { validateWorkspace } from './logic/validation.js';
 import { useEditorStore } from './stores/useEditorStore.js';
 import { canPersistLocally } from './repository/mockRepository.js';
 import './styles.css';
-const { Header, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 const { Text, Title } = Typography;
-function BottomPanel() {
-    const snapshot=useEditorStore(s=>s.snapshot);
-    const selection=useEditorStore(s=>s.selection);
-    const dirty=useEditorStore(s=>s.dirty);
-    const [collapsed,setCollapsed]=useState(true);
-    const [tab,setTab]=useState('output');
-    const [events,setEvents]=useState([]);
-    const seq=useRef(0);
-    const issues=useMemo(()=>snapshot?validateWorkspace(snapshot):[],[snapshot]);
-    const selectionKey=selection?`${selection.kind}:${selection.id}${selection.fieldName?'.'+selection.fieldName:''}`:'';
-    useEffect(()=>{
-      if(!snapshot)return;
-      seq.current+=1;
-      setEvents(previous=>[...previous,{id:seq.current,text:`[INFO] Explorer selection: ${selectionKey||'none'}`}].slice(-80));
-    },[snapshot?.project.id,selectionKey]);
-    return <div className={`bottom-panel log-only-panel${collapsed?' is-collapsed':''}`}>
-      <div className="log-panel-header"><Space size={6}>
-        <Button type="text" size="small" onClick={()=>setCollapsed(v=>!v)} aria-label={collapsed?'하단 패널 펼치기':'하단 패널 접기'}>{collapsed?'▸':'▾'}</Button>
-        <Button type="text" size="small" className={tab==='output'?'log-active-tab':''} onClick={()=>{setCollapsed(false);setTab('output');}}>OUTPUT {issues.length>0&&<Tag color="orange">{issues.length}</Tag>}</Button>
-        <Button type="text" size="small" className={tab==='console'?'log-active-tab':''} onClick={()=>{setCollapsed(false);setTab('console');}}>CONSOLE</Button>
-      </Space><Space size={10}><Text type="secondary" className="log-mode-caption">{tab==='output'?'Static validation / diagnostic messages':'Local UI events (not DDS runtime)'}</Text>
-        {tab==='console'&&<Button type="text" size="small" onClick={()=>setEvents([])}>Clear</Button>}
-      </Space></div>
-      {!collapsed&&<div className="log-stream" role="log" aria-label={tab==='output'?'Output log':'Console log'}>
-        {tab==='output'?<>
-          <div className="log-line"><span className="log-info">[INFO]</span> UMAA Studio · model validation (mock schema, not compliance certification)</div>
-          {issues.length===0?<div className="log-line"><span className="log-success">[OK]</span> No static validation issues.</div>
-            :issues.map((issue,i)=><div className="log-line" key={`${issue.code}-${i}`}><span className={issue.severity==='error'?'log-error':'log-warn'}>[{issue.severity.toUpperCase()}]</span> {issue.code}: {issue.message}</div>)}
-          <div className="log-line"><span className="log-info">[INFO]</span> {snapshot?.components.length??0} components · {snapshot?.messages.length??0} message types · {dirty?'unsaved project changes':'no pending project changes'}</div>
-        </>:events.length?events.map(item=><div className="log-line" key={item.id}>{item.text}</div>):<div className="log-line log-muted">Console cleared. Waiting for local UI events.</div>}
-      </div>}
-    </div>;
-}
 function AddCustomServiceModal({ open, onClose }) {
     const [form] = Form.useForm();
     const createService = useEditorStore(s => s.addCustomService);
@@ -155,18 +124,14 @@ export default function App() {
           </Space>
         </Flex>
       </Header>
-      {!snapshot || loading ? <Content className="loading-content"><Spin size="large" tip="Mock 프로젝트 로딩 중"><div style={{ width: 300, height: 160 }}/></Spin></Content> : <Layout className="main-layout">
-        <Sider width={274} theme="light" className="side-pane left-pane">
+      {!snapshot || loading ? <Content className="loading-content"><Spin size="large" tip="Mock 프로젝트 로딩 중"><div style={{ width: 300, height: 160 }}/></Spin></Content> : <StudioShell
+        explorer={<>
           <StudioNavigator onNewComponent={()=>setComponentModal(true)} onNewService={()=>setServiceModal(true)} onCreate={kind=>kind==='component'?setComponentModal(true):kind==='service'?setServiceModal(true):setCreateKind(kind)}/>
           <div className="side-footer"><Text type="secondary">Project 편집 가능 · 표준 ICD 읽기 전용</Text><br/><Text type="secondary" style={{fontSize:11}}>{canUseLocalStorage?'브라우저 Mock 저장소 · JSON 백업 지원':'localStorage 제한 · JSON 백업 권장'}</Text></div>
-        </Sider>
-        <Content className="workspace-pane">
-          <div className="workspace-editor-body">
-            <WorkspaceWorkbench onNewComponent={()=>setComponentModal(true)} onNewService={()=>setServiceModal(true)} onGenerate={openGenerator} onCreate={setCreateKind}/>
-          </div>
-          <div className="workspace-bottom"><BottomPanel/></div>
-        </Content>
-        <Sider width={292} theme="light" className="side-pane right-pane">
+        </>}
+        workbench={<WorkspaceWorkbench onNewComponent={()=>setComponentModal(true)} onNewService={()=>setServiceModal(true)} onGenerate={openGenerator} onCreate={setCreateKind}/>}
+        bottomPanel={<BottomPanel/>}
+        properties={<>
           {selection?.kind==='component'?<JourneyGuide onGenerate={openGenerator}/>:<ContextProperties/>}
           {(!selection||['diagram','build'].includes(selection.kind))&&<><Divider style={{margin:'10px 0'}}/>
             <div className="project-settings"><Text strong>빌드 대상 / DDS 설정</Text>
@@ -174,8 +139,8 @@ export default function App() {
               <div style={{marginTop:10}}><Text type="secondary">DDS Vendor</Text><Select style={{width:'100%',marginTop:4}} value={snapshot.project.ddsVendor} onChange={changeVendor} options={[{label:'eProsima Fast DDS',value:'fastdds'},{label:'RTI Connext DDS',value:'connext'}]}/></div>
               <div style={{marginTop:14}}><Badge status={issues.some(i=>i.severity==='error')?'error':issues.length?'warning':'success'} text={<Text type="secondary">정적 검사 {issues.filter(i=>i.severity==='error').length} errors / {issues.filter(i=>i.severity==='warning').length} warnings</Text>}/></div>
             </div></>}
-        </Sider>
-      </Layout>}
+        </>}
+      />}
     </Layout>
     <Modal title="새 Component 만들기" open={componentModal} okText="생성하고 시작" destroyOnClose onCancel={() => setComponentModal(false)} onOk={async () => {
             try {

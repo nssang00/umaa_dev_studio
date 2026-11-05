@@ -4,7 +4,7 @@ const read=(path)=>readFileSync(new URL(path, import.meta.url),'utf8');
 const workbench=read('../src/components/TypeWorkbench.jsx');
 const prop=read('../src/components/TypeProperties.jsx');
 const context=read('../src/components/ContextProperties.jsx');
-const app=read('../src/App.jsx');
+const app=read('../src/App.jsx') + '\n' + read('../src/components/BottomPanel.jsx');
 const workspace=read('../src/components/WorkspaceWorkbench.jsx');
 const preview=read('../preview/UMAA_Types_UML_Editor_v0.8.3.html');
 assert.match(workbench,/className="struct-diagram"/);
