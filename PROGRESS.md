@@ -89,3 +89,9 @@
 - Validation now reports `QOS_POLICY_VALUE` for imported invalid nested policy settings.
 - Ensured selection-driven field opening does not continually reopen a manually collapsed row while typing.
 - Added `docs/NESTED_QOS_STRUCT_ACCORDION.md`; full CI pending.
+
+## 2026-11-05 — merged nested QoS / Struct accordion UI
+
+- PR [#3](https://github.com/nssang00/umaa_dev_studio/pull/3) squash-merged into `main` as [e7294d5](https://github.com/nssang00/umaa_dev_studio/commit/e7294d51720adbb47a59fe1d48e1f74658aba1a2).
+- [Post-merge Actions 42047357561](https://github.com/nssang00/umaa_dev_studio/actions/runs/42047357561): **SUCCESS**; `npm ci`, full `npm test` including nested QoS and Struct accordion regression tests, `npm run build`, and artifact upload.
+- Not yet covered by browser automation: actual nested accordion clicks, typing in a React Flow node, and save/reload through browser UI. Full DDS QoS policy/compatibility validation is not implemented.
