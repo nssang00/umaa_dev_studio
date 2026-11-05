@@ -1,30 +1,20 @@
 import { useMemo } from 'react';
-import { Alert, Input, Select, Typography } from 'antd';
+import { Alert, Typography } from 'antd';
 import { Background, Controls, ReactFlow } from '@xyflow/react';
 import { useEditorStore } from '../stores/useEditorStore.js';
 import { QosEntitySections } from './QosEntitySections.jsx';
+import { QosProfileFields } from './QosProfileFields.jsx';
 const { Text } = Typography;
 
 function QosProfileNode({ data }) {
   const { profile, profiles, onMetaChange, onPolicyChange } = data;
   return <section className="qos-profile-editor-node nodrag nowheel nopan"
     aria-label={'QoS Profile ' + profile.name}
-    onWheel={event => event.stopPropagation()} onPointerDown={event => event.stopPropagation()}>
+    onWheel={event => event.stopPropagation()}>
     <header className="qos-profile-editor-head">
       <Text type="secondary">qos_profile</Text>
       <h3>{profile.name}</h3>
-      <div className="qos-profile-meta-grid">
-        <label>QoS Library
-          <Input className="nodrag nopan" size="small" value={profile.libraryName ?? ''}
-            onChange={event => onMetaChange({libraryName:event.target.value})}/>
-        </label>
-        <label>Base Profile (reference only)
-          <Select className="nodrag nopan" size="small" allowClear value={profile.baseProfileId ?? undefined}
-            placeholder="None" onChange={value => onMetaChange({baseProfileId:value ?? null})}
-            options={profiles.filter(item => item.id !== profile.id)
-              .map(item => ({value:item.id,label:item.name}))}/>
-        </label>
-      </div>
+      <QosProfileFields profile={profile} profiles={profiles} onMetaChange={onMetaChange}/>
     </header>
     <QosEntitySections key={profile.id} profile={profile} onChange={onPolicyChange}/>
     <div className="qos-profile-node-foot">정책값은 Profile에 저장됩니다. DDS Runtime 적용 및 호환성 검증은 별도입니다.</div>
@@ -40,7 +30,10 @@ export function QosProfileDiagram({ profileId }) {
   const profile = snapshot?.qosProfiles.find(item => item.id === profileId);
   const nodes = useMemo(() => profile ? [{
     id: 'profile:' + profile.id, type: 'qosProfile', position: {x:0,y:0},
-    draggable: false, selectable: false,
+    draggable: false, selectable: false, focusable: false,
+    // React Flow v12 sets pointer-events:none when neither selectable nor
+    // draggable. Override the wrapper style so nested Ant Design controls work.
+    style: { pointerEvents: 'all' },
     data: {
       profile, profiles: snapshot.qosProfiles,
       onMetaChange: patch => updateProfile(profileId, patch),
@@ -55,6 +48,7 @@ export function QosProfileDiagram({ profileId }) {
       <ReactFlow key={profileId} nodes={nodes} edges={[]} nodeTypes={nodeTypes}
         fitView fitViewOptions={{padding:0.08}} minZoom={0.35} maxZoom={1.5}
         nodesDraggable={false} nodesConnectable={false} elementsSelectable={false}
+        nodesFocusable={false} panOnDrag={false} zoomOnDoubleClick={false}
         zoomOnScroll={false} panOnScroll={false} proOptions={{hideAttribution:true}}>
         <Background gap={18} color="#d6e3ef"/><Controls showInteractive={false}/>
       </ReactFlow>
