@@ -395,3 +395,13 @@ body { color: #26364a; }
 .struct-property-field-grid .ant-form-item { margin-bottom:10px; min-width:0; }
 .struct-property-row .ant-checkbox-wrapper { font-size:12px; }
 @media(max-width:1150px) { .struct-property-field-grid { grid-template-columns:minmax(0,1fr); } }
+
+/* Accordion-style Struct field editor. Draft values stay in the parent Form.List. */
+.struct-field-accordion .ant-collapse-item { border:1px solid #d9e3f0; border-radius:8px !important; margin-bottom:8px; background:#fbfcff; overflow:hidden; }
+.struct-field-accordion .ant-collapse-header { align-items:center !important; padding:10px !important; }
+.struct-field-accordion .ant-collapse-content-box { padding:8px 10px 12px !important; }
+.struct-field-summary { display:flex; align-items:center; flex-wrap:wrap; gap:7px; min-width:0; }
+.struct-field-summary strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:200px; }
+.struct-field-summary code { font-size:11px; color:#61728a; }
+.struct-field-commands { display:flex; gap:8px; align-items:center; justify-content:space-between; margin-top:12px; }
+.struct-field-detail .ant-form-item-label { padding-bottom:2px; }

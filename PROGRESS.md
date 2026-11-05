@@ -75,3 +75,10 @@
 - Added pure `qosPolicies` design catalog and independent `editQosEntityField` store command; migration preserves existing profile properties and seeds entity sections from legacy values without overwriting existing nested edits.
 - QoS per-entity values are saved in profile JSON, not DDS runtime. `test:qos-editor` covers default sections, migration, typed field validation, persistence, no-op, and UI wiring.
 - CI pending; old conceptual graph remains as unused source/history, no longer primary UI.
+
+## 2026-11-05 — Struct field accordion checkpoint
+
+- Added `StructFieldAccordionList.jsx` and `StructFieldEditor.jsx` as nested presentation-only blocks inside the Struct Properties Form.List draft.
+- Every field row can expand/collapse; all declared field values remain in a single draft and save together. Selected UML field expands automatically; add and remove remain available.
+- Added editable design-only `description` and `defaultValue` field metadata; `editStructDefinition` validates input, persists metadata and preserves original ICD Mock baseline. Default value is a text annotation, not compiled IDL.
+- New `test:struct-accordion`; CI pending.
