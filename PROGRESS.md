@@ -95,3 +95,9 @@
 - PR [#3](https://github.com/nssang00/umaa_dev_studio/pull/3) squash-merged into `main` as [e7294d5](https://github.com/nssang00/umaa_dev_studio/commit/e7294d51720adbb47a59fe1d48e1f74658aba1a2).
 - [Post-merge Actions 42047357561](https://github.com/nssang00/umaa_dev_studio/actions/runs/42047357561): **SUCCESS**; `npm ci`, full `npm test` including nested QoS and Struct accordion regression tests, `npm run build`, and artifact upload.
 - Not yet covered by browser automation: actual nested accordion clicks, typing in a React Flow node, and save/reload through browser UI. Full DDS QoS policy/compatibility validation is not implemented.
+
+## 2026-11-06 — Struct / QoS editor density cleanup
+
+- Styling only: retained a single outer border per Struct field and per QoS entity; changed nested QoS policy cards into thin dividers with no individual outline.
+- Removed Ant Design Collapse root frame on these editors and reduced nested padding 15–25%. Kept input field borders, label readability, focus/keyboard behavior, and data/update logic unchanged.
+- Added `test:editor-density` CSS hierarchy regression. CI and browser visual inspection pending.
