@@ -107,3 +107,10 @@
 - [PR #4](https://github.com/nssang00/umaa_dev_studio/pull/4) squash-merged to `main` at [1927ccf](https://github.com/nssang00/umaa_dev_studio/commit/1927ccf7f5eaec1d05415fb9cfe6ee3fb2e68189).
 - [Post-merge Actions 42053476761](https://github.com/nssang00/umaa_dev_studio/actions/runs/42053476761): **SUCCESS**, including full `npm test` (new CSS hierarchy test), `npm run build`, and artifact upload.
 - Visual appearance and interaction of expanded panels in an actual browser were not E2E-tested; this was a scoped CSS-only adjustment.
+
+## 2026-11-06 — QoS node interaction and Properties editing
+
+- Identified a React Flow v12 pointer-event issue: when QoS nodes are neither draggable nor selectable, NodeWrapper applies `pointer-events:none`; this blocks embedded Ant Design Collapse and form controls. Explicitly override `pointerEvents:'all'` on the QoS node's wrapper style, retain read-only node positions, disable panning/double-click zoom and suppress node keyboard selection.
+- Reused `QosEntitySections` and new shared `QosProfileFields` in both React Flow node and `QosProperties` sidebar, routed through `ContextProperties` and pure selection projection's `qos` field. Both views use existing narrow Zustand actions to update the same persisted profile.
+- QoS sidebar is single-column for narrow Properties widths; no DDS data schema, policy saving semantics, or Struct model changes.
+- Added regression `test:qos-interaction`; CI and browser E2E pending.

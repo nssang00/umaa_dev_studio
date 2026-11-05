@@ -450,3 +450,14 @@ body { color: #26364a; }
 .qos-profile-node-foot { border-top:1px solid #e2eaf5; margin-top:12px; padding-top:8px; color:#647994; font-size:11px; }
 .type-properties .struct-property-field-grid { grid-template-columns:minmax(0,1fr); }
 @media(max-width:700px) { .qos-policy-controls {grid-template-columns:minmax(0,1fr)} }
+
+/* QoS Properties reuses the diagram's policy editor but fits a 240–540px pane. */
+.qos-properties .qos-properties-metadata { margin-top:12px; }
+.qos-properties .qos-profile-meta-grid,
+.qos-properties .qos-policy-controls { grid-template-columns:minmax(0,1fr); }
+.qos-properties .qos-entity-accordion { margin-top:10px; }
+.qos-properties .qos-entity-title { font-size:12px; }
+.qos-properties .qos-entity-accordion > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box { padding:6px 8px 8px !important; }
+.qos-properties .qos-policy-accordion > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box { padding:4px 3px 9px 9px !important; }
+.qos-properties .qos-policy-controls .ant-input-number { width:100%; }
+.qos-properties .small-hint { display:block; margin:8px 0; }

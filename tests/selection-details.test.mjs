@@ -32,6 +32,8 @@ for (const [kind, id, name] of [
   assert.equal(describeSelection(snapshot, { kind, id }).name, name, kind);
 }
 assert.equal(describeSelection(snapshot, { kind: 'message', id: 'missing' }).type, null);
+assert.strictEqual(describeSelection(snapshot, {kind:'qos',id:'q1'}).qos,snapshot.qosProfiles[0]);
+assert.equal(describeSelection(snapshot, {kind:'qos',id:'missing'}).qos,null);
 assert.equal(describeSelection(snapshot, { kind: 'diagram' }, 'missing').focusedComponent, null);
 assert.equal(JSON.stringify(snapshot), before, 'Selection projection must not mutate domain state');
 console.log('PASS: pure selection details, types, focused component and missing IDs');

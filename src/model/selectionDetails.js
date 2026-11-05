@@ -28,5 +28,5 @@ export function describeSelection(snapshot, selection, highlightedComponentId = 
     : [];
   const name = svc?.name ?? op?.name ?? topic?.name ?? type?.name ?? qos?.name
     ?? area?.name ?? NAMES[kind] ?? 'System Diagram';
-  return { kind, id, name, svc, op, topic, type, focusedComponent, focusedBindings };
+  return { kind, id, name, svc, op, topic, type, qos, focusedComponent, focusedBindings };
 }
