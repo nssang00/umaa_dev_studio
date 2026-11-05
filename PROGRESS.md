@@ -55,3 +55,9 @@
 - `editStructDefinition` applies metadata + fields atomically, prevents duplicate/inherited field IDs, invalid annotations and inheritance cycles, and preserves ICD Mock baseline/Project Override.
 - Existing enum member editor is unchanged; UML field selection still highlights the row, not a distinct Properties editor.
 - Added `test:struct-batch` and `test:struct-panel`; CI verification pending.
+
+## CI checkpoints — QoS and Struct refactor
+
+- QoS concept diagram: [Actions 42038816335](https://github.com/nssang00/umaa_dev_studio/actions/runs/42038816335) **SUCCESS**.
+- Struct-wide Properties: [Actions 42039583847](https://github.com/nssang00/umaa_dev_studio/actions/runs/42039583847) **SUCCESS** (all tests including new QoS and Struct checks, React build and artifact upload).
+- Added design/limitations record in `docs/QOS_ENTITY_AND_STRUCT_PROPERTIES.md`. Documentation-only final CI to follow.
