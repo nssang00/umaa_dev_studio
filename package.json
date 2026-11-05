@@ -12,7 +12,7 @@
     "test:icd": "node tests/autopilot.test.mjs",
     "test:design": "node tests/design-model.test.mjs",
     "test:layout": "node tests/layout.test.mjs",
-    "test": "npm run check:static && npm run test:icd && npm run test:design && npm run test:layout && npm run test:workbench && npm run test:graphs && npm run test:idl-mock && npm run test:preview && npm run test:icd-assets && npm run test:type-override && npm run test:icd-ui",
+    "test": "npm run check:static && npm run test:icd && npm run test:design && npm run test:layout && npm run test:workbench && npm run test:graphs && npm run test:idl-mock && npm run test:preview && npm run test:icd-assets && npm run test:type-override && npm run test:icd-ui && npm run test:struct-ui",
     "test:workbench": "node tests/workbench-model.test.mjs",
     "test:graphs": "node tests/graph-editing.test.mjs",
     "test:struct-ui": "node tests/struct-console-layout.test.mjs",
