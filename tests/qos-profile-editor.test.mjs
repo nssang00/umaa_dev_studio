@@ -7,6 +7,7 @@ import {
   editQosEntityField, findInvalidQosEntityValues,
 } from '../src/model/qosPolicies.js';
 import { readFileSync } from 'node:fs';
+import { validateWorkspace } from '../src/logic/validation.js';
 const read = f => readFileSync(new URL(f, import.meta.url), 'utf8');
 
 assert.deepEqual(QOS_SECTION_KEYS, [
@@ -46,6 +47,10 @@ for(const args of [
  ['nope','reliability','kind','reliable'],['topic_qos','nope','kind','reliable'],
 ]) assert.equal(editQosEntityField(change,id,...args),null, 'reject invalid '+args.join('.'));
 assert.deepEqual(snap,structuredClone(seedWorkspace),'model input immutable');
+const invalidSaved=structuredClone(change);
+invalidSaved.qosProfiles.find(q=>q.id===id).datawriter_qos.history.depth=0;
+assert.ok(validateWorkspace(invalidSaved).some(issue => issue.code === 'QOS_POLICY_VALUE' && issue.entityId === id));
+assert.equal(validateWorkspace(change).some(issue => issue.code === 'QOS_POLICY_VALUE'),false);
 const persisted=parseWorkspaceImport(JSON.parse(JSON.stringify(change)));
 assert.equal(persisted.qosProfiles.find(q=>q.id===id).datareader_qos.deadline.period_ms,250);
 const upgraded=upgradeWorkspace({ ...snap,qosProfiles:[legacy] });

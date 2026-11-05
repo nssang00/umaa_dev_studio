@@ -1,4 +1,5 @@
 import { isLargeCollection, isSpecialization } from '../model/icdConcepts.js';
+import { findInvalidQosEntityValues } from '../model/qosPolicies.js';
 export function validateWorkspace(s) {
     const issues = [];
     const error = (code, message, entityId) => issues.push({ severity: 'error', code, message, entityId });
@@ -69,6 +70,7 @@ export function validateWorkspace(s) {
             error('MISSING_CUSTOM_TYPE', `필드가 찾을 수 없는 Custom Type ${field.type}을 참조합니다.`);
     }
     for(const profile of s.qosProfiles??[]) {
+        for (const path of findInvalidQosEntityValues(profile)) error('QOS_POLICY_VALUE', `${profile.name}: 유효하지 않은 QoS 값 ${path}`, profile.id);
         if(profile.baseProfileId && !s.qosProfiles.some(q=>q.id===profile.baseProfileId))error('QOS_BASE_MISSING',`${profile.name}의 상위 QoS Profile이 없습니다.`,profile.id);
         if(profile.historyKind==='keep_last' && (!Number.isInteger(profile.historyDepth)||profile.historyDepth<1))error('QOS_HISTORY',`${profile.name}의 History depth는 양의 정수여야 합니다.`,profile.id);
         if(profile.presentationAccessScope==='topic'&&profile.orderedAccess===true&&profile.coherentAccess===true)warn('QOS_VENDOR_CHECK',`${profile.name}의 Presentation 설정은 선택 DDS 벤더와 함께 검증하세요.`,profile.id);

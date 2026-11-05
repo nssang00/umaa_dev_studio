@@ -82,3 +82,10 @@
 - Every field row can expand/collapse; all declared field values remain in a single draft and save together. Selected UML field expands automatically; add and remove remain available.
 - Added editable design-only `description` and `defaultValue` field metadata; `editStructDefinition` validates input, persists metadata and preserves original ICD Mock baseline. Default value is a text annotation, not compiled IDL.
 - New `test:struct-accordion`; CI pending.
+
+## 2026-11-05 — nested QoS and Struct accordion polish
+
+- Added fixed-height QoS ReactFlow canvas / scrollable inner Profile node, responsive typed inputs and consistent narrow Properties layout.
+- Validation now reports `QOS_POLICY_VALUE` for imported invalid nested policy settings.
+- Ensured selection-driven field opening does not continually reopen a manually collapsed row while typing.
+- Added `docs/NESTED_QOS_STRUCT_ACCORDION.md`; full CI pending.

@@ -405,3 +405,27 @@ body { color: #26364a; }
 .struct-field-summary code { font-size:11px; color:#61728a; }
 .struct-field-commands { display:flex; gap:8px; align-items:center; justify-content:space-between; margin-top:12px; }
 .struct-field-detail .ant-form-item-label { padding-bottom:2px; }
+
+/* One editable QoS Profile inside a React Flow node; inner scrolling keeps zoom stable. */
+.qos-profile-diagram { min-width:0; margin-top:10px; }
+.qos-profile-canvas { height:min(75vh,760px); min-height:560px; overflow:hidden; border:1px solid #d5e1ef; border-radius:9px; background:#f5f9fd; margin-top:10px; }
+.qos-profile-editor-node { width:720px; max-height:620px; overflow-y:auto; overscroll-behavior:contain; border:1px solid #91acc9; border-radius:11px; background:#fff; color:#26364a; box-shadow:0 6px 24px rgba(24,58,91,.12); padding:14px; font-size:13px; }
+.qos-profile-editor-head { border-bottom:1px solid #e2eaf5; padding-bottom:12px; margin-bottom:12px; }
+.qos-profile-editor-head h3 { margin:4px 0 12px; font-size:17px; }
+.qos-profile-meta-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+.qos-profile-meta-grid label { display:flex; flex-direction:column; gap:5px; color:#506781; font-size:12px; min-width:0; }
+.qos-entity-accordion > .ant-collapse-item { margin-bottom:8px; border:1px solid #cdddee; border-radius:7px !important; background:#f9fcff; overflow:hidden; }
+.qos-entity-accordion > .ant-collapse-item > .ant-collapse-header { font-weight:600; padding:11px 10px !important; }
+.qos-entity-title { display:flex; align-items:center; flex-wrap:wrap; gap:7px; min-width:0; word-break:break-word; }
+.qos-entity-title .ant-tag { font-size:10px; font-weight:normal; }
+.qos-policy-accordion .ant-collapse-item { border:1px solid #e1e8f2; border-radius:5px !important; margin-bottom:6px; background:white; }
+.qos-policy-accordion .ant-collapse-header { padding:8px 10px !important; }
+.qos-policy-accordion .ant-collapse-content-box { padding:10px !important; }
+.qos-policy-title { display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+.qos-policy-title .ant-tag { color:#677c93; font-size:10px; }
+.qos-policy-controls { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; align-items:center; }
+.qos-policy-field { display:flex; min-width:0; flex-direction:column; gap:5px; font-size:12px; color:#455f7a; }
+.qos-policy-field .ant-select, .qos-policy-field .ant-input { width:100%; }
+.qos-profile-node-foot { border-top:1px solid #e2eaf5; margin-top:12px; padding-top:8px; color:#647994; font-size:11px; }
+.type-properties .struct-property-field-grid { grid-template-columns:minmax(0,1fr); }
+@media(max-width:700px) { .qos-policy-controls {grid-template-columns:minmax(0,1fr)} }

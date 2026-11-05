@@ -14,6 +14,7 @@ export function StructFieldAccordionList({
   const [openKeys, setOpenKeys] = useState([]);
   const lastAddRequest = useRef(false);
   const expandNext = useRef(false);
+  const lastSelectedField = useRef(null);
   const watched = Form.useWatch('fields', form) ?? [];
 
   const addExpanded = () => {
@@ -31,9 +32,14 @@ export function StructFieldAccordionList({
     setOpenKeys(previous => previous.includes(newKey) ? previous : [...previous, newKey]);
   }, [fields.length, fields[fields.length - 1]?.key]);
   useEffect(() => {
-    if (!selectedFieldName) return;
+    if (!selectedFieldName) {
+      lastSelectedField.current = null;
+      return;
+    }
+    if (lastSelectedField.current === selectedFieldName) return;
     const index = watched.findIndex(field => field?.name === selectedFieldName);
     if (index < 0 || !fields[index]) return;
+    lastSelectedField.current = selectedFieldName;
     const key = String(fields[index].key);
     setOpenKeys(previous => previous.includes(key) ? previous : [...previous, key]);
   }, [selectedFieldName, fields, watched]);
