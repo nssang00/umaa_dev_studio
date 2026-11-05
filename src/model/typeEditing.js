@@ -130,15 +130,28 @@ function replaceDeclaredStructFields(workspace, kind, id, fields) {
     if (!field || typeof field !== 'object') return null;
     const name = String(field.name ?? '').trim();
     const entry = { name, type: String(field.type ?? '').trim(), key: !!field.key, optional: !!field.optional };
+    if ('description' in field && typeof field.description !== 'string') return null;
+    if ('defaultValue' in field && typeof field.defaultValue !== 'string') return null;
+    if (field.description?.length > 4000 || field.defaultValue?.length > 2048) return null;
     if (!validField(entry) || seen.has(name) || inherited.has(name)) return null;
     seen.add(name);
     const original = (type.fields ?? []).find(item => item.name === field._originalName)
       ?? (type.fields ?? []).find(item => item.name === name);
     const { name: oldName, type: oldType, key: oldKey, optional: oldOptional, ...metadata } = original ?? {};
-    normalized.push({ ...metadata, ...entry });
+    const next = { ...metadata, ...entry };
+    if ('description' in field) {
+      if (field.description) next.description = field.description;
+      else delete next.description;
+    }
+    if ('defaultValue' in field) {
+      if (field.defaultValue) next.defaultValue = field.defaultValue;
+      else delete next.defaultValue;
+    }
+    normalized.push(next);
   }
   const comparable = items => items.map(item => ({
     name: item.name, type: item.type, key: !!item.key, optional: !!item.optional,
+    description: item.description || '', defaultValue: item.defaultValue || '',
   }));
   if (JSON.stringify(comparable(normalized)) === JSON.stringify(comparable(type.fields ?? []))) return workspace;
   return change(workspace, kind, id, t => ({ ...edited(t), fields: normalized }));

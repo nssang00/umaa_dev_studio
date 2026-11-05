@@ -7,6 +7,7 @@ import { uuid } from '../model/types.js';
 import { defaultRuntime, isValidIdlName } from '../model/workspaceSchema.js';
 import { editTypeField, editTypeDefinition, restoreTypeMock, editStructDefinition } from '../model/typeEditing.js';
 import { canCreateTopic, canCreateTopicRelation, canAssignServiceCategory, isQosAncestor } from '../model/assetRules.js';
+import { editQosEntityField, withQosEntitySections } from '../model/qosPolicies.js';
 const projectId = 'demo-usv';
 const update = (set, transform) => {
     set(s => s.snapshot ? { snapshot: transform(s.snapshot), dirty: true } : {});
@@ -204,7 +205,7 @@ export const useEditorStore = create((set, get) => ({
         const s = get().snapshot;
         const trimmed = String(name ?? '').trim();
         if (!s || !trimmed || s.qosProfiles.some(q => q.name.toLowerCase() === trimmed.toLowerCase())) return false;
-        const profile = { id: uuid(), name: trimmed, source: 'project', libraryName: 'Project QoS', baseProfileId: null, reliability: 'reliable', durability: 'volatile', historyKind: 'keep_last', historyDepth: 10, presentationAccessScope:'topic', orderedAccess:false, coherentAccess:false, note: 'User-defined DDS QoS configuration' };
+        const profile = withQosEntitySections({ id: uuid(), name: trimmed, source: 'project', libraryName: 'Project QoS', baseProfileId: null, reliability: 'reliable', durability: 'volatile', historyKind: 'keep_last', historyDepth: 10, presentationAccessScope:'topic', orderedAccess:false, coherentAccess:false, note: 'User-defined DDS QoS configuration' });
         update(set, old => ({ ...old, qosProfiles: [...old.qosProfiles, profile] }));
         set({ selection: { kind: 'qos', id: profile.id } });
         return true;
@@ -215,6 +216,13 @@ export const useEditorStore = create((set, get) => ({
         if('baseProfileId' in patch && patch.baseProfileId && (!s.qosProfiles.some(q=>q.id===patch.baseProfileId)||isQosAncestor(s.qosProfiles,id,patch.baseProfileId)))return false;
         if('historyDepth' in patch && (!Number.isInteger(patch.historyDepth)||patch.historyDepth<1))return false;
         update(set,old=>({...old,qosProfiles:old.qosProfiles.map(q=>q.id===id?{...q,...patch}:q)}));return true;
+    },
+    updateQosEntityField(profileId, sectionKey, policyKey, fieldKey, value) {
+        const snapshot = get().snapshot;
+        const next = snapshot && editQosEntityField(snapshot, profileId, sectionKey, policyKey, fieldKey, value);
+        if (!next) return false;
+        if (next !== snapshot) set({ snapshot: next, dirty: true });
+        return true;
     },
     updateComponentRuntime(id, patch) {
         update(set, old => ({ ...old, componentRuntime: { ...old.componentRuntime,

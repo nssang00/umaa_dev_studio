@@ -1,4 +1,5 @@
 import { withMockIdlTypes } from './mockIdlCatalog.js';
+import { withQosEntitySections } from './qosPolicies.js';
 /** Project extensions and DDS runtime configuration are deliberately separate from
  * the immutable, curated UMAA standard catalog. This is a UI/model schema, not
  * a claim that official IDL files or DDS middleware are bundled. */
@@ -18,8 +19,8 @@ export function upgradeWorkspace(value) {
   s.functionalAreas = (s.functionalAreas ?? []).map(x => ({ ...x, source: x.source || 'standard' }));
   s.dataTypes ??= [];
   s.qosProfiles ??= [structuredClone(DEFAULT_QOS_PROFILE)];
-  s.qosProfiles = s.qosProfiles.map(q=>({libraryName:'Project QoS',baseProfileId:null,presentationAccessScope:'topic',orderedAccess:false,coherentAccess:false,...q}));
-  if (!s.qosProfiles.some(q => q.id === DEFAULT_QOS_PROFILE.id)) s.qosProfiles.unshift(structuredClone(DEFAULT_QOS_PROFILE));
+  s.qosProfiles = s.qosProfiles.map(q=>withQosEntitySections({libraryName:'Project QoS',baseProfileId:null,presentationAccessScope:'topic',orderedAccess:false,coherentAccess:false,...q}));
+  if (!s.qosProfiles.some(q => q.id === DEFAULT_QOS_PROFILE.id)) s.qosProfiles.unshift(withQosEntitySections(structuredClone(DEFAULT_QOS_PROFILE)));
   s.componentRuntime ??= {};
   s.behaviorDiagrams ??= {};
   for (const c of s.components ?? []) {

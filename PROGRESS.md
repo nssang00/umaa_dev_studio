@@ -68,3 +68,24 @@
 - Last PR-head GitHub Actions [42039952234](https://github.com/nssang00/umaa_dev_studio/actions/runs/42039952234): **SUCCESS**.
 - Post-merge `main` GitHub Actions [42040084458](https://github.com/nssang00/umaa_dev_studio/actions/runs/42040084458): **SUCCESS** for `npm ci`, complete `npm test` (including QoS concept and Struct-wide tests), `npm run build` and artifact upload.
 - Known limitations: no actual DDS per-entity QoS persistence/application or Requested/Offered validator; browser E2E interactions not yet exercised on runner.
+
+## 2026-11-05 — QoS nested editor checkpoint
+
+- Replaced separate QoS policy and concept/reference tabs with one React Flow `QosProfileDiagram` node. It contains six open/close entity sections, each with nested policy accordion and editable typed fields.
+- Added pure `qosPolicies` design catalog and independent `editQosEntityField` store command; migration preserves existing profile properties and seeds entity sections from legacy values without overwriting existing nested edits.
+- QoS per-entity values are saved in profile JSON, not DDS runtime. `test:qos-editor` covers default sections, migration, typed field validation, persistence, no-op, and UI wiring.
+- CI pending; old conceptual graph remains as unused source/history, no longer primary UI.
+
+## 2026-11-05 — Struct field accordion checkpoint
+
+- Added `StructFieldAccordionList.jsx` and `StructFieldEditor.jsx` as nested presentation-only blocks inside the Struct Properties Form.List draft.
+- Every field row can expand/collapse; all declared field values remain in a single draft and save together. Selected UML field expands automatically; add and remove remain available.
+- Added editable design-only `description` and `defaultValue` field metadata; `editStructDefinition` validates input, persists metadata and preserves original ICD Mock baseline. Default value is a text annotation, not compiled IDL.
+- New `test:struct-accordion`; CI pending.
+
+## 2026-11-05 — nested QoS and Struct accordion polish
+
+- Added fixed-height QoS ReactFlow canvas / scrollable inner Profile node, responsive typed inputs and consistent narrow Properties layout.
+- Validation now reports `QOS_POLICY_VALUE` for imported invalid nested policy settings.
+- Ensured selection-driven field opening does not continually reopen a manually collapsed row while typing.
+- Added `docs/NESTED_QOS_STRUCT_ACCORDION.md`; full CI pending.

@@ -1,21 +1,20 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Alert, Button, Checkbox, Descriptions, Form, Input, Popconfirm, Select, Space, Tag, Typography } from 'antd';
-import { PlusOutlined, UndoOutlined } from '@ant-design/icons';
+import { UndoOutlined } from '@ant-design/icons';
+import { StructFieldAccordionList } from './StructFieldAccordionList.jsx';
 import { effectiveTypeFields } from '../model/mockIdlCatalog.js';
 const { Text } = Typography;
 const identifier = /^[A-Za-z_][A-Za-z0-9_]*$/;
 
 const initialFields = type => (type.fields ?? []).map(field => ({
   ...field, _originalName: field.name, key: !!field.key, optional: !!field.optional,
+  description: field.description ?? '', defaultValue: field.defaultValue ?? '',
 }));
-const blankField = () => ({ name: '', type: 'double', key: false, optional: false });
-
 /** Entire Struct draft is local to this editor; onApply commits one validated model transaction. */
 export function StructPropertiesEditor({
   snapshot, type, requestAdd = false, selectedFieldName, onApply, onRestore,
 }) {
   const [form] = Form.useForm();
-  const lastAddRequest = useRef(false);
   const candidates = [...snapshot.messages, ...snapshot.dataTypes]
     .filter(item => item.id !== type.id && item.kind !== 'enum');
   const inheritedCount = effectiveTypeFields(snapshot, type).filter(field => field.inherited).length;
@@ -28,13 +27,6 @@ export function StructPropertiesEditor({
     });
   }, [form, type.id, type.name, type.baseType, type.fields]);
 
-  useEffect(() => {
-    if (requestAdd && !lastAddRequest.current) {
-      const fields = form.getFieldValue('fields') ?? initialFields(type);
-      form.setFieldsValue({ fields: [...fields, blankField()] });
-    }
-    lastAddRequest.current = requestAdd;
-  }, [requestAdd, form, type]);
 
   const resetDraft = () => {
     form.setFieldsValue({ name: type.name, baseType: type.baseType ?? null, fields: initialFields(type) });
@@ -63,8 +55,8 @@ export function StructPropertiesEditor({
       <Descriptions.Item label="Inherited">{inheritedCount}</Descriptions.Item>
       {type.reference && <Descriptions.Item label="ICD Reference">{type.reference}</Descriptions.Item>}
     </Descriptions>
-    <Alert style={{margin:'12px 0'}} type="info" showIcon message="Struct 단위로 편집하고 한 번에 저장합니다."
-      description="선언 필드 전체와 Struct 이름·부모 타입을 한 트랜잭션으로 적용합니다. 상속 필드는 부모 Struct에서 수정합니다."/>
+    <Alert style={{margin:'12px 0'}} type="info" showIcon message="Struct의 필드를 펼쳐 수정한 뒤 전체 저장합니다."
+      description="각 필드를 펼치면 상세 속성과 설계 메타데이터를 입력할 수 있습니다. 모든 변경은 전체 저장 시 함께 적용하며, 상속 필드는 부모 Struct에서 수정합니다."/>
     <Form form={form} layout="vertical" size="small">
       <Form.Item label="Struct Name" name="name"
         rules={[{ required:true }, {pattern:identifier, message:'IDL 이름만 입력할 수 있습니다.'}]}>
@@ -83,34 +75,9 @@ export function StructPropertiesEditor({
         {selectedFieldName && <Text type="secondary">선택: {selectedFieldName}</Text>}
       </div>
       <Form.List name="fields">
-        {(fields, {add, remove}) => <>
-          <div className="struct-property-list">
-            {fields.length === 0 && <Text type="secondary">선언된 필드가 없습니다.</Text>}
-            {fields.map((field, index) => <div className="struct-property-row" key={field.key}>
-              <div className="struct-property-row-head">
-                <Text strong>#{index + 1}</Text>
-                <Button type="text" danger size="small" onClick={() => remove(field.name)}>제거</Button>
-              </div>
-              <Form.Item name={[field.name, '_originalName']} hidden><Input/></Form.Item>
-              <div className="struct-property-field-grid">
-                <Form.Item name={[field.name, 'name']} label="Field Name"
-                  rules={[{required:true}, {pattern:identifier,message:'IDL 식별자 형식이어야 합니다.'}]}>
-                  <Input size="small" placeholder="fieldName"/>
-                </Form.Item>
-                <Form.Item name={[field.name, 'type']} label="IDL Type" rules={[{required:true}]}>
-                  <Input size="small" placeholder="double / MyType"/>
-                </Form.Item>
-              </div>
-              <Space size={16}>
-                <Form.Item name={[field.name,'key']} valuePropName="checked" noStyle><Checkbox>@key</Checkbox></Form.Item>
-                <Form.Item name={[field.name,'optional']} valuePropName="checked" noStyle><Checkbox>@optional</Checkbox></Form.Item>
-              </Space>
-            </div>)}
-          </div>
-          <Button type="dashed" block icon={<PlusOutlined/>} style={{marginTop:9}} onClick={() => add(blankField())}>
-            필드 추가
-          </Button>
-        </>}
+        {(fields, {add, remove}) => <StructFieldAccordionList
+          form={form} fields={fields} add={add} remove={remove}
+          requestAdd={requestAdd} selectedFieldName={selectedFieldName}/>}
       </Form.List>
       <Space style={{marginTop:16}}>
         <Button type="primary" size="small" onClick={saveAll}>Struct 전체 저장</Button>

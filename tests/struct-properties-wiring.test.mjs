@@ -8,6 +8,8 @@ const diagram=read('../src/components/TypeWorkbench.jsx');
 assert.match(props,/StructPropertiesEditor/);
 assert.match(props,/updateStructDefinition/);
 assert.match(editor,/Form.List name="fields"/);
+assert.match(editor,/StructFieldAccordionList/);
+assert.match(read('../src/components/StructFieldAccordionList.jsx'),/Collapse/);
 assert.match(editor,/Struct 전체 저장/);
 assert.match(editor,/onApply/);
 assert.match(editor,/onRestore/);
