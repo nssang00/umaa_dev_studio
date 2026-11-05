@@ -9,3 +9,10 @@
 - Verified locally: `npm run test:core`, `npm run test:studio-layout`, `npm run test:struct-ui`, `npm run test:icd-ui`, `npm run check:static`.
 - Required CI verification: `npm test`, `npm run build` on GitHub Actions (pending at authoring time).
 - Remaining: interactive browser drag/caret E2E testing; not claimed as passed until run.
+
+## GitHub Actions verification
+
+- UI feature commit: [`9165847`](https://github.com/nssang00/umaa_dev_studio/commit/916584741f07ee23595a6553964a9495f90c0f6e).
+- 2026-11-05 CI run [`42027679267`](https://github.com/nssang00/umaa_dev_studio/actions/runs/42027679267): **SUCCESS** on `ubuntu-latest` / Node.js 22.
+- Runner passed `npm ci`, `npm test` (including `test:struct-ui` and `test:studio-layout`), `npm run build`, and artifact upload.
+- Interactive browser drag and console caret E2E remain unverified; static/layout logic tests are not browser E2E.
