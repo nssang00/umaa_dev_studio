@@ -34,5 +34,11 @@
 
 - Checkpoint 1: GitHub Actions run [42034345699](https://github.com/nssang00/umaa_dev_studio/actions/runs/42034345699) **SUCCESS** (`npm ci`, full `npm test`, `npm run build`).
 - Checkpoint 2: GitHub Actions run [42034622967](https://github.com/nssang00/umaa_dev_studio/actions/runs/42034622967) **SUCCESS** (full tests including `test:selection`; React build).
-- Final import cleanup changes are pending final CI run; do not report final commit verified until CI succeeds.
+- Final PR checkpoint CI [42034839632](https://github.com/nssang00/umaa_dev_studio/actions/runs/42034839632): **SUCCESS** (`npm ci`, full regression suite including `test:panels` and `test:selection`, React build, artifact upload).
 - Browser interaction E2E for dragging panes and clicking Console carets remains unverified. No domain schema, DDS runtime or persistence behavior changes intended.
+
+## 2026-11-05 — merged UI modularization
+
+- PR [#1](https://github.com/nssang00/umaa_dev_studio/pull/1) squash-merged into `main` at [baef58f](https://github.com/nssang00/umaa_dev_studio/commit/baef58f92fb4060c0ac747035920b6b2f0d885e0).
+- Post-merge `main` GitHub Actions [42034950825](https://github.com/nssang00/umaa_dev_studio/actions/runs/42034950825): **SUCCESS** (`npm ci`, full `npm test`, `npm run build`, upload artifact).
+- Next: browser-based drag / keyboard / caret E2E. Existing graph node component (`StudioGraphNode`) is already reused by TypeGraph and ContractGraph; avoid adding a redundant node abstraction. Separate domain editors only as shared UI behavior is verified.
