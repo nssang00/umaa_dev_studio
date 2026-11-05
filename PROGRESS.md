@@ -42,3 +42,22 @@
 - PR [#1](https://github.com/nssang00/umaa_dev_studio/pull/1) squash-merged into `main` at [baef58f](https://github.com/nssang00/umaa_dev_studio/commit/baef58f92fb4060c0ac747035920b6b2f0d885e0).
 - Post-merge `main` GitHub Actions [42034950825](https://github.com/nssang00/umaa_dev_studio/actions/runs/42034950825): **SUCCESS** (`npm ci`, full `npm test`, `npm run build`, upload artifact).
 - Next: browser-based drag / keyboard / caret E2E. Existing graph node component (`StudioGraphNode`) is already reused by TypeGraph and ContractGraph; avoid adding a redundant node abstraction. Separate domain editors only as shared UI behavior is verified.
+
+## 2026-11-05 — QoS entity concept graph (checkpoint 1)
+
+- New pure `qosDiagram` projection expresses six DDS entity QoS sections and containment/Topic usage topology. Unlike profile references, this graph is explicitly conceptual.
+- Keeps true Profile base references and Component Runtime selections in a separate read-only diagram; does not imply per-entity policy assignment or DDS runtime support.
+- Regression added: `test:qos-diagram`; CI verification pending.
+
+## 2026-11-05 — Struct-wide Properties (checkpoint 2)
+
+- `StructPropertiesEditor` is a self-contained editable draft of Struct identity, optional parent, and all declared fields; one save dispatches one validated model mutation.
+- `editStructDefinition` applies metadata + fields atomically, prevents duplicate/inherited field IDs, invalid annotations and inheritance cycles, and preserves ICD Mock baseline/Project Override.
+- Existing enum member editor is unchanged; UML field selection still highlights the row, not a distinct Properties editor.
+- Added `test:struct-batch` and `test:struct-panel`; CI verification pending.
+
+## CI checkpoints — QoS and Struct refactor
+
+- QoS concept diagram: [Actions 42038816335](https://github.com/nssang00/umaa_dev_studio/actions/runs/42038816335) **SUCCESS**.
+- Struct-wide Properties: [Actions 42039583847](https://github.com/nssang00/umaa_dev_studio/actions/runs/42039583847) **SUCCESS** (all tests including new QoS and Struct checks, React build and artifact upload).
+- Added design/limitations record in `docs/QOS_ENTITY_AND_STRUCT_PROPERTIES.md`. Documentation-only final CI to follow.

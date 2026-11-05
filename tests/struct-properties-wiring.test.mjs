@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+const read = file => readFileSync(new URL(file, import.meta.url), 'utf8');
+const props=read('../src/components/TypeProperties.jsx');
+const editor=read('../src/components/StructPropertiesEditor.jsx');
+const store=read('../src/stores/useEditorStore.js');
+const diagram=read('../src/components/TypeWorkbench.jsx');
+assert.match(props,/StructPropertiesEditor/);
+assert.match(props,/updateStructDefinition/);
+assert.match(editor,/Form.List name="fields"/);
+assert.match(editor,/Struct 전체 저장/);
+assert.match(editor,/onApply/);
+assert.match(editor,/onRestore/);
+assert.match(store,/editStructDefinition/);
+assert.match(diagram,/fieldName:field.name/);
+assert.match(diagram,/Struct 이름·상속·전체 선언 필드/);
+console.log('PASS Struct-level Properties editor composition and existing diagram selection');

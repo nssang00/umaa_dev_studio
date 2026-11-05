@@ -65,7 +65,7 @@ export function TypeWorkbench({ kind, id }) {
         </section>
       </div>
       <div className="struct-side-guide"><strong>UML 표준 방식</strong><p>상속은 부모 클래스와 일반화 화살표(빈 삼각형)로 표현합니다. 자식에는 직접 정의한 필드만 표시합니다.</p>
-        <p>필드를 선택하면 오른쪽 Properties에서 수정할 수 있습니다.</p>
+        <p>필드를 선택하면 강조 표시됩니다. 오른쪽 Properties에서 Struct 이름·상속·전체 선언 필드를 함께 편집한 뒤 한 번에 저장합니다.</p>
         {type.source!=='custom'&&<p className="struct-mock-note">ICD 기반 Mock입니다. 수정은 Project Override로 보존되며 공식 IDL을 변경하지 않습니다.</p>}
         {topics.length>0&&<><strong className="struct-subheading">Referenced by Topics</strong>{topics.map(t=><Button type="link" size="small" key={t.id} onClick={()=>select({kind:'topic',id:t.id})}><LinkOutlined/> {t.name}</Button>)}</>}
       </div>

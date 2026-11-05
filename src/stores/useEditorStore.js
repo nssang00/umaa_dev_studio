@@ -5,7 +5,7 @@ import { canConnect } from '../logic/validation.js';
 import { ensureComponentPositions, layoutComponentPositions } from '../logic/layout.js';
 import { uuid } from '../model/types.js';
 import { defaultRuntime, isValidIdlName } from '../model/workspaceSchema.js';
-import { editTypeField, editTypeDefinition, restoreTypeMock } from '../model/typeEditing.js';
+import { editTypeField, editTypeDefinition, restoreTypeMock, editStructDefinition } from '../model/typeEditing.js';
 import { canCreateTopic, canCreateTopicRelation, canAssignServiceCategory, isQosAncestor } from '../model/assetRules.js';
 const projectId = 'demo-usv';
 const update = (set, transform) => {
@@ -180,6 +180,13 @@ export const useEditorStore = create((set, get) => ({
         const s=get().snapshot;
         if(!s||!canAssignServiceCategory(s,serviceId,category))return false;
         update(set,old=>({...old,services:old.services.map(s=>s.id===serviceId?{...s,serviceCategory:category}:s)}));return true;
+    },
+    updateStructDefinition(kind, typeId, patch) {
+        const current=get().snapshot;
+        const next=current&&editStructDefinition(current,kind,typeId,patch);
+        if(!next)return false;
+        if(next!==current)set({snapshot:next,dirty:true});
+        return true;
     },
     applyTypeFieldEdit(kind, typeId, action, payload) {
         const s=get().snapshot;const next=s&&editTypeField(s,kind,typeId,action,payload);

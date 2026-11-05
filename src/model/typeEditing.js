@@ -98,3 +98,48 @@ export function restoreTypeMock(workspace, kind, id) {
   });
   return baseline.name===type.name ? reverted : replaceReferences(reverted,type.name,qualify(type),baseline.name,`${type.namespace}::${baseline.name}`,type.namespace);
 }
+
+/** Atomic Struct edit: IDL identity, UML parent and all declared fields.
+ * Checks are performed before exposing any mutated snapshot to the store.
+ * Enum editing deliberately retains its existing dedicated pathway.
+ */
+export function editStructDefinition(workspace, kind, id, patch = {}) {
+  const key = listKey(kind);
+  const current = key && workspace[key]?.find(item => item.id === id);
+  if (!current || current.kind !== 'struct' || !Array.isArray(patch.fields)) return null;
+  const nextName = String(patch.name ?? '').trim();
+  const nextBase = patch.baseType || null;
+  const metaChanged = nextName !== current.name || nextBase !== (current.baseType ?? null);
+  const candidate = metaChanged
+    ? editTypeDefinition(workspace, kind, id, { name: nextName, baseType: nextBase })
+    : workspace;
+  if (!candidate) return null;
+  return replaceDeclaredStructFields(candidate, kind, id, patch.fields);
+}
+
+function replaceDeclaredStructFields(workspace, kind, id, fields) {
+  const key = listKey(kind);
+  const type = key && workspace[key]?.find(item => item.id === id);
+  if (!type || type.kind !== 'struct') return null;
+  const inherited = new Set(
+    effectiveTypeFields(workspace, type).filter(field => field.inherited).map(field => field.name),
+  );
+  const seen = new Set();
+  const normalized = [];
+  for (const field of fields) {
+    if (!field || typeof field !== 'object') return null;
+    const name = String(field.name ?? '').trim();
+    const entry = { name, type: String(field.type ?? '').trim(), key: !!field.key, optional: !!field.optional };
+    if (!validField(entry) || seen.has(name) || inherited.has(name)) return null;
+    seen.add(name);
+    const original = (type.fields ?? []).find(item => item.name === field._originalName)
+      ?? (type.fields ?? []).find(item => item.name === name);
+    const { name: oldName, type: oldType, key: oldKey, optional: oldOptional, ...metadata } = original ?? {};
+    normalized.push({ ...metadata, ...entry });
+  }
+  const comparable = items => items.map(item => ({
+    name: item.name, type: item.type, key: !!item.key, optional: !!item.optional,
+  }));
+  if (JSON.stringify(comparable(normalized)) === JSON.stringify(comparable(type.fields ?? []))) return workspace;
+  return change(workspace, kind, id, t => ({ ...edited(t), fields: normalized }));
+}

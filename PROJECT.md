@@ -11,3 +11,6 @@
 - Credentials: never commit credentials, local browser storage, generated bundles or `node_modules`.
 
 - UI composition: `src/layouts/workbenchPanels.config.js` registers feature views; `WorkbenchPanelRenderer.jsx` instantiates them through public props. `SelectionPropertiesPanel.jsx` owns right-panel composition. Keep StudioShell geometry-only.
+
+- QoS UI: six DDS QoS entity section concepts are a separate pure graph from real stored Profile references; diagram must not imply entity-level policy assignment where none is stored.
+- Struct Properties: all declared fields, name and UML parent edited in a single draft and committed via one validated `editStructDefinition` transaction; inherited fields remain parent-owned, mock baseline remains unmodified.

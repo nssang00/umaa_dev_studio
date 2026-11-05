@@ -100,4 +100,4 @@ export function FunctionalAreaWorkbench({id}) {
     {area.id==='PO'&&<Alert type="info" showIcon message="PO는 8개 Functional Area 분류에 포함되지만, 별도 공개 PO ICD는 확인되지 않았습니다."/>}
   </div>;
 }
-export function QosWorkbench({id}) {return <div className="center-workbench"><Text className="editor-eyebrow" type="secondary">DDS QOS PROFILE · OMG DDS-JSON 참고</Text><Tabs items={[{key:'policy',label:'QoS Policies',children:<QosEditor profileId={id}/>},{key:'usage',label:'Profile Relationships Diagram',children:<QosUsageDiagram profileId={id}/>}]} /><div className="editor-note">QoS Profile 정의는 프로젝트의 설계 메타데이터입니다. DDS 벤더별 적용 및 Requested/Offered 검증은 아직 구현하지 않았습니다.</div></div>;}
+export function QosWorkbench({id}) {return <div className="center-workbench"><Text className="editor-eyebrow" type="secondary">DDS QOS PROFILE · OMG DDS-JSON 참고</Text><Tabs items={[{key:'policy',label:'QoS Policies',children:<QosEditor profileId={id}/>},{key:'usage',label:'DDS Entity QoS / Profile References',children:<QosUsageDiagram profileId={id}/>}]} /><div className="editor-note">QoS Profile 정의는 프로젝트의 설계 메타데이터입니다. DDS 벤더별 적용 및 Requested/Offered 검증은 아직 구현하지 않았습니다.</div></div>;}
