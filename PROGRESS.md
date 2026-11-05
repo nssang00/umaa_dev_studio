@@ -61,3 +61,10 @@
 - QoS concept diagram: [Actions 42038816335](https://github.com/nssang00/umaa_dev_studio/actions/runs/42038816335) **SUCCESS**.
 - Struct-wide Properties: [Actions 42039583847](https://github.com/nssang00/umaa_dev_studio/actions/runs/42039583847) **SUCCESS** (all tests including new QoS and Struct checks, React build and artifact upload).
 - Added design/limitations record in `docs/QOS_ENTITY_AND_STRUCT_PROPERTIES.md`. Documentation-only final CI to follow.
+
+## 2026-11-05 — QoS / Struct editor merged and verified
+
+- [PR #2](https://github.com/nssang00/umaa_dev_studio/pull/2) squash-merged at [81d6d6f](https://github.com/nssang00/umaa_dev_studio/commit/81d6d6fff7d5e317ff8ce6ee9e4e1e9e4952ab4f).
+- Last PR-head GitHub Actions [42039952234](https://github.com/nssang00/umaa_dev_studio/actions/runs/42039952234): **SUCCESS**.
+- Post-merge `main` GitHub Actions [42040084458](https://github.com/nssang00/umaa_dev_studio/actions/runs/42040084458): **SUCCESS** for `npm ci`, complete `npm test` (including QoS concept and Struct-wide tests), `npm run build` and artifact upload.
+- Known limitations: no actual DDS per-entity QoS persistence/application or Requested/Offered validator; browser E2E interactions not yet exercised on runner.
