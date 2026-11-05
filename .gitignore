@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.core-check/
+*.log
+.DS_Store
