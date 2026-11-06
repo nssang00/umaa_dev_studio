@@ -1,6 +1,7 @@
 import { isLargeCollection, isSpecialization } from '../model/icdConcepts.js';
 import { findInvalidQosEntityValues } from '../model/qosPolicies.js';
 import { configuredEndpoints } from '../model/endpointConfiguration.js';
+import { INTERFACE_DIRECTIONS } from '../model/interfaceDirection.js';
 export function validateWorkspace(s) {
     const issues = [];
     const error = (code, message, entityId) => issues.push({ severity: 'error', code, message, entityId });
@@ -12,6 +13,10 @@ export function validateWorkspace(s) {
             error('MISSING_SERVICE', `Binding ${b.id}의 Service가 없습니다.`, b.id);
     }
     for (const op of s.operations) {
+        if(op.interfaceDirection===null || op.interfaceDirection===undefined)
+            warn('INTERFACE_DIRECTION_UNSPECIFIED', `${op.name}: 계약 INPUT/OUTPUT 방향을 확인해야 합니다.`,op.id);
+        else if(!INTERFACE_DIRECTIONS.includes(op.interfaceDirection))
+            error('INVALID_INTERFACE_DIRECTION', `${op.name}: Interface 방향은 INPUT 또는 OUTPUT이어야 합니다.`,op.id);
         if (!s.services.some(v => v.id === op.serviceId))
             error('MISSING_SERVICE', `Operation ${op.name}의 Service가 없습니다.`, op.id);
         if (!s.topics.some(t => t.id === op.topicId))

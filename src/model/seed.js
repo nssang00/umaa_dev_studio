@@ -6,6 +6,7 @@
  * navigation groupings, NOT independently published normative UMAA interfaces.
  */
 import { upgradeWorkspace } from './workspaceSchema.js';
+import { legacyDirectionFromName } from './interfaceDirection.js';
 const state = {
     project: {
         id: 'demo-usv', name: 'UMAA 6.0 Autopilot Component Reference Assembly', standardVersion: 'UMAA 6.0',
@@ -57,7 +58,9 @@ function topic(serviceId, name) {
 function op(serviceId, name, topicName, action, actor, optionalConsumer = false) {
     const tid = topic(serviceId, topicName);
     const id = `op-${serviceId}-${name}`;
-    const item = { id, serviceId, name, topicId: tid, action, actor, ...(optionalConsumer ? { optionalConsumer } : {}) };
+    const item = { id, serviceId, name, topicId: tid, action, actor,
+        interfaceDirection: legacyDirectionFromName(name), interfaceDirectionSource:'curated-seed',
+        ...(optionalConsumer ? { optionalConsumer } : {}) };
     state.operations.push(item);
     state.interfaces.find(i => i.serviceId === serviceId).operationIds.push(id);
 }

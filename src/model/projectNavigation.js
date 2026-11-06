@@ -1,20 +1,7 @@
 import { categoryLabel, flowLabel } from './icdConcepts.js';
 
-/** Direction relative to a service PROVIDER, never the DDS Reader/Writer role. */
-export function serviceOperationDirection(op) {
-  if (!op || !['provider','consumer'].includes(op.actor)) return null;
-  if (op.action === 'subscribe') return op.actor === 'consumer' ? 'output' : 'input';
-  if (op.action === 'publish' || op.action === 'dispose')
-    return op.actor === 'consumer' ? 'input' : 'output';
-  return null;
-}
-
-/** UI-selected direction + wire action -> canonical Operation actor. */
-export function actorForOperation(direction, action) {
-  if (!['input','output'].includes(direction) || !['publish','subscribe','dispose'].includes(action)) return null;
-  if (action === 'subscribe') return direction === 'output' ? 'consumer' : 'provider';
-  return direction === 'input' ? 'consumer' : 'provider';
-}
+import { serviceOperationDirection } from './interfaceDirection.js';
+export { serviceOperationDirection } from './interfaceDirection.js';
 
 const item = (key, label, selection = null, children = [], extra = {}) => ({
   key, label, selection, children, ...extra,
@@ -37,6 +24,11 @@ export function serviceContractTree(s, svc, keyPrefix = 'project') {
     item(keyPrefix+':interfaces:'+svc.id,'Interfaces',null,[
       item(keyPrefix+':input:'+svc.id,'INPUT · To Provider',null,groups('input')),
       item(keyPrefix+':output:'+svc.id,'OUTPUT · From Provider',null,groups('output')),
+      ...(ops.some(op=>serviceOperationDirection(op)===null)
+        ? [item(keyPrefix+':unclassified:'+svc.id,'Direction review required',null,
+            ops.filter(op=>!serviceOperationDirection(op)).map(op=>item(
+              keyPrefix+':unclassified-op:'+op.id,op.name+' · '+op.action.toUpperCase(),
+              {kind:'operation',id:op.id})))]:[]),
     ]),
     item(keyPrefix+':topics:'+svc.id,'DDS Topic / Data Type references',null,
       topics.map(t=>{

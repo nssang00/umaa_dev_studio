@@ -1,5 +1,6 @@
 import { withMockIdlTypes } from './mockIdlCatalog.js';
 import { withQosEntitySections } from './qosPolicies.js';
+import { migrateLegacyOperationDirection } from './interfaceDirection.js';
 /** Project extensions and DDS runtime configuration are deliberately separate from
  * the immutable, curated UMAA standard catalog. This is a UI/model schema, not
  * a claim that official IDL files or DDS middleware are bundled. */
@@ -17,6 +18,7 @@ export function upgradeWorkspace(value) {
   const s = structuredClone(value);
   s.schemaVersion = 3;
   s.functionalAreas = (s.functionalAreas ?? []).map(x => ({ ...x, source: x.source || 'standard' }));
+  s.operations = (s.operations ?? []).map(migrateLegacyOperationDirection);
   s.dataTypes ??= [];
   s.qosProfiles ??= [structuredClone(DEFAULT_QOS_PROFILE)];
   s.qosProfiles = s.qosProfiles.map(q=>withQosEntitySections({libraryName:'Project QoS',baseProfileId:null,presentationAccessScope:'topic',orderedAccess:false,coherentAccess:false,...q}));

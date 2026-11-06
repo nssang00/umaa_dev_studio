@@ -155,3 +155,10 @@
 - Post-merge Actions [42141664951](https://github.com/nssang00/umaa_dev_studio/actions/runs/42141664951): **SUCCESS** for full `npm test` including new Project Model and Endpoint QoS regressions, `npm run build`, and artifact upload.
 - User-facing: unified curated ICD Catalog / Project Service Model / System Model Explorer; INPUT/OUTPUT Service direction UI; logical DDS DataWriter/Reader topology and Endpoint QoS design overrides; unified right Properties.
 - Browser-level actual interactions and visual layout of large tree/DDS graph remain unverified. Complete UMAA ICD import, normative IDL, DDS runtime entity creation, policy merging and Requested/Offered verification remain future work.
+
+## 2026-11-06 — Interface Direction correction (checkpoint 1)
+
+- Separated Service Operation `interfaceDirection` from DDS `action` and `actor`; Consumer query/subscription is **INPUT** in curated command and request templates, never inferred as OUTPUT from Subscribe.
+- Curated seed stores explicit provider-facing INPUT/OUTPUT (seed naming classification, not a certified full ICD import). Legacy workspaces are upgraded from recognized operation names only, with provenance `legacy-name`; unrecognized operations remain null and are warned, invalid values are errors.
+- Both Custom Operation creation dialogs now capture independent Interface Direction and DDS Actor. Existing programmatic creation calls are supported via limited naming fallback; new UI always passes explicit direction.
+- New model, migration and UI regression test `test:interface-direction`; CI pending.

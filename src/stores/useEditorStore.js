@@ -8,6 +8,7 @@ import { defaultRuntime, isValidIdlName } from '../model/workspaceSchema.js';
 import { editTypeField, editTypeDefinition, restoreTypeMock, editStructDefinition } from '../model/typeEditing.js';
 import { canCreateTopic, canCreateTopicRelation, canAssignServiceCategory, isQosAncestor } from '../model/assetRules.js';
 import { editQosEntityField, withQosEntitySections } from '../model/qosPolicies.js';
+import { INTERFACE_DIRECTIONS, legacyDirectionFromName } from '../model/interfaceDirection.js';
 import { editEndpointQosProfile, removeBindingEndpointConfigs } from '../model/endpointConfiguration.js';
 const projectId = 'demo-usv';
 const update = (set, transform) => {
@@ -316,14 +317,18 @@ export const useEditorStore = create((set, get) => ({
         set({ selection: { kind: 'topic', id: obj.id } });
         return true;
     },
-    addCustomOperation(serviceId, name, topicId, action, actor, optionalConsumer = false) {
+    addCustomOperation(serviceId, name, topicId, action, actor, optionalConsumer = false, interfaceDirection = undefined) {
         const s = get().snapshot;
         const svc = s?.services.find(v => v.id === serviceId && v.source === 'custom');
         const trimmed = String(name ?? '').trim();
+        // Legacy API callers may omit the direction; names are a migration hint only.
+        const direction = interfaceDirection === undefined ? legacyDirectionFromName(trimmed) : interfaceDirection;
         if (!svc || !isValidIdlName(trimmed) || !s.topics.some(t => t.id === topicId) ||
             !['publish','subscribe','dispose'].includes(action) || !['provider','consumer'].includes(actor) ||
+            !INTERFACE_DIRECTIONS.includes(direction) ||
             s.operations.some(o => o.serviceId === serviceId && o.name === trimmed)) return false;
-        const op = { id: uuid(), serviceId, name: trimmed, topicId, action, actor, optionalConsumer };
+        const op = { id: uuid(), serviceId, name: trimmed, topicId, action, actor,
+            interfaceDirection:direction, interfaceDirectionSource:interfaceDirection===undefined?'legacy-name':'user', optionalConsumer };
         update(set, old => ({ ...old, operations: [...old.operations, op],
             interfaces: old.interfaces.map(i => i.serviceId === serviceId ? { ...i, operationIds: [...i.operationIds, op.id] } : i) }));
         set({ selection: { kind: 'operation', id: op.id } });
@@ -385,6 +390,10 @@ export const useEditorStore = create((set, get) => ({
             operations.push({ id: uuid(), serviceId: sid, name: 'query' + trimmed + 'ExecutionStatus', topicId: tExecution, action: 'subscribe', actor: 'consumer', optionalConsumer: true });
             operations.push({ id: uuid(), serviceId: sid, name: 'cancel' + trimmed + 'Command', topicId: tCommand, action: 'dispose', actor: 'consumer' });
         }
+        // Template directions are explicit; DDS actor is independently persisted.
+        const directedOperations=operations.map(op=>({
+            ...op,interfaceDirection:legacyDirectionFromName(op.name),interfaceDirectionSource:'template',
+        }));
         update(set, old => ({ ...old,
             functionalAreas: functionalArea === 'CUSTOM' && !old.functionalAreas.some(a => a.id === 'CUSTOM')
                 ? [...old.functionalAreas, { id: 'CUSTOM', name: 'Project Extensions', icd: 'Project-defined area — not UMAA standard', source: 'custom' }]
@@ -392,7 +401,7 @@ export const useEditorStore = create((set, get) => ({
             services: [...old.services, svc],
             interfaces: [...old.interfaces, { id: uuid(), serviceId: sid, name: `${trimmed} · Operation Interface`,
                     description: 'Custom Service의 Operation 그룹', operationIds: operations.map(o => o.id) }],
-            topics: [...old.topics, ...topics], messages: [...old.messages, ...messages], operations: [...old.operations, ...operations] }));
+            topics: [...old.topics, ...topics], messages: [...old.messages, ...messages], operations: [...old.operations, ...directedOperations] }));
         set({ selection: { kind: 'service', id: sid } });
         return true;
     },
