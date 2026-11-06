@@ -131,7 +131,8 @@ set_target_properties(${target} PROPERTIES OUTPUT_NAME ${target})
         const operations = s.operations.filter(o => o.serviceId === service?.id).map(op => {
             const topic = s.topics.find(t => t.id === op.topicId);
             const type = s.messages.find(m => m.id === topic?.messageTypeId);
-            return {name:op.name,actor:op.actor,action:op.action,optionalConsumer:!!op.optionalConsumer,
+            return {name:op.name,interfaceDirection:op.interfaceDirection??null,interfaceDirectionSource:op.interfaceDirectionSource??null,
+                actor:op.actor,action:op.action,optionalConsumer:!!op.optionalConsumer,
                 topic:topic?.name,type:type?.name,namespace:type?.namespace,standardIDLLinked:false};
         });
         return {bindingId,service:service?.name,role,flowControl:service?.flowControl,

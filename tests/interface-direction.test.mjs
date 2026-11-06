@@ -68,3 +68,10 @@ for(const path of ['../src/components/ContractWorkbench.jsx','../src/components/
   assert.match(ui,/updateCustomOperationDirection/);
   assert.match(ui,/INPUT\/OUTPUT|INPUT · To Provider/);
 }
+
+import { generateComponentFiles } from '../src/logic/codegen.js';
+const generated=generateComponentFiles(s,'autopilot');
+const contract=JSON.parse(generated.find(f=>f.path==='contracts/service-operations.json').content);
+const emittedQuery=contract.contract.flatMap(row=>row.operations).find(op=>op.name===query.name);
+assert.ok(emittedQuery && emittedQuery.interfaceDirection==='input');
+assert.equal(emittedQuery.action,'subscribe','wire action remains separate');

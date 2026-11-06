@@ -182,3 +182,6 @@
 - Operation Workbench and right Properties now allow editing INPUT/OUTPUT without mutating DDS Actor, Action or Topic. Unclassified legacy custom operations can be reviewed.
 - Updated `docs/ICD_SERVICE_SYSTEM_EXPLORER.md` and `PROJECT.md` to state independent direction semantics and central DDS limitations.
 - Full CI / React build pending.
+
+- Code generation's machine-readable `contracts/service-operations.json` now exports Interface Direction and migration/source annotation separately from DDS Actor/Action; regression test verifies Consumer Query INPUT + Subscribe survives generation.
+- Corrected Markdown code spans in architecture notes.
