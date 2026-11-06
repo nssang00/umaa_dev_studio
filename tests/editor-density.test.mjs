@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 const css=readFileSync(new URL('../src/styles.css', import.meta.url),'utf8');
 const struct=readFileSync(new URL('../src/components/StructFieldAccordionList.jsx', import.meta.url),'utf8');
-const qos=readFileSync(new URL('../src/components/QosPolicyAccordion.jsx', import.meta.url),'utf8');
+const qos=readFileSync(new URL('../src/components/qos/QosPolicyAccordion.jsx', import.meta.url),'utf8');
 for (const s of [
   '.struct-field-accordion.ant-collapse',
   '.qos-entity-accordion.ant-collapse',
