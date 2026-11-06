@@ -19,3 +19,6 @@
 
 - Model navigation: unified ProjectModelExplorer with three roots (curated UMAA ICD Catalog, Project Service Model, System Model). Catalog Interfaces are tool navigation projections, not authoritative model IDs.
 - Endpoint configuration: `endpointConfigs` is a design-only QoS override index keyed by Binding ID, Topic ID, DataWriter/DataReader direction. Inherit Component Runtime profile by default. No DDS SDK entity creation or full QoS compatibility assertion.
+
+- Interface Direction: `operation.interfaceDirection` is independent from DDS `action` and `actor` (notably `query*` may be INPUT and subscribe). New Custom Operations capture both separately; imported legacy names are a migration hint, not official ICD truth. Standard definitions are immutable in editor; Custom direction updates are atomic.
+- DDS advanced view: System Model DDS Configuration centralizes Component Runtime, Topic reference projection, Endpoint QoS overrides, and limited static checks. Component Journey uses on-demand derived Endpoint preview, not mandatory DDS manual setup.

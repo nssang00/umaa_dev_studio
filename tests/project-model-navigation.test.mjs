@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { seedWorkspace } from '../src/model/seed.js';
-import { actorForOperation, serviceOperationDirection, serviceContractTree,
+import { serviceOperationDirection, serviceContractTree,
   projectModelTree, expandedTreeKeys } from '../src/model/projectNavigation.js';
 import { serviceContractGraph } from '../src/logic/editorGraphs.js';
 const s=structuredClone(seedWorkspace);
@@ -10,11 +10,10 @@ assert.ok(sample);
 const ops=s.operations.filter(op=>op.serviceId===sample.id);
 assert.ok(ops.some(op=>serviceOperationDirection(op)==='input' && op.action==='publish'));
 assert.ok(ops.some(op=>serviceOperationDirection(op)==='output' && op.action==='publish'));
-assert.ok(ops.filter(op=>op.action==='subscribe'&&op.actor==='consumer').every(op=>serviceOperationDirection(op)==='output'));
-for(const direction of ['input','output'])for(const action of ['publish','subscribe','dispose']){
- const actor=actorForOperation(direction,action);
- assert.equal(serviceOperationDirection({actor,action}),direction);
-}
+assert.ok(ops.filter(op=>op.action==='subscribe'&&op.actor==='consumer').every(op=>serviceOperationDirection(op)==='input'));
+assert.equal(serviceOperationDirection({action:'subscribe',actor:'consumer',interfaceDirection:'input'}),'input');
+assert.equal(serviceOperationDirection({action:'subscribe',actor:'consumer'}),null);
+assert.equal(serviceOperationDirection({action:'publish',actor:'provider',interfaceDirection:'input'}),'input');
 const roots=projectModelTree(s);
 assert.deepEqual(roots.map(x=>x.label.split(' · ')[0]),['UMAA ICD Catalog','Project Service Model','System Model']);
 const catalog=roots[0],project=roots[1],system=roots[2];
@@ -44,8 +43,9 @@ const sourceGraph=readFileSync(new URL('../src/components/ContractGraph.jsx',imp
 const sourceDetails=readFileSync(new URL('../src/components/DesignDetails.jsx',import.meta.url),'utf8');
 for (const source of [sourceGraph,sourceDetails]) {
   assert.match(source,/name="direction"/);
-  assert.match(source,/actorForOperation\(v.direction,v.action\)/);
-  assert.doesNotMatch(source,/name="actor" label="Actor/);
+  assert.match(source,/v.actor/);
+  assert.match(source,/v.direction/);
+  assert.match(source,/name="actor" label="DDS Actor/);
 }
 
 const operationEditor=readFileSync(new URL('../src/components/ContractWorkbench.jsx',import.meta.url),'utf8');

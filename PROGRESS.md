@@ -155,3 +155,33 @@
 - Post-merge Actions [42141664951](https://github.com/nssang00/umaa_dev_studio/actions/runs/42141664951): **SUCCESS** for full `npm test` including new Project Model and Endpoint QoS regressions, `npm run build`, and artifact upload.
 - User-facing: unified curated ICD Catalog / Project Service Model / System Model Explorer; INPUT/OUTPUT Service direction UI; logical DDS DataWriter/Reader topology and Endpoint QoS design overrides; unified right Properties.
 - Browser-level actual interactions and visual layout of large tree/DDS graph remain unverified. Complete UMAA ICD import, normative IDL, DDS runtime entity creation, policy merging and Requested/Offered verification remain future work.
+
+## 2026-11-06 — Interface Direction correction (checkpoint 1)
+
+- Separated Service Operation `interfaceDirection` from DDS `action` and `actor`; Consumer query/subscription is **INPUT** in curated command and request templates, never inferred as OUTPUT from Subscribe.
+- Curated seed stores explicit provider-facing INPUT/OUTPUT (seed naming classification, not a certified full ICD import). Legacy workspaces are upgraded from recognized operation names only, with provenance `legacy-name`; unrecognized operations remain null and are warned, invalid values are errors.
+- Both Custom Operation creation dialogs now capture independent Interface Direction and DDS Actor. Existing programmatic creation calls are supported via limited naming fallback; new UI always passes explicit direction.
+- New model, migration and UI regression test `test:interface-direction`; CI pending.
+
+## 2026-11-06 — Limited DDS static preflight (checkpoint 2)
+
+- New `ddsDesignPreflight()` checks Domain, simple Component Partition, and selected Writer/Reader Reliability, Durability and Deadline cases on existing logical connections.
+- Findings are design warnings only and do not claim full DDS Requested/Offered compatibility; no SDK or Participant instances.
+- Added `test:dds-preflight`; deployment-centered UI updates follow in this PR.
+
+## 2026-11-06 — Central DDS advanced workspace & Lego Component UX (checkpoint 3)
+
+- Unified DDS advanced workspace sections: Deployment/Participant design overview, logical Topic References, automatically generated Writer/Reader Endpoint list and limited Design Checks; no change to componentRuntime schema.
+- Component Journey defaults to Service Provider/Consumer assembly, with collapsed auto-derived Endpoint preview. Generation step, Component Properties and advanced Component tab link to central DDS Configuration (optionally prefiltered by Component), rather than duplicating inline settings.
+- Standard catalog, ContractGraph, Model storage and per-endpoint QoS selection remain separate, preserving existing Service/Binding relationships.
+- Full test and build CI pending; browser UX verification pending.
+
+## 2026-11-06 — Custom Operation post-create direction editing & docs
+
+- Added narrow atomic `updateCustomOperationDirection` for custom-only Operations, with no-op, invalid-value and standard-source protection.
+- Operation Workbench and right Properties now allow editing INPUT/OUTPUT without mutating DDS Actor, Action or Topic. Unclassified legacy custom operations can be reviewed.
+- Updated `docs/ICD_SERVICE_SYSTEM_EXPLORER.md` and `PROJECT.md` to state independent direction semantics and central DDS limitations.
+- Full CI / React build pending.
+
+- Code generation's machine-readable `contracts/service-operations.json` now exports Interface Direction and migration/source annotation separately from DDS Actor/Action; regression test verifies Consumer Query INPUT + Subscribe survives generation.
+- Corrected Markdown code spans in architecture notes.

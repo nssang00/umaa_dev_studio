@@ -3,7 +3,7 @@ import { Alert, Badge, Button, Card, Collapse, Empty, Form, Input, Modal, Select
 import { ApartmentOutlined, ArrowLeftOutlined, ArrowRightOutlined, CheckCircleOutlined, CloudDownloadOutlined, CodeOutlined, DeleteOutlined, PlusOutlined, SettingOutlined } from '@ant-design/icons';
 import { useEditorStore } from '../stores/useEditorStore.js';
 import { componentProgress, issueDestination } from '../logic/journeyModel.js';
-import { RuntimeSettings } from './DesignDetails.jsx';
+
 const { Text, Title } = Typography;
 
 function ServiceAddModal({ open, onClose, component, snapshot, initialRole }) {
@@ -95,7 +95,16 @@ export function ComponentJourney({ component, onGenerate, onAdvanced }) {
           <BindingColumn title="제공하는 기능" subtitle="이 컴포넌트가 구현할 서비스" role="provider" rows={progress.providers} snapshot={snapshot} onAdd={()=>{setPickerRole('provider');setPicker(true);}} onRemove={remove} onContract={openContract}/>
           <BindingColumn title="사용하는 기능" subtitle="다른 컴포넌트에서 가져올 서비스" role="consumer" rows={progress.consumers} snapshot={snapshot} onAdd={()=>{setPickerRole('consumer');setPicker(true);}} onRemove={remove} onContract={openContract}/>
         </div>
-        <div className="journey-inline-summary"><CheckCircleOutlined/> {progress.bindings.length}개 Service Binding · {progress.endpoints.length}개 파생 DDS Endpoint <Button type="link" onClick={onAdvanced}>Operation / Topic 상세 보기</Button></div>
+        <div className="journey-inline-summary"><CheckCircleOutlined/> {progress.bindings.length}개 Service Binding · {progress.endpoints.length}개 자동 파생 DDS Endpoint</div>
+        <Collapse ghost items={[{key:'dds-preview',label:<span>자동 DDS Endpoint 미리보기 ({progress.endpoints.length})</span>,children:<div className="journey-derived-endpoints">
+          {progress.endpoints.slice(0,6).map(e=><div key={e.bindingId+'|'+e.topicId+'|'+e.direction} className="journey-derived-endpoint-row">
+            <Tag color={e.direction==='writer'?'blue':'cyan'}>{e.direction==='writer'?'DataWriter':'DataReader'}</Tag>
+            <span>{e.serviceName} · {e.topicName}</span>
+          </div>)}
+          {progress.endpoints.length>6&&<Text type="secondary">외 {progress.endpoints.length-6}개 Endpoint</Text>}
+          <Button size="small" onClick={()=>select({kind:'ddsConfig',id:'project',componentId:component.id})}>고급 DDS 설정에서 전체 보기</Button>
+          <Text type="secondary" className="small-hint">이 목록은 Service 역할에서 자동 도출한 설계 결과이며, 실제 DDS 엔터티는 아닙니다.</Text>
+        </div>}]} />
       </section>}
       {step===2&&<section className="journey-step-content">
         <div className="step-heading"><h2>설정을 확인하고 코드 골격을 생성하세요</h2><Text type="secondary">생성된 파일을 C++ 프로젝트에서 구현하고 컴파일하면 DLL/SO를 만들 수 있습니다.</Text></div>
@@ -104,7 +113,10 @@ export function ComponentJourney({ component, onGenerate, onAdvanced }) {
             <div className="journey-field"><Text type="secondary">DDS 구현체 (설계 메타데이터)</Text><Select style={{width:'100%'}} value={snapshot.project.ddsVendor} onChange={changeVendor} options={[{value:'fastdds',label:'eProsima Fast DDS'},{value:'connext',label:'RTI Connext DDS'}]}/></div></Card>
           <Card size="small" title="생성 대상 요약"><div className="journey-metric"><span>Component</span><strong>{component.name}</strong></div><div className="journey-metric"><span>Service Binding</span><strong>{progress.bindings.length}</strong></div><div className="journey-metric"><span>Endpoint 명세</span><strong>{progress.endpoints.length}</strong></div><div className="journey-metric"><span>정적 모델 오류 (프로젝트 전체)</span><strong>{progress.blockingErrors.length}</strong></div></Card>
         </div>
-        <Collapse ghost items={[{key:'runtime',label:<><SettingOutlined/> 고급 DDS Runtime / QoS 설정</>,children:<RuntimeSettings componentId={component.id}/>}]} />
+        <div className="journey-advanced-dds">
+          <Text type="secondary">Domain, Partition과 Endpoint QoS는 공통 DDS Configuration에서 관리합니다. Component 조립의 필수 단계가 아닙니다.</Text>
+          <Button icon={<SettingOutlined/>} size="small" onClick={()=>select({kind:'ddsConfig',id:'project',componentId:component.id})}>고급 DDS 설정 열기</Button>
+        </div>
         {!progress.hasServices&&<Alert style={{marginTop:12}} type="warning" showIcon message="아직 서비스가 없습니다." description="이 컴포넌트가 제공하거나 사용하는 서비스를 하나 이상 선택하세요." action={<Button size="small" onClick={()=>move(1)}>서비스 선택</Button>}/>}
         {progress.blockingErrors.length>0&&<Alert style={{marginTop:12}} showIcon type="error" message={`프로젝트 정적 검사 오류 ${progress.blockingErrors.length}건`} description={<div>현재 생성기는 프로젝트 전체를 검증합니다. 아래 오류 항목을 확인하세요.<div className="journey-error-links">{progress.blockingErrors.slice(0,6).map((i,n)=><Button key={`${i.code}-${n}`} size="small" onClick={()=>{const d=issueDestination(snapshot,i);if(d)select(d);}} disabled={!issueDestination(snapshot,i)}>{i.message}</Button>)}</div></div>}/>}
         {progress.hasServices&&progress.blockingErrors.length===0&&<Alert style={{marginTop:12}} type="success" showIcon message="코드 골격 생성 준비 완료" description="정적 스키마 검증 결과입니다. 컴파일 성공, DDS 통신 동작 또는 UMAA 공식 적합성을 의미하지 않습니다."/>}
