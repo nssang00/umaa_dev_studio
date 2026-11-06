@@ -194,3 +194,11 @@
 - Independent Service Interface INPUT/OUTPUT semantics and legacy name-based migration; standard read-only; custom create/edit with independent Actor/Action, and codegen contract metadata preserving direction.
 - Component-first Service assembly plus optional generated DDS Endpoint preview; central Deployment/Topic/Endpoint/Design Checks; limited static DDS mismatch warnings only.
 - Browser real-click/drag visual E2E was not run. Full DDS Requested/Offered checks, DDS SDK entities, all Participant and Publisher/Subscriber policy mapping, and authoritative complete UMAA ICD import remain out of scope.
+
+## 2026-11-06 — Studio Layout / Views / Components composition
+
+- Moved geometry-only implementation to `src/layouts/studio/StudioShell.jsx`; the old components path is a re-export for compatibility. Introduced `StudioLayout.jsx` as the owner of Explorer/Workbench/Properties/Console view slots.
+- Registered explicit View components `ExplorerView`, `WorkbenchView`, `PropertiesView`, `ConsoleView` in the existing panel registry. Each View composes existing feature components; Explorer owns its footer. Removed layout slot markup from `App.jsx`.
+- No domain/state/Repo schema change, preserving Studio pane width preferences, bottom Console placement, behavior and project data.
+- Documented `model/`, `logic/`, `repository/`, `stores/` and UI layering in `docs/FRONTEND_ARCHITECTURE.md`.
+- Added architecture test `test:studio-views`; full CI/build pending.

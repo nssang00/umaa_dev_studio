@@ -13,7 +13,7 @@ assert.deepEqual(resizeStudioPane(1100, base, 'explorer', 10), { explorer: 210, 
 assert.deepEqual(resizeStudioPane(1100, base, 'properties', 10), { explorer: 274, properties: 240 });
 assert.deepEqual(resizeStudioPane(1100, base, 'unknown', 1000), base);
 assert.ok(STUDIO_PANE_LIMITS.workbenchMin >= 360);
-const shell = readFileSync(new URL('../src/components/StudioShell.jsx', import.meta.url), 'utf8');
+const shell = readFileSync(new URL('../src/layouts/studio/StudioShell.jsx', import.meta.url), 'utf8');
 const panel = readFileSync(new URL('../src/components/BottomPanel.jsx', import.meta.url), 'utf8');
 const app = readFileSync(new URL('../src/App.jsx', import.meta.url), 'utf8');
 for (const fragment of ['role="separator"', 'onPointerDown', 'onPointerMove', 'onPointerUp', 'onKeyDown', 'aria-valuenow', 'ResizeObserver', 'window.localStorage']) {
@@ -22,8 +22,8 @@ for (const fragment of ['role="separator"', 'onPointerDown', 'onPointerMove', 'o
 for (const fragment of ['CaretUpOutlined', 'CaretDownOutlined', 'aria-expanded', 'OUTPUT', 'CONSOLE', 'log-only-panel']) {
   assert.ok(panel.includes(fragment), `Missing console control: ${fragment}`);
 }
-assert.match(app, /<StudioShell/);
-assert.match(app, /bottomPanel=\{<WorkbenchPanelRenderer panelId="bottom"\/>\}/);
+assert.match(app, /<StudioLayout/);
+assert.match(readFileSync(new URL('../src/layouts/studio/StudioLayout.jsx', import.meta.url), 'utf8'), /bottomPanel=\{<WorkbenchPanelRenderer panelId="bottom" viewProps=\{consoleProps\}\/>\}/);
 const registry = readFileSync(new URL("../src/layouts/workbenchPanels.config.js", import.meta.url), "utf8");
-assert.match(registry, /BottomPanel/);
+assert.match(registry, /ConsoleView/);
 console.log('PASS resizable Explorer/Properties constraints + console caret + shell composition');
