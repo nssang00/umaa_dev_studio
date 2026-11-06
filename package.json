@@ -13,7 +13,7 @@
     "test:design": "node tests/design-model.test.mjs",
     "test:layout": "node tests/layout.test.mjs",
     "test:studio-layout": "node tests/studio-layout.test.mjs",
-    "test": "npm run check:static && npm run test:icd && npm run test:design && npm run test:layout && npm run test:workbench && npm run test:graphs && npm run test:idl-mock && npm run test:preview && npm run test:icd-assets && npm run test:type-override && npm run test:icd-ui && npm run test:struct-ui && npm run test:studio-layout && npm run test:panels && npm run test:selection && npm run test:qos-diagram && npm run test:struct-batch && npm run test:struct-panel && npm run test:qos-editor && npm run test:struct-accordion && npm run test:editor-density && npm run test:qos-interaction && npm run test:project-model && npm run test:endpoint-config && npm run test:interface-direction && npm run test:dds-preflight && npm run test:studio-views",
+    "test": "npm run check:static && npm run test:icd && npm run test:design && npm run test:layout && npm run test:workbench && npm run test:graphs && npm run test:idl-mock && npm run test:preview && npm run test:icd-assets && npm run test:type-override && npm run test:icd-ui && npm run test:struct-ui && npm run test:studio-layout && npm run test:panels && npm run test:selection && npm run test:qos-diagram && npm run test:struct-batch && npm run test:struct-panel && npm run test:qos-editor && npm run test:struct-accordion && npm run test:editor-density && npm run test:qos-interaction && npm run test:project-model && npm run test:endpoint-config && npm run test:interface-direction && npm run test:dds-preflight && npm run test:studio-views && npm run test:feature-components",
     "test:workbench": "node tests/workbench-model.test.mjs",
     "test:graphs": "node tests/graph-editing.test.mjs",
     "test:struct-ui": "node tests/struct-console-layout.test.mjs",
@@ -36,7 +36,8 @@
     "test:endpoint-config": "node tests/endpoint-configuration.test.mjs",
     "test:interface-direction": "node tests/interface-direction.test.mjs",
     "test:dds-preflight": "node tests/dds-design-preflight.test.mjs",
-    "test:studio-views": "node tests/studio-views-architecture.test.mjs"
+    "test:studio-views": "node tests/studio-views-architecture.test.mjs",
+    "test:feature-components": "node tests/feature-components.test.mjs"
   },
   "dependencies": {
     "@ant-design/icons": "^5.6.1",

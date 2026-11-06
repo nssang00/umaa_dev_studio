@@ -210,3 +210,12 @@
 - PR Actions [42146450134](https://github.com/nssang00/umaa_dev_studio/actions/runs/42146450134): **SUCCESS** for full test suite, build and artifact.
 - Post-merge Actions [42146595191](https://github.com/nssang00/umaa_dev_studio/actions/runs/42146595191): **SUCCESS** for the same checks on merged `main`.
 - Visual/keyboard E2E in an actual browser not run; behavior should remain the same because only composition and import paths changed.
+
+
+## 2026-11-06 — Feature component grouping and shared composition (checkpoint 1)
+
+- New `components/assembly/`: real `ComponentJourney`, extracted `ServicePicker` and reusable Provider/Consumer `ServiceBindingSection`. Original `ComponentJourney` import path remains a re-export.
+- New `components/service/`: real `ContractGraph` and shared `OperationFields` with explicit INPUT/OUTPUT contract direction and independent DDS Actor/Action, used by both ContractGraph and CustomServiceEditor.
+- New `components/types/` and `components/qos/`: actual `TypeGraph` / `QosProfileDiagram` implementations, old paths retained as re-exports for existing callers.
+- New `components/shared/graph/ModelGraphCanvas` handles React Flow chrome (background, controls, optional minimap) while each feature retains its own node/edge rules and interaction settings, including nested QoS pointerEvents.
+- Updated static checks and added `test:feature-components`. Full Actions test/build pending.

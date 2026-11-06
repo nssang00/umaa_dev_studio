@@ -5,7 +5,7 @@ import { describeSelection } from '../src/model/selectionDetails.js';
 import { editQosEntityField } from '../src/model/qosPolicies.js';
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 
-const diagram=read('../src/components/QosProfileDiagram.jsx');
+const diagram=read('../src/components/qos/QosProfileDiagram.jsx');
 const properties=read('../src/components/QosProperties.jsx');
 const metadata=read('../src/components/QosProfileFields.jsx');
 const context=read('../src/components/ContextProperties.jsx');

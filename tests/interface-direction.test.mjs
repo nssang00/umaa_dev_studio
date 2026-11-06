@@ -40,12 +40,14 @@ assert.ok(tree.children.find(x=>x.label==='Interfaces').children.at(-1).children
 const store=read('../src/stores/useEditorStore.js');
 assert.match(store,/interfaceDirection:direction/);
 assert.match(store,/interfaceDirection:legacyDirectionFromName\(op.name\)/);
-for (const path of ['../src/components/ContractGraph.jsx','../src/components/DesignDetails.jsx']) {
+for (const path of ['../src/components/service/ContractGraph.jsx','../src/components/DesignDetails.jsx']) {
   const ui=read(path);
-  assert.match(ui,/name="direction"/);
-  assert.match(ui,/name="actor"/);
+  assert.match(ui,/OperationFields/);
   assert.doesNotMatch(ui,/actorForOperation/);
 }
+const fields=read('../src/components/service/OperationFields.jsx');
+assert.match(fields,/name="direction"/);
+assert.match(fields,/name="actor"/);
 console.log('PASS independent Interface INPUT/OUTPUT, Query INPUT, migration, persistence and UI actor separation');
 
 import { useEditorStore } from '../src/stores/useEditorStore.js';

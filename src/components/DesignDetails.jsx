@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Alert, Button, Divider, Form, Input, InputNumber, Modal, Select, Space, Table, Tag, Typography, message, Descriptions } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useEditorStore } from '../stores/useEditorStore.js';
+import { OperationFields, OPERATION_DEFAULT_VALUES } from './service/OperationFields.jsx';
 
 import { deriveEndpoints } from '../logic/endpoints.js';
 const { Text, Title } = Typography;
@@ -127,21 +128,10 @@ export function CustomServiceEditor({service}) {
         if(ok){setEditing(null);form.resetFields();message.success('Custom Contract를 확장했습니다.');}else message.error('중복 또는 잘못된 정의입니다.');
       }catch{}
     }}>
-      <Form form={form} layout="vertical" key={`${service.id}-${editing}`} initialValues={{action:'publish',direction:'output',actor:'provider',optionalConsumer:false}}>
+      <Form form={form} layout="vertical" key={`${service.id}-${editing}`} initialValues={OPERATION_DEFAULT_VALUES}>
         <Form.Item name="name" label={editing==='message'?'IDL Data Type 이름':editing==='topic'?'Topic 이름':'Operation 이름'} rules={[{required:true},{pattern:/^[A-Za-z_][A-Za-z0-9_]*$/}]}><Input placeholder={editing==='message'?'CustomSensorReportType':editing==='topic'?'CustomSensorReportType':'reportCustomSensor'}/></Form.Item>
         {editing==='topic'&&<Form.Item name="typeId" label="Topic에서 전달할 Data Type" rules={[{required:true}]}><Select showSearch optionFilterProp="label" options={ownMessageTypes.map(m=>({label:m.name,value:m.id}))}/></Form.Item>}
-        {editing==='operation'&&<>
-          <Form.Item name="topicId" label="DDS Topic" rules={[{required:true}]}><Select showSearch optionFilterProp="label" options={ownedTopics.map(t=>({label:t.name,value:t.id})).concat(s.topics.filter(t=>!ownedTopics.includes(t)&&ownMessageTypes.some(m=>m.id===t.messageTypeId)).map(t=>({label:t.name,value:t.id})))}/></Form.Item>
-          <Form.Item name="action" label="DDS Action"><Select options={['publish','subscribe','dispose'].map(x=>({label:x,value:x}))}/></Form.Item>
-          <Form.Item name="direction" label="Interface Direction · Provider 기준" rules={[{required:true}]}><Select options={[
-            {label:'INPUT · Consumer → Provider',value:'input'},
-            {label:'OUTPUT · Provider → Consumer',value:'output'},
-          ]}/></Form.Item>
-          <Form.Item name="actor" label="DDS Actor (독립 지정)" rules={[{required:true}]}><Select options={[
-            {label:'Consumer',value:'consumer'},{label:'Provider',value:'provider'},
-          ]}/></Form.Item>
-          <Text type="secondary" className="small-hint">INPUT/OUTPUT은 계약 방향이며 DDS Publish/Subscribe와 별도로 지정합니다.</Text>
-        </>}
+        {editing==='operation'&&<OperationFields topics={ownedTopics.concat(s.topics.filter(t=>!ownedTopics.includes(t)&&ownMessageTypes.some(m=>m.id===t.messageTypeId)))}/>}
       </Form>
     </Modal>
   </>;

@@ -39,14 +39,16 @@ assert.match(cssSource,/selectedKeys/);
 assert.match(readFileSync(new URL('../src/App.jsx',import.meta.url),'utf8'),/serviceCategory: 'control'/);
 console.log('PASS three-model Explorer, ICD references, direction grouping, Service Type creation wiring');
 
-const sourceGraph=readFileSync(new URL('../src/components/ContractGraph.jsx',import.meta.url),'utf8');
+const sourceGraph=readFileSync(new URL('../src/components/service/ContractGraph.jsx',import.meta.url),'utf8');
 const sourceDetails=readFileSync(new URL('../src/components/DesignDetails.jsx',import.meta.url),'utf8');
-for (const source of [sourceGraph,sourceDetails]) {
-  assert.match(source,/name="direction"/);
+const sharedOperationFields=readFileSync(new URL('../src/components/service/OperationFields.jsx',import.meta.url),'utf8');
+for(const source of [sourceGraph,sourceDetails]) {
+  assert.match(source,/OperationFields/);
   assert.match(source,/v.actor/);
   assert.match(source,/v.direction/);
-  assert.match(source,/name="actor" label="DDS Actor/);
 }
+assert.match(sharedOperationFields,/name="direction"/);
+assert.match(sharedOperationFields,/name="actor" label="DDS Actor/);
 
 const operationEditor=readFileSync(new URL('../src/components/ContractWorkbench.jsx',import.meta.url),'utf8');
 const inspector=readFileSync(new URL('../src/components/ContextProperties.jsx',import.meta.url),'utf8');
