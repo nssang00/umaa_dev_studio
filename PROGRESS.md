@@ -255,3 +255,10 @@
 - Preserved ellipsis on long labels, optional badges/add buttons, selection handling, and Services/Components tabs. No domain model, persistence, or API changes.
 - Added static regression assertions in `test:explorer-dds` for inline layout and overflow handling; full CI verification required before merge.
 - Narrow-pane browser visual/interaction validation at 210–480px remains outstanding; CSS regression tests alone cannot prove browser appearance.
+
+## 2026-11-07 — Explorer tree expand (+) / icon spacing
+
+- Reduced the ProjectModelExplorer tree's icon slot to 18px and left-aligned the icon glyph so it sits closer to the preceding expansion (+) control.
+- Left Ant Design's switcher size, indentation, selection, title ellipsis and right-side create (+) buttons untouched. No model, persistence or endpoint changes.
+- Updated `test:explorer-dds` source/style regression expectations. Full `npm test` and `npm run build` require CI verification before merge.
+- The exact apparent spacing and clicking at narrow Explorer widths remain unverified in a live browser; static CSS assertions alone are not browser visual/E2E proof.

@@ -497,7 +497,8 @@ body { color: #26364a; }
 .project-explorer-tabs .ant-tabs-tab {font-size:12px;padding:7px 5px!important;}
 .project-explorer-search {display:flex;align-items:center;gap:6px;margin:5px 4px 9px;}
 .project-explorer-search .ant-input-search {flex:1;min-width:0;margin:0;}
-.project-explorer-tree .ant-tree-iconEle {flex:0 0 auto;color:#6485a9;display:inline-flex;align-items:center;justify-content:center;}
+/* Tighten the expand (+) glyph-to-icon spacing without shrinking the switcher's hit box. */
+.project-explorer-tree .ant-tree-iconEle {flex:0 0 18px;width:18px;color:#6485a9;display:inline-flex;align-items:center;justify-content:flex-start;}
 /* Service-first Contract and Flow node presentation (DDS Mapping keeps legacy graph). */
 .contract-graph-mode-tabs {margin:0 0 4px;}
 .service-contract-node {background:#fff;border:1px solid #a9c4df;border-radius:11px;
