@@ -248,3 +248,10 @@
 - WorkspaceWorkbench, ContextProperties, ContractWorkbench and StudioNavigator now import the reorganized feature implementations directly; legacy root facades remain to protect external consumers.
 - Updated `docs/FRONTEND_ARCHITECTURE.md` with the feature tree and props/composition contract; `test:feature-composition` checks the new direct imports.
 - No model/schema changes. GitHub Actions test and build pending.
+
+## 2026-11-06 — Explorer Tree icon/label single-row fix
+
+- Scoped the Ant Design Tree layout fix to ProjectModelExplorer: its content wrapper is a flex row, icon is non-shrinking, and title consumes remaining width.
+- Preserved ellipsis on long labels, optional badges/add buttons, selection handling, and Services/Components tabs. No domain model, persistence, or API changes.
+- Added static regression assertions in `test:explorer-dds` for inline layout and overflow handling; full CI verification required before merge.
+- Narrow-pane browser visual/interaction validation at 210–480px remains outstanding; CSS regression tests alone cannot prove browser appearance.
