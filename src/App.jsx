@@ -2,8 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, Badge, Button, ConfigProvider, Divider, Dropdown, Flex, Form, Input, Layout, Modal, Select, Space, Spin, Table, Tabs, Tag, Tooltip, Typography, message } from 'antd';
 import { ApiOutlined, ApartmentOutlined, AppstoreOutlined, CloudDownloadOutlined, DatabaseOutlined, DownloadOutlined, FileAddOutlined, PlusOutlined, ReloadOutlined, SaveOutlined, SafetyCertificateOutlined, ShareAltOutlined, UploadOutlined, FolderAddOutlined, ControlOutlined } from '@ant-design/icons';
 import { GenerationPanel } from './components/GenerationPanel.jsx';
-import { StudioShell } from './components/StudioShell.jsx';
-import { WorkbenchPanelRenderer } from './layouts/WorkbenchPanelRenderer.jsx';
+import { StudioLayout } from './layouts/studio/StudioLayout.jsx';
 import { validateWorkspace } from './logic/validation.js';
 import { SERVICE_CATEGORIES, FLOW_CONTROLS } from './model/icdConcepts.js';
 import { useEditorStore } from './stores/useEditorStore.js';
@@ -121,27 +120,23 @@ export default function App() {
           </Space>
         </Flex>
       </Header>
-      {!snapshot || loading ? <Content className="loading-content"><Spin size="large" tip="Mock 프로젝트 로딩 중"><div style={{ width: 300, height: 160 }}/></Spin></Content> : <StudioShell
-        explorer={<>
-          <WorkbenchPanelRenderer panelId="explorer" viewProps={{
-            onNewComponent: () => setComponentModal(true),
-            onNewService: () => setServiceModal(true),
-            onCreate: kind => kind === 'component' ? setComponentModal(true) : kind === 'service' ? setServiceModal(true) : setCreateKind(kind),
-          }}/>
-          <div className="side-footer"><Text type="secondary">Project 편집 가능 · 표준 ICD 읽기 전용</Text><br/><Text type="secondary" style={{fontSize:11}}>{canUseLocalStorage?'브라우저 Mock 저장소 · JSON 백업 지원':'localStorage 제한 · JSON 백업 권장'}</Text></div>
-        </>}
-        workbench={<WorkbenchPanelRenderer panelId="workbench" viewProps={{
+      {!snapshot || loading ? <Content className="loading-content"><Spin size="large" tip="Mock 프로젝트 로딩 중"><div style={{ width: 300, height: 160 }}/></Spin></Content> : <StudioLayout
+        explorerProps={{
+          onNewComponent: () => setComponentModal(true),
+          onNewService: () => setServiceModal(true),
+          onCreate: kind => kind === 'component' ? setComponentModal(true) : kind === 'service' ? setServiceModal(true) : setCreateKind(kind),
+          canUseLocalStorage,
+        }}
+        workbenchProps={{
           onNewComponent: () => setComponentModal(true),
           onNewService: () => setServiceModal(true),
           onGenerate: openGenerator,
           onCreate: setCreateKind,
-        }}/>}
-        bottomPanel={<WorkbenchPanelRenderer panelId="bottom"/>}
-        properties={<WorkbenchPanelRenderer panelId="properties" viewProps={{
+        }}
+        propertiesProps={{
           selection, project: snapshot.project, issues, onGenerate: openGenerator,
           onChangePlatform: changePlatform, onChangeVendor: changeVendor,
-        }}/>}
-
+        }}
       />}
     </Layout>
     <Modal title="새 Component 만들기" open={componentModal} okText="생성하고 시작" destroyOnClose onCancel={() => setComponentModal(false)} onOk={async () => {
