@@ -133,7 +133,10 @@ export function CustomServiceEditor({service}) {
         {editing==='operation'&&<>
           <Form.Item name="topicId" label="DDS Topic" rules={[{required:true}]}><Select showSearch optionFilterProp="label" options={ownedTopics.map(t=>({label:t.name,value:t.id})).concat(s.topics.filter(t=>!ownedTopics.includes(t)&&ownMessageTypes.some(m=>m.id===t.messageTypeId)).map(t=>({label:t.name,value:t.id})))}/></Form.Item>
           <Form.Item name="action" label="DDS Action"><Select options={['publish','subscribe','dispose'].map(x=>({label:x,value:x}))}/></Form.Item>
-          <Form.Item name="actor" label="Actor (Provider 기준 방향)"><Select options={['provider','consumer'].map(x=>({label:x,value:x}))}/></Form.Item>
+          <Form.Item name="direction" label="Interface Direction · Provider 기준" rules={[{required:true}]}><Select options={[
+            {label:'INPUT · Consumer → Provider',value:'input'},
+            {label:'OUTPUT · Provider → Consumer',value:'output'},
+          ]}/></Form.Item>
         </>}
       </Form>
     </Modal>

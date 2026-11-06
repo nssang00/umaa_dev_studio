@@ -129,3 +129,5 @@
 - ContractGraph shows separate INPUT/OUTPUT interface headers while retaining operation→action→topic→type links; Custom Service creation now accepts Service Type and Flow Control as separate values.
 - Built-in Flow Control Rules view labels the curated reference as partial. Legacy Asset Library views are retained for old selections but not duplicated in normal navigation.
 - Test `test:project-model`; full CI pending.
+
+- Checkpoint 1 repair: updated existing selection label regression to `Topic Relationships` and completed both Custom Operation modals' explicit INPUT/OUTPUT direction controls; Service Type and Flow selection are now distinct in the create dialog.

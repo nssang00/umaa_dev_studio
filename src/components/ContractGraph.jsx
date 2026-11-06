@@ -72,7 +72,11 @@ export function ContractGraph({serviceId}) {
         {dialog==='operation'&&<>
           <Form.Item name="topicId" label="DDS Topic" rules={[{required:true}]}><Select showSearch optionFilterProp="label" options={reusableTopics.map(t=>({label:t.name,value:t.id}))}/></Form.Item>
           <Form.Item name="action" label="DDS Action"><Select options={['publish','subscribe','dispose'].map(v=>({label:v,value:v}))}/></Form.Item>
-          <Form.Item name="actor" label="Actor"><Select options={['provider','consumer'].map(v=>({label:v,value:v}))}/></Form.Item>
+          <Form.Item name="direction" label="Interface Direction (Provider 기준)" rules={[{required:true}]}><Select options={[
+            {label:'INPUT · Consumer → Provider',value:'input'},
+            {label:'OUTPUT · Provider → Consumer',value:'output'},
+          ]}/></Form.Item>
+          <Typography.Text type="secondary" className="small-hint">Direction과 DDS Action으로 발행/구독 Actor가 결정됩니다. Query는 Consumer Subscribe이며 OUTPUT으로 분류합니다.</Typography.Text>
         </>}
       </Form>
     </Modal>

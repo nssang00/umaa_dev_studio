@@ -32,7 +32,8 @@ function AddCustomServiceModal({ open, onClose }) {
     <Form layout="vertical" form={form} initialValues={{ flow: 'command-response', area: 'CUSTOM', serviceCategory: 'control' }}>
       <Form.Item name="name" label="Service Name" rules={[{ required: true }, { pattern: /^[A-Za-z][A-Za-z0-9_]*$/, message: '영문자로 시작하는 이름을 사용하세요' }]}><Input placeholder="CustomSensorStatus"/></Form.Item>
       <Form.Item name="area" label="Functional Area 분류" rules={[{required:true}]}><Select options={[{value:'CUSTOM',label:'Project Extensions (독립)'},...(snapshot?.functionalAreas??[]).filter(a=>a.id!=='CUSTOM').map(a=>({value:a.id,label:`${a.id} — ${a.name} ${a.source==='custom'?'(Custom)':'(UMAA 분류 참조)'}`}))]}/></Form.Item>
-      <Form.Item name="flow" label="Flow Control · ICD §5 (Status/Report와 별개)"><Select options={[{ label: 'Request / Reply (구독 기반 조회 템플릿)', value: 'request-reply' }, { label: 'Command / Response (명령/상태 템플릿)', value: 'command-response' }]}/></Form.Item>
+      <Form.Item name="serviceCategory" label="Service Type" rules={[{required:true}]}><Select options={SERVICE_CATEGORIES}/></Form.Item>
+      <Form.Item name="flow" label="Flow Control · ICD §5" rules={[{required:true}]}><Select options={FLOW_CONTROLS}/></Form.Item>
     </Form>
   </Modal>;
 }

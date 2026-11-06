@@ -39,3 +39,11 @@ assert.match(cssSource,/onCreate/);
 assert.match(cssSource,/selectedKeys/);
 assert.match(readFileSync(new URL('../src/App.jsx',import.meta.url),'utf8'),/serviceCategory: 'control'/);
 console.log('PASS three-model Explorer, ICD references, direction grouping, Service Type creation wiring');
+
+const sourceGraph=readFileSync(new URL('../src/components/ContractGraph.jsx',import.meta.url),'utf8');
+const sourceDetails=readFileSync(new URL('../src/components/DesignDetails.jsx',import.meta.url),'utf8');
+for (const source of [sourceGraph,sourceDetails]) {
+  assert.match(source,/name="direction"/);
+  assert.match(source,/actorForOperation\(v.direction,v.action\)/);
+  assert.doesNotMatch(source,/name="actor" label="Actor/);
+}

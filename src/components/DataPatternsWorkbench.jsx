@@ -21,7 +21,7 @@ export function DataPatternsWorkbench(){
   },[s]);
   const topics=s?.topics??[],rels=s?.topicRelations??[];
   return <div className="center-workbench">
-    <div className="editor-heading"><div><Text className="editor-eyebrow" type="secondary">UMAA ICD §3.8 / §3.9</Text><h2>Data Patterns · Topic Relationships</h2></div><Button icon={<PlusOutlined/>} type="primary" onClick={()=>setModal(true)}>관계 생성</Button></div>
+    <div className="editor-heading"><div><Text className="editor-eyebrow" type="secondary">UMAA ICD §3.8 / §3.9</Text><h2>Topic Relationships · Data Patterns</h2></div><Button icon={<PlusOutlined/>} type="primary" onClick={()=>setModal(true)}>관계 생성</Button></div>
     <Alert showIcon type="info" message="Data Modeling Patterns는 Flow Control 종류가 아닙니다." description="Large Collections는 Metadata / Element Topic 쌍을, Generalization / Specialization은 타입 관계와 서로 다른 Topic의 동기화 메타데이터를 다룹니다. Topic 관계도와 UML Type Diagram을 함께 확인하세요."/>
     <div className="data-pattern-graph" aria-label="Topic relationship diagram"><ReactFlow nodes={graph.nodes} edges={graph.edges} onNodeDoubleClick={(_,node)=>select({kind:'topic',id:node.id})} nodesDraggable={false} nodesConnectable={false} fitView proOptions={{hideAttribution:true}}><Background gap={18} color="#dce6f2"/><Controls showInteractive={false}/></ReactFlow></div>
     <Table rowKey="id" size="small" pagination={false} dataSource={rels} columns={[
