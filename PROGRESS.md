@@ -147,3 +147,11 @@
 - Service Contract Operation table and right Properties display canonical Provider-facing Interface Direction; Service Properties list Service Type and Flow Control separately.
 - New `docs/ICD_SERVICE_SYSTEM_EXPLORER.md` documents model boundaries, read-only curated catalog status, logical DDS topology, Endpoint QoS inheritance and persistent schema, migration and missing DDS execution/compatibility layers.
 - Updated outdated QoS scope note in `PROJECT.md`; full CI pending.
+
+## 2026-11-06 — three-model IDE workspace merged and verified
+
+- [PR #6](https://github.com/nssang00/umaa_dev_studio/pull/6) squash-merged into `main` as [974d26e](https://github.com/nssang00/umaa_dev_studio/commit/974d26e70c1959208a2c66c0d3e9d59ca0f60622).
+- Final PR-head Actions [42141554498](https://github.com/nssang00/umaa_dev_studio/actions/runs/42141554498): **SUCCESS**.
+- Post-merge Actions [42141664951](https://github.com/nssang00/umaa_dev_studio/actions/runs/42141664951): **SUCCESS** for full `npm test` including new Project Model and Endpoint QoS regressions, `npm run build`, and artifact upload.
+- User-facing: unified curated ICD Catalog / Project Service Model / System Model Explorer; INPUT/OUTPUT Service direction UI; logical DDS DataWriter/Reader topology and Endpoint QoS design overrides; unified right Properties.
+- Browser-level actual interactions and visual layout of large tree/DDS graph remain unverified. Complete UMAA ICD import, normative IDL, DDS runtime entity creation, policy merging and Requested/Offered verification remain future work.
