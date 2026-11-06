@@ -139,3 +139,5 @@
 - New DDS Configuration overview workbench lists all derived endpoints and offers direct inspector selection and per-Component Runtime editing.
 - Explicit validation for malformed QoS refs and orphaned Endpoint configs; JSON import/export round-trips, and design-only metadata `contracts/endpoint-qos-design.json` in generated scaffold.
 - New `test:endpoint-config`; full Actions CI pending, browser interaction E2E not run. No DDS SDK application or Requested/Offered check.
+
+- DDS checkpoint regression update: existing channel graph expectation now checks 3 nodes and 4 edges per Topic, including both endpoints; the old 1 Topic-node + 2 edges check no longer described the new projection.
