@@ -225,3 +225,11 @@
 - Moved nested QoS Section/Policy/Field controls, Profile metadata and QoS Properties implementations into `components/qos/`, maintaining root re-export paths.
 - QoS profile diagram now imports siblings; shared `ModelPropertiesPanel` owns common inspector eyebrow, title and content shell.
 - Added `tests/qos-components-architecture.test.mjs`; Actions full suite/build follows.
+
+
+## 2026-11-06 — Explorer and DDS feature grouping (checkpoint 2b)
+
+- Moved ProjectModelExplorer into `components/explorer/`; moved DDS configuration, communication visualization and Endpoint Properties into `components/dds/`.
+- Existing root import paths remain forwarding exports for incremental consumers.
+- DDS Communication now uses shared React Flow canvas; Endpoint Properties uses shared Inspector frame, preserving domain-specific QoS selection.
+- Updated source-wiring regressions and added `test:explorer-dds`; Actions full suite/build pending.

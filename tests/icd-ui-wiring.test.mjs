@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 const read=x=>readFileSync(new URL(x,import.meta.url),'utf8');
 const navigator=read('../src/components/StudioNavigator.jsx');
-const explorer=read('../src/components/ProjectModelExplorer.jsx');
+const explorer=read('../src/components/explorer/ProjectModelExplorer.jsx');
 const workspace=read('../src/components/WorkspaceWorkbench.jsx');
 const app=read('../src/App.jsx');
 const library=read('../src/components/AssetLibraryWorkbench.jsx');

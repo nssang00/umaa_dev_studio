@@ -32,7 +32,7 @@ assert.ok(ddsDesignPreflight(mismatch).some(i=>i.code==='DDS_DOMAIN_MISMATCH'));
 mismatch.componentRuntime[ch.readerComponentId].partition='Other';
 assert.ok(ddsDesignPreflight(mismatch).some(i=>i.code==='DDS_PARTITION_MISMATCH'));
 assert.ok(ddsDesignPreflight(s).every(i=>i.severity==='warning'));
-const dds=read('../src/components/DdsConfigurationWorkbench.jsx');
+const dds=read('../src/components/dds/DdsConfigurationWorkbench.jsx');
 for(const p of ['deployment','topics','endpoints','preflight','RuntimeSettings','ddsDesignPreflight'])
   assert.ok(dds.includes(p),'missing central DDS section '+p);
 const journey=read('../src/components/assembly/ComponentJourney.jsx');

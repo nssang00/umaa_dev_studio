@@ -33,7 +33,7 @@ const found=projectModelTree(s,'Command / Response');
 assert.ok(expandedTreeKeys(found).length>0);
 const allOps=roots[0].children.find(x=>x.label==='Operations').children;
 assert.ok(allOps.every(n=>n.selection?.kind==='operation'));
-const cssSource=readFileSync(new URL('../src/components/ProjectModelExplorer.jsx',import.meta.url),'utf8');
+const cssSource=readFileSync(new URL('../src/components/explorer/ProjectModelExplorer.jsx',import.meta.url),'utf8');
 assert.match(cssSource,/onCreate/);
 assert.match(cssSource,/selectedKeys/);
 assert.match(readFileSync(new URL('../src/App.jsx',import.meta.url),'utf8'),/serviceCategory: 'control'/);
