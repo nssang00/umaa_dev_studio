@@ -16,10 +16,10 @@ The legacy Asset Library / Advanced Model Explorer views are retained internally
 
 - **Service Type** (Control / Config / Specs / Status·Report / Other) is separate from **Flow Control** (Command / Response or Request / Reply).
 - The Custom Service creation dialog captures both. It still seeds an editable project-owned contract template, never an official ICD contract.
-- A Provider-facing contract groups Operations into **INPUT / To Provider** and **OUTPUT / From Provider**:
-  - \`publish\` and \`dispose\`: a Consumer actor gives INPUT, a Provider actor gives OUTPUT.
-  - \`subscribe\`: a Consumer actor is OUTPUT (it subscribes to the Provider report Topic); a Provider actor is INPUT.
-- The Custom Operation creation dialog asks for Interface Direction plus DDS Action and derives the stored \`actor\` so the wire semantics stay consistent. The existing Operation data format remains compatible and its Interface direction is a projection.
+- Provider-facing **INPUT / To Provider** and **OUTPUT / From Provider** are independent persisted \`operation.interfaceDirection\` values, not functions of DDS actions or actors.
+- A Consumer's \`queryXXX\` can be **INPUT** even when its DDS action is **Subscribe** on a Provider report Topic. \`setXXX\` and \`cancelXXX\` are generally INPUT; \`reportXXX\` generally OUTPUT in the curated seed.
+- The curated seed stores direction classifications; they are **partial sample classifications**, not normative complete ICD imports. Old project JSON receives a name-based migration hint for conventional \`set/query/cancel/report\` names; unfamiliar names become unclassified and require user review.
+- Custom Operation create/edit uses a separate Interface Direction field and DDS Actor field. Editing the direction does **not** change the Actor, DDS Action, Topic or service binding.
 - Query without request data is normally subscription, not creation of a separate Query DDS Topic. Cancel is Dispose against an existing command instance; these are **not additional Topic resources** by default.
 - ContractGraph keeps Operation → Action → Topic → Data Type mappings. It adds labels for INPUT/OUTPUT; no claimed normative Interface identifier is created.
 
@@ -58,3 +58,11 @@ Both sides explicitly label DataWriter or DataReader for each Topic. This is a *
 ## Verification and explicit limits
 
 The new model and UI wiring tests cover three Explorer roots, source references, INPUT/OUTPUT derivation, graph projections, Endpoint override persistence, invalid reference rejection, migration and emitted metadata. Full \`npm test\` and \`npm run build\` are required to pass on GitHub Actions before merging. Actual browser click/keyboard/accessibility E2E is **not covered** by these tests. DDS middleware, official ICD catalog import, complete schema, code generation of working DDS entities and compatibility checks remain outside the implemented scope.
+
+## 2026-11-06 — UX follow-up: central DDS design and checks
+
+- **Component Journey** presents Service Provider/Consumer assignment first and an optional collapsed auto-derived Writer/Reader preview. There is no required step to manually create DDS entities.
+- **DDS Configuration** is a single advanced System Model workbench: Deployment/Participant *design overview*, Topic References, Generated Endpoints, and Design Checks. Component Runtime is editable from Deployment; per-endpoint QoS overrides remain in selected Endpoint Properties.
+- This workbench does **not** add global mutable Participant objects or a deployment schema. Existing Domain/Partition/QoS defaults are stored per Component as before. Creating DDS entities via a middleware SDK is out of scope.
+- **Design Checks** provide conservative *warnings* only for simple Domain ID/Partition conflicts and a subset of Writer/Reader Requested/Offered Reliability, Durability, Deadline comparisons. No DDS full partition patterns, profile merging, actual matching, QoS lifecycle or runtime vendor semantics are verified.
+

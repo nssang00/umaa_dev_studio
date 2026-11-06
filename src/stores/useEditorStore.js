@@ -334,6 +334,18 @@ export const useEditorStore = create((set, get) => ({
         set({ selection: { kind: 'operation', id: op.id } });
         return true;
     },
+    updateCustomOperationDirection(operationId, interfaceDirection) {
+        const s=get().snapshot;
+        const op=s?.operations.find(o=>o.id===operationId);
+        const svc=s?.services.find(v=>v.id===op?.serviceId);
+        if(!op || svc?.source!=='custom' || !INTERFACE_DIRECTIONS.includes(interfaceDirection))return false;
+        if(op.interfaceDirection===interfaceDirection)return true;
+        update(set, old=>({
+            ...old,operations:old.operations.map(o=>o.id===operationId?
+                {...o,interfaceDirection,interfaceDirectionSource:'user'}:o),
+        }));
+        return true;
+    },
     updateCustomOperationTopic(operationId, topicId) {
         const s=get().snapshot;
         const op=s?.operations.find(o=>o.id===operationId);

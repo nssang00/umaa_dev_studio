@@ -85,10 +85,15 @@ export function TopicWorkbench({topicId}) {
 }
 export function OperationWorkbench({operationId}) {
   const s=useEditorStore(x=>x.snapshot);const select=useEditorStore(x=>x.select);
+  const updateDirection=useEditorStore(x=>x.updateCustomOperationDirection);
   const op=s?.operations.find(o=>o.id===operationId); if(!op)return <Empty/>;
   const svc=s.services.find(v=>v.id===op.serviceId);const topic=s.topics.find(t=>t.id===op.topicId);const type=s.messages.find(t=>t.id===topic?.messageTypeId);
   return <div className="center-workbench"><div className="editor-heading"><div><Text type="secondary" className="editor-eyebrow">DDS ACTION / OPERATION</Text><h2>{op.name}</h2></div><Button icon={<ArrowLeftOutlined/>} onClick={()=>select({kind:'service',id:op.serviceId})}>Service</Button></div>
-    <Descriptions bordered column={1}><Descriptions.Item label="Service"><Button type="link" onClick={()=>select({kind:'service',id:svc?.id})}>{svc?.name}</Button></Descriptions.Item><Descriptions.Item label="Interface Direction">{serviceOperationDirection(op)?.toUpperCase()??'—'} · Provider 기준</Descriptions.Item><Descriptions.Item label="Actor"><Tag>{op.actor}</Tag></Descriptions.Item><Descriptions.Item label="DDS Action"><Tag>{op.action}</Tag></Descriptions.Item><Descriptions.Item label="Topic"><Button type="link" onClick={()=>topic&&select({kind:'topic',id:topic.id})}>{topic?.name}</Button></Descriptions.Item><Descriptions.Item label="Data Type"><Button type="link" onClick={()=>type&&select({kind:'message',id:type.id})}>{type?.name}</Button></Descriptions.Item></Descriptions>
+    <Descriptions bordered column={1}><Descriptions.Item label="Service"><Button type="link" onClick={()=>select({kind:'service',id:svc?.id})}>{svc?.name}</Button></Descriptions.Item><Descriptions.Item label="Interface Direction">{svc?.source==='custom'?
+      <Select size="small" style={{minWidth:235}} value={serviceOperationDirection(op)??undefined}
+        placeholder="INPUT/OUTPUT 선택" onChange={value=>updateDirection(op.id,value)}
+        options={[{label:'INPUT · To Provider',value:'input'},{label:'OUTPUT · From Provider',value:'output'}]}/>:
+      (serviceOperationDirection(op)?.toUpperCase()??'확인 필요')+' · Provider 기준'}</Descriptions.Item><Descriptions.Item label="Actor"><Tag>{op.actor}</Tag></Descriptions.Item><Descriptions.Item label="DDS Action"><Tag>{op.action}</Tag></Descriptions.Item><Descriptions.Item label="Topic"><Button type="link" onClick={()=>topic&&select({kind:'topic',id:topic.id})}>{topic?.name}</Button></Descriptions.Item><Descriptions.Item label="Data Type"><Button type="link" onClick={()=>type&&select({kind:'message',id:type.id})}>{type?.name}</Button></Descriptions.Item></Descriptions>
     <Alert style={{marginTop:16}} type="info" showIcon message="Operation ≠ 새 DDS Topic" description="subscribe는 Topic 구독, dispose는 기존 Command 인스턴스 정리를 의미합니다. 별도 Query/Cancel Topic은 생성하지 않습니다."/>
   </div>;
 }

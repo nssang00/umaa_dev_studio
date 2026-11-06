@@ -47,3 +47,24 @@ for (const path of ['../src/components/ContractGraph.jsx','../src/components/Des
   assert.doesNotMatch(ui,/actorForOperation/);
 }
 console.log('PASS independent Interface INPUT/OUTPUT, Query INPUT, migration, persistence and UI actor separation');
+
+import { useEditorStore } from '../src/stores/useEditorStore.js';
+const customService={...svc,id:'service-custom-dir',name:'CustomDirectionTest',source:'custom'};
+const customOp={...query,id:'operation-custom-dir',serviceId:customService.id,name:'queryCustomSignal',
+  interfaceDirection:null,interfaceDirectionSource:'unspecified'};
+const customSnapshot={...structuredClone(s),services:[...s.services,customService],
+  operations:[...s.operations,customOp]};
+useEditorStore.setState({snapshot:customSnapshot,dirty:false});
+assert.equal(useEditorStore.getState().updateCustomOperationDirection(customOp.id,'sideways'),false);
+assert.equal(useEditorStore.getState().updateCustomOperationDirection(query.id,'output'),false,'standard cannot be mutated');
+assert.equal(useEditorStore.getState().updateCustomOperationDirection(customOp.id,'input'),true);
+assert.equal(useEditorStore.getState().snapshot.operations.find(x=>x.id===customOp.id).interfaceDirection,'input');
+assert.equal(useEditorStore.getState().snapshot.operations.find(x=>x.id===customOp.id).interfaceDirectionSource,'user');
+assert.equal(useEditorStore.getState().dirty,true);
+assert.equal(useEditorStore.getState().updateCustomOperationDirection(customOp.id,'input'),true,'no-op is allowed');
+assert.equal(customSnapshot.operations.find(x=>x.id===customOp.id).interfaceDirection,null,'original immutable');
+for(const path of ['../src/components/ContractWorkbench.jsx','../src/components/ContextProperties.jsx']){
+  const ui=read(path);
+  assert.match(ui,/updateCustomOperationDirection/);
+  assert.match(ui,/INPUT\/OUTPUT|INPUT · To Provider/);
+}

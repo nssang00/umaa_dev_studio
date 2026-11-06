@@ -175,3 +175,10 @@
 - Component Journey defaults to Service Provider/Consumer assembly, with collapsed auto-derived Endpoint preview. Generation step, Component Properties and advanced Component tab link to central DDS Configuration (optionally prefiltered by Component), rather than duplicating inline settings.
 - Standard catalog, ContractGraph, Model storage and per-endpoint QoS selection remain separate, preserving existing Service/Binding relationships.
 - Full test and build CI pending; browser UX verification pending.
+
+## 2026-11-06 — Custom Operation post-create direction editing & docs
+
+- Added narrow atomic `updateCustomOperationDirection` for custom-only Operations, with no-op, invalid-value and standard-source protection.
+- Operation Workbench and right Properties now allow editing INPUT/OUTPUT without mutating DDS Actor, Action or Topic. Unclassified legacy custom operations can be reviewed.
+- Updated `docs/ICD_SERVICE_SYSTEM_EXPLORER.md` and `PROJECT.md` to state independent direction semantics and central DDS limitations.
+- Full CI / React build pending.
