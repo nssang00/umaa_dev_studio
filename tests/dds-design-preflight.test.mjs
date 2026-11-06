@@ -35,7 +35,7 @@ assert.ok(ddsDesignPreflight(s).every(i=>i.severity==='warning'));
 const dds=read('../src/components/DdsConfigurationWorkbench.jsx');
 for(const p of ['deployment','topics','endpoints','preflight','RuntimeSettings','ddsDesignPreflight'])
   assert.ok(dds.includes(p),'missing central DDS section '+p);
-const journey=read('../src/components/ComponentJourney.jsx');
+const journey=read('../src/components/assembly/ComponentJourney.jsx');
 assert.match(journey,/자동 DDS Endpoint 미리보기/);
 assert.match(journey,/kind:'ddsConfig',id:'project',componentId:component.id/);
 assert.doesNotMatch(journey,/<RuntimeSettings componentId=/);
