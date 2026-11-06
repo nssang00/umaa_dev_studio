@@ -233,3 +233,10 @@
 - Existing root import paths remain forwarding exports for incremental consumers.
 - DDS Communication now uses shared React Flow canvas; Endpoint Properties uses shared Inspector frame, preserving domain-specific QoS selection.
 - Updated source-wiring regressions and added `test:explorer-dds`; Actions full suite/build pending.
+
+
+## 2026-11-06 — Type/Struct feature grouping (checkpoint 3)
+
+- Moved TypeWorkbench, TypeProperties, StructPropertiesEditor, StructFieldAccordionList, StructFieldEditor implementations into `components/types/`, beside existing TypeGraph. Original imports now re-export including `renderIdlPreview`.
+- Preserved Form.List draft semantics and atomic Struct validation; only implementation paths and inter-feature imports changed.
+- Updated existing source-scanning tests and added `test:type-components`. Full test/build CI pending.

@@ -33,9 +33,9 @@ assert.equal(editStructDefinition(snapshot,'message',source.id,{
 }),null);
 assert.equal(snapshot.messages.find(t=>t.id===source.id).name,source.name);
 
-const parent=read('../src/components/StructPropertiesEditor.jsx');
-const list=read('../src/components/StructFieldAccordionList.jsx');
-const field=read('../src/components/StructFieldEditor.jsx');
+const parent=read('../src/components/types/StructPropertiesEditor.jsx');
+const list=read('../src/components/types/StructFieldAccordionList.jsx');
+const field=read('../src/components/types/StructFieldEditor.jsx');
 assert.match(parent,/StructFieldAccordionList/);
 assert.match(parent,/Form.List name="fields"/);
 assert.match(parent,/Struct 전체 저장/);
