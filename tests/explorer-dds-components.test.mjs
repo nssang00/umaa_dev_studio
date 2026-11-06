@@ -25,11 +25,11 @@ const expectTreeStyle=(selector, declaration)=>{
   assert.ok(rule, 'Missing CSS rule: '+selector);
   assert.match(rule, declaration, 'Unexpected CSS for '+selector);
 };
-expectTreeStyle('.project-explorer-tree .ant-tree-node-content-wrapper', /display\\s*:\\s*flex/);
-expectTreeStyle('.project-explorer-tree .ant-tree-node-content-wrapper', /align-items\\s*:\\s*center/);
-expectTreeStyle('.project-explorer-tree .ant-tree-title', /flex\\s*:\\s*1/);
-expectTreeStyle('.project-explorer-tree .ant-tree-iconEle', /flex\\s*:\\s*0\\s+0\\s+auto/);
-expectTreeStyle('.project-explorer-row', /white-space\\s*:\\s*nowrap/);
-expectTreeStyle('.project-explorer-label', /text-overflow\\s*:\\s*ellipsis/);
+expectTreeStyle('.project-explorer-tree .ant-tree-node-content-wrapper', /display\s*:\s*flex/);
+expectTreeStyle('.project-explorer-tree .ant-tree-node-content-wrapper', /align-items\s*:\s*center/);
+expectTreeStyle('.project-explorer-tree .ant-tree-title', /flex\s*:\s*1/);
+expectTreeStyle('.project-explorer-tree .ant-tree-iconEle', /flex\s*:\s*0\s+0\s+auto/);
+expectTreeStyle('.project-explorer-row', /white-space\s*:\s*nowrap/);
+expectTreeStyle('.project-explorer-label', /text-overflow\s*:\s*ellipsis/);
 
 console.log('PASS grouped Explorer/DDS components with shared graph and Properties');
