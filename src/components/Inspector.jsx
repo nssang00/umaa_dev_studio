@@ -114,13 +114,9 @@ export function Inspector() {
             })}
         <Button block icon={<PlusOutlined />} onClick={() => { bindingForm.resetFields(); setBindingModal(true); }}>Service Binding 추가</Button>
       </Space>
-      <Divider orientation="left">DDS Endpoints (파생)</Divider>
-      <Table size="small" pagination={false} rowKey={e => `${e.bindingId}-${e.direction}-${e.topicName}`} dataSource={deriveEndpoints(s, component.id)} columns={[
-                { title: 'Topic', dataIndex: 'topicName', ellipsis: true },
-                { title: '방향', dataIndex: 'direction', width: 82, render: (v) => <Tag color={v === 'writer' ? 'blue' : 'orange'}>{v}</Tag> },
-            ]}/>
-      <Text type="secondary" className="small-hint">Writer/Reader는 Service의 Operation과 P/C 역할에서 자동 계산합니다. 실제 DDS 엔티티는 아직 생성되지 않습니다.</Text>
-      <RuntimeSettings componentId={component.id}/>
+      <Divider orientation="left">Auto DDS Mapping</Divider>
+      <Text type="secondary" className="small-hint">{deriveEndpoints(s, component.id).length}개 DataWriter/DataReader 설계 Endpoint가 Service Binding에서 자동 도출됩니다.</Text>
+      <Button size="small" block onClick={()=>select({kind:'ddsConfig',id:'project',componentId:component.id})}>고급 DDS Configuration 열기</Button>
     </>}
 
     {service && <>

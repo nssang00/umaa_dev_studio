@@ -168,3 +168,10 @@
 - New `ddsDesignPreflight()` checks Domain, simple Component Partition, and selected Writer/Reader Reliability, Durability and Deadline cases on existing logical connections.
 - Findings are design warnings only and do not claim full DDS Requested/Offered compatibility; no SDK or Participant instances.
 - Added `test:dds-preflight`; deployment-centered UI updates follow in this PR.
+
+## 2026-11-06 — Central DDS advanced workspace & Lego Component UX (checkpoint 3)
+
+- Unified DDS advanced workspace sections: Deployment/Participant design overview, logical Topic References, automatically generated Writer/Reader Endpoint list and limited Design Checks; no change to componentRuntime schema.
+- Component Journey defaults to Service Provider/Consumer assembly, with collapsed auto-derived Endpoint preview. Generation step, Component Properties and advanced Component tab link to central DDS Configuration (optionally prefiltered by Component), rather than duplicating inline settings.
+- Standard catalog, ContractGraph, Model storage and per-endpoint QoS selection remain separate, preserving existing Service/Binding relationships.
+- Full test and build CI pending; browser UX verification pending.

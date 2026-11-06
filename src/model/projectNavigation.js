@@ -110,7 +110,7 @@ export function projectModelTree(s, query = '') {
         s.services.find(svc=>svc.id===s.bindings.find(b=>b.id===c.providerBindingId)?.serviceId)?.name??c.id,
         {kind:'connection',id:c.id}))),
     group('system-dds','DDS Configuration',[
-      item('system:ddsOverview','Endpoint / Domain / Partition overview',{kind:'ddsConfig',id:'project'}),
+      item('system:ddsOverview','Deployment / Topics / Endpoints / Checks',{kind:'ddsConfig',id:'project'}),
       group('system-qos','QoS Profiles',s.qosProfiles.map(q=>ref('system','qos',q)),'qos'),
       item('system:relations','Topic Relationships',{kind:'dataPatterns',id:'project'}),
     ]),

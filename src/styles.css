@@ -481,3 +481,13 @@ body { color: #26364a; }
 .dds-config-workbench .dds-config-filter {display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:16px 0 10px;}
 .dds-config-workbench .ant-table-row {cursor:pointer;}
 .dds-config-workbench .dds-overview-runtime {margin-top:22px;border-top:1px solid #e1e9f4;padding-top:9px;}
+
+/* Assembly stays Service-first; DDS details expand on demand. */
+.journey-derived-endpoints {display:flex;flex-direction:column;gap:7px;padding:2px 4px 12px;}
+.journey-derived-endpoint-row {display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:12px;}
+.journey-derived-endpoint-row .ant-tag {margin:0;}
+.journey-derived-endpoints > .ant-btn {align-self:flex-start;margin-top:5px;}
+.journey-advanced-dds {display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 6px;border-top:1px solid #e6edf5;margin-top:12px;}
+.journey-advanced-dds .ant-typography {flex:1;min-width:200px;}
+.dds-central-tabs {margin-top:16px;}
+.dds-central-tabs .ant-tabs-content-holder {min-height:280px;}

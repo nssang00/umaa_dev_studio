@@ -47,7 +47,12 @@ function ComponentWorkbench({component,onNewComponent}) {
       <Alert style={{marginTop:14}} showIcon type="info" message="Service Contract와 Component는 분리됩니다." description="공식 UMAA Service 패턴은 수정하지 않습니다. Component는 이를 제공하거나 소비하는 역할과 실행 설정을 선택합니다."/></div>}
     {tab==='assembly'&&<div className="canvas-section"><Diagram/></div>}
     {tab==='behavior'&&<div className="behavior-container"><BehaviorGraph componentId={component.id}/></div>}
-    {tab==='runtime'&&<div className="center-workbench assembly-details"><h2>{component.name} · DDS Runtime Configuration</h2><RuntimeSettings componentId={component.id}/></div>}
+    {tab==='runtime'&&<div className="center-workbench assembly-details">
+      <h2>{component.name} · DDS Configuration</h2>
+      <Alert type="info" showIcon message="프로젝트 공통 DDS Configuration에서 관리합니다."
+        description="Service Binding으로 Endpoint를 자동 도출합니다. 고급 Domain/Partition/QoS 설정은 해당 화면에서 재정의하세요."/>
+      <Button style={{marginTop:14}} onClick={()=>select({kind:'ddsConfig',id:'project',componentId:component.id})}>DDS Configuration 열기</Button>
+    </div>}
     <Modal title={`${component.name} · Service Binding 추가`} open={modal} onCancel={()=>setModal(false)} okText="바인딩 추가" onOk={()=>{
       if(!serviceId){message.warning('Service를 선택하세요.');return;}
       if(addBinding(component.id,serviceId,role)){setModal(false);message.success('Service 역할을 추가했습니다.');}else message.warning('이미 존재하는 Binding이거나 유효하지 않습니다.');
