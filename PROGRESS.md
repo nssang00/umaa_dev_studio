@@ -185,3 +185,12 @@
 
 - Code generation's machine-readable `contracts/service-operations.json` now exports Interface Direction and migration/source annotation separately from DDS Actor/Action; regression test verifies Consumer Query INPUT + Subscribe survives generation.
 - Corrected Markdown code spans in architecture notes.
+
+## 2026-11-06 — Interface direction / centralized DDS UX merged
+
+- [PR #7](https://github.com/nssang00/umaa_dev_studio/pull/7) squash merged into `main` as [734c49f](https://github.com/nssang00/umaa_dev_studio/commit/734c49f4c06cdc7e78db54c50b91c8c6b5fbb8e7).
+- Final PR Actions [42144793033](https://github.com/nssang00/umaa_dev_studio/actions/runs/42144793033): **SUCCESS** (all `npm test`, React build, artifact upload).
+- Post-merge Actions [42144891281](https://github.com/nssang00/umaa_dev_studio/actions/runs/42144891281): **SUCCESS** on merged app code.
+- Independent Service Interface INPUT/OUTPUT semantics and legacy name-based migration; standard read-only; custom create/edit with independent Actor/Action, and codegen contract metadata preserving direction.
+- Component-first Service assembly plus optional generated DDS Endpoint preview; central Deployment/Topic/Endpoint/Design Checks; limited static DDS mismatch warnings only.
+- Browser real-click/drag visual E2E was not run. Full DDS Requested/Offered checks, DDS SDK entities, all Participant and Publisher/Subscriber policy mapping, and authoritative complete UMAA ICD import remain out of scope.
