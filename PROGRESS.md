@@ -121,3 +121,11 @@
 - [PR head Actions 42054966263](https://github.com/nssang00/umaa_dev_studio/actions/runs/42054966263): **SUCCESS**.
 - [Post-merge Actions 42055125678](https://github.com/nssang00/umaa_dev_studio/actions/runs/42055125678): **SUCCESS**, complete `npm test` (including new `test:qos-interaction`), `npm run build` and artifact upload.
 - Browser-level direct click / input E2E is not run; pointer-event cause identified from React Flow source and regression statically checked against explicit wrapper-style override. Both QoS views share Zustand update actions and model.
+
+## 2026-11-06 — Model-workspace consolidation (checkpoint 1)
+
+- Unified default explorer into three independently scoped roots: curated read-only UMAA ICD Catalog; Project Service Model (custom and actively referenced standard Services); System Model (Components, Service Connections, DDS Configuration).
+- Pure `projectNavigation` builds tree, classifies Provider-facing INPUT/OUTPUT operations, and maps requested direction + DDS action to canonical actor without changing normative source data.
+- ContractGraph shows separate INPUT/OUTPUT interface headers while retaining operation→action→topic→type links; Custom Service creation now accepts Service Type and Flow Control as separate values.
+- Built-in Flow Control Rules view labels the curated reference as partial. Legacy Asset Library views are retained for old selections but not duplicated in normal navigation.
+- Test `test:project-model`; full CI pending.

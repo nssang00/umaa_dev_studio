@@ -5,6 +5,7 @@ import { GenerationPanel } from './components/GenerationPanel.jsx';
 import { StudioShell } from './components/StudioShell.jsx';
 import { WorkbenchPanelRenderer } from './layouts/WorkbenchPanelRenderer.jsx';
 import { validateWorkspace } from './logic/validation.js';
+import { SERVICE_CATEGORIES, FLOW_CONTROLS } from './model/icdConcepts.js';
 import { useEditorStore } from './stores/useEditorStore.js';
 import { canPersistLocally } from './repository/mockRepository.js';
 import './styles.css';
@@ -17,7 +18,7 @@ function AddCustomServiceModal({ open, onClose }) {
     return <Modal title="Custom Service 생성" open={open} okText="생성" onCancel={onClose} destroyOnClose onOk={async () => {
             try {
                 const v = await form.validateFields();
-                if (createService(v.name, v.flow, v.area)) {
+                if (createService(v.name, v.flow, v.area, v.serviceCategory)) {
                     message.success('Custom Service 및 메시지 정의를 생성했습니다.');
                     form.resetFields();
                     onClose();
@@ -28,7 +29,7 @@ function AddCustomServiceModal({ open, onClose }) {
             catch { /* validation */ }
         }}>
     <Alert type="info" showIcon message="Custom Service는 UMAA 표준 Service가 아닙니다." description="생성되는 IDL은 프로젝트 정의이며, 규격 준수는 별도 검토해야 합니다." style={{ marginBottom: 16 }}/>
-    <Form layout="vertical" form={form} initialValues={{ flow: 'request-reply', area: 'CUSTOM' }}>
+    <Form layout="vertical" form={form} initialValues={{ flow: 'command-response', area: 'CUSTOM', serviceCategory: 'control' }}>
       <Form.Item name="name" label="Service Name" rules={[{ required: true }, { pattern: /^[A-Za-z][A-Za-z0-9_]*$/, message: '영문자로 시작하는 이름을 사용하세요' }]}><Input placeholder="CustomSensorStatus"/></Form.Item>
       <Form.Item name="area" label="Functional Area 분류" rules={[{required:true}]}><Select options={[{value:'CUSTOM',label:'Project Extensions (독립)'},...(snapshot?.functionalAreas??[]).filter(a=>a.id!=='CUSTOM').map(a=>({value:a.id,label:`${a.id} — ${a.name} ${a.source==='custom'?'(Custom)':'(UMAA 분류 참조)'}`}))]}/></Form.Item>
       <Form.Item name="flow" label="Flow Control · ICD §5 (Status/Report와 별개)"><Select options={[{ label: 'Request / Reply (구독 기반 조회 템플릿)', value: 'request-reply' }, { label: 'Command / Response (명령/상태 템플릿)', value: 'command-response' }]}/></Form.Item>
@@ -104,7 +105,7 @@ export default function App() {
       <input ref={jsonInputRef} type="file" accept=".json,application/json" aria-label="프로젝트 JSON 가져오기" style={{ display: 'none' }} onChange={e => { void importJson(e.target.files?.[0]); }}/>
       <Header className="app-header">
         <Flex justify="space-between" align="center" gap={14} style={{ height: '100%' }}>
-          <Space size={12} align="center"><div className="app-logo"><ShareAltOutlined /></div><div><div className="app-title">UMAA Development Studio</div><div className="app-subtitle">Component 제작 · Asset Library · ICD Data Patterns</div></div></Space>
+          <Space size={12} align="center"><div className="app-logo"><ShareAltOutlined /></div><div><div className="app-title">UMAA Development Studio</div><div className="app-subtitle">Component · Service Contract · DDS Configuration</div></div></Space>
           <Space size={8} wrap>
             <Tag color="processing">{snapshot?.project.standardVersion ?? 'UMAA 6.0'}</Tag>
             <Tag color={dirty?'gold':'success'}>{dirty?'저장하지 않은 변경사항':'저장됨'}</Tag>

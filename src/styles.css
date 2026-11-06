@@ -461,3 +461,16 @@ body { color: #26364a; }
 .qos-properties .qos-policy-accordion > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box { padding:4px 3px 9px 9px !important; }
 .qos-properties .qos-policy-controls .ant-input-number { width:100%; }
 .qos-properties .small-hint { display:block; margin:8px 0; }
+
+/* Single VS-Code-style Explorer: Catalog, Service Model and System Model. */
+.project-model-explorer {padding:13px 8px 10px;gap:7px;min-width:0;}
+.project-model-explorer .navigator-kicker {padding-left:5px;}
+.project-model-explorer .ant-input-search {margin:4px 0 7px;}
+.project-explorer-tree {background:transparent;font-size:12px;min-width:0;}
+.project-explorer-tree .ant-tree-node-content-wrapper {min-width:0;overflow:hidden;}
+.project-explorer-tree .ant-tree-title {display:block;min-width:0;}
+.project-explorer-row {display:flex;align-items:center;gap:4px;min-width:0;width:100%;white-space:nowrap;}
+.project-explorer-label {overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1;}
+.project-explorer-badge {max-width:95px;overflow:hidden;text-overflow:ellipsis;font-size:10px;margin:0;color:#657b94;background:#f2f5f9;border-color:#e0e7ef;}
+.project-explorer-row .ant-btn {flex-shrink:0;width:24px;height:22px;}
+.project-model-explorer .navigator-bottom-hint {font-size:10px;padding:12px 5px 4px;}

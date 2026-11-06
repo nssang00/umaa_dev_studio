@@ -337,15 +337,16 @@ export const useEditorStore = create((set, get) => ({
         update(set, old=>({...old,operations:old.operations.filter(o=>o.id!==operationId),interfaces:old.interfaces.map(i=>({...i,operationIds:i.operationIds.filter(id=>id!==operationId)}))}));
         return true;
     },
-    addCustomService(name, flow, functionalArea = 'CUSTOM') {
+    addCustomService(name, flow, functionalArea = 'CUSTOM', serviceCategory = null) {
         const s = get().snapshot;
         const trimmed = name.trim();
         if (!s || !/^[A-Za-z][A-Za-z0-9_]*$/.test(trimmed) || s.services.some(x => x.name.toLowerCase() === trimmed.toLowerCase()))
             return false;
         if (functionalArea !== 'CUSTOM' && !s.functionalAreas.some(a => a.id === functionalArea)) return false;
+        if (!['request-reply','command-response'].includes(flow) || (serviceCategory && !['control','config','specs','status-report','other'].includes(serviceCategory))) return false;
         const sid = uuid();
         const namespace = `ProjectCustom::${trimmed}`;
-        const svc = { id: sid, name: trimmed, namespace, functionalArea, source: 'custom', version: '1.0', flowControl: flow, serviceCategory: /(?:Status|Report)$/.test(trimmed)?'status-report':flow==='command-response'?'control':'other', description: '사용자 정의 서비스 (UMAA 표준 서비스 아님)' };
+        const svc = { id: sid, name: trimmed, namespace, functionalArea, source: 'custom', version: '1.0', flowControl: flow, serviceCategory: serviceCategory || (/(?:Status|Report)$/.test(trimmed)?'status-report':flow==='command-response'?'control':'other'), description: '사용자 정의 서비스 (UMAA 표준 서비스 아님)' };
         const messages = [];
         const topics = [];
         const operations = [];

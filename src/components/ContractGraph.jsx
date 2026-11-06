@@ -3,6 +3,7 @@ import { Alert, Button, Form, Input, Modal, Select, Space, Tag, Typography, mess
 import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
 import { ReactFlow, Background, Controls, MiniMap } from '@xyflow/react';
 import { useEditorStore } from '../stores/useEditorStore.js';
+import { actorForOperation } from '../model/projectNavigation.js';
 import { serviceContractGraph, validateCustomContractLink } from '../logic/editorGraphs.js';
 import { StudioGraphNode } from './GraphNodes.jsx';
 const nodeTypes={studio:StudioGraphNode};
@@ -43,7 +44,7 @@ export function ContractGraph({serviceId}) {
   const handleSubmit=async()=>{
     try{
       const v=await form.validateFields();
-      const ok=dialog==='type'?addMessage(serviceId,v.name):dialog==='topic'?addTopic(serviceId,v.name,v.typeId):addOperation(serviceId,v.name,v.topicId,v.action,v.actor,Boolean(v.optionalConsumer));
+      const ok=dialog==='type'?addMessage(serviceId,v.name):dialog==='topic'?addTopic(serviceId,v.name,v.typeId):addOperation(serviceId,v.name,v.topicId,v.action,actorForOperation(v.direction,v.action),Boolean(v.optionalConsumer));
       if(!ok){message.error('ID 중복, Type/Topic 참조 오류 또는 유효하지 않은 이름입니다.');return;}
       setDialog(null);message.success('Custom Service 계약에 추가했습니다.');select({kind:'service',id:serviceId});
     }catch{}
@@ -65,7 +66,7 @@ export function ContractGraph({serviceId}) {
     </div>}
     <Alert type="info" showIcon style={{marginTop:10}} message="Operation과 DDS Topic은 항상 1:1이 아닙니다." description="UMAA에서 Query는 일반적으로 Subscribe, Cancel은 기존 Command 인스턴스 Dispose로 구현됩니다. Service 패턴은 역할 바인딩 시 자동 파생됩니다."/>
     <Modal open={!!dialog} title={`Custom ${dialog??''} 생성`} okText="계약에 추가" onOk={handleSubmit} onCancel={()=>setDialog(null)} destroyOnClose>
-      <Form form={form} layout="vertical" initialValues={{action:'publish',actor:'provider',optionalConsumer:false}}>
+      <Form form={form} layout="vertical" initialValues={{action:'publish',direction:'output',optionalConsumer:false}}>
         <Form.Item name="name" label="이름" rules={[{required:true},{pattern:idRx,message:'IDL 식별자 형식으로 입력하세요'}]}><Input placeholder={dialog==='type'?'NewSensorReportType':dialog==='topic'?'NewSensorReportTopic':'reportNewSensor'}/></Form.Item>
         {dialog==='topic'&&<Form.Item name="typeId" label="Data Type" rules={[{required:true}]}><Select showSearch optionFilterProp="label" options={ownedTypes.map(m=>({label:m.name,value:m.id}))}/></Form.Item>}
         {dialog==='operation'&&<>

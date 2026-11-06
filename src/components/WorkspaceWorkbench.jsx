@@ -11,6 +11,7 @@ import { BehaviorGraph } from './BehaviorGraph.jsx';
 import { ComponentJourney } from './ComponentJourney.jsx';
 import { AssetLibraryWorkbench } from './AssetLibraryWorkbench.jsx';
 import { DataPatternsWorkbench } from './DataPatternsWorkbench.jsx';
+import { FlowControlRulesWorkbench } from './FlowControlRulesWorkbench.jsx';
 import { deriveEndpoints } from '../logic/endpoints.js';
 const {Text}=Typography;
 
@@ -97,6 +98,7 @@ export function WorkspaceWorkbench({onNewComponent,onNewService,onGenerate,onCre
     <div className="canvas-section"><Diagram/></div></div>;
   if(kind==='assetLibrary')return <AssetLibraryWorkbench onCreate={onCreate} onNewService={onNewService}/>;
   if(kind==='dataPatterns')return <DataPatternsWorkbench/>;
+  if(kind==='flowRules')return <FlowControlRulesWorkbench ruleId={selection.id==='catalog'?null:selection.id}/>;
   if(kind==='connection')return <CommunicationView connectionId={selection.id} onBack={()=>select({kind:'diagram',id:'system'})}/>;
   if(kind==='service')return <ServiceWorkbench key={selection.id} serviceId={selection.id}/>;
   if(kind==='interface')return <ServiceWorkbench key={selection.id} serviceId={snapshot.interfaces.find(i=>i.id===selection.id)?.serviceId}/>;

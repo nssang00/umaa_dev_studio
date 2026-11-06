@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Alert, Button, Divider, Form, Input, InputNumber, Modal, Select, Space, Table, Tag, Typography, message, Descriptions } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useEditorStore } from '../stores/useEditorStore.js';
+import { actorForOperation } from '../model/projectNavigation.js';
 import { deriveEndpoints } from '../logic/endpoints.js';
 const { Text, Title } = Typography;
 const FIELD_TYPES = ['boolean','long','unsigned long','double','float','string'];
@@ -122,11 +123,11 @@ export function CustomServiceEditor({service}) {
       try{const v=await form.validateFields();let ok=false;
         if(editing==='message')ok=addType(service.id,v.name);
         if(editing==='topic')ok=addTopic(service.id,v.name,v.typeId);
-        if(editing==='operation')ok=addOp(service.id,v.name,v.topicId,v.action,v.actor,v.optionalConsumer);
+        if(editing==='operation')ok=addOp(service.id,v.name,v.topicId,v.action,actorForOperation(v.direction,v.action),v.optionalConsumer);
         if(ok){setEditing(null);form.resetFields();message.success('Custom Contract를 확장했습니다.');}else message.error('중복 또는 잘못된 정의입니다.');
       }catch{}
     }}>
-      <Form form={form} layout="vertical" key={`${service.id}-${editing}`} initialValues={{action:'publish',actor:'provider',optionalConsumer:false}}>
+      <Form form={form} layout="vertical" key={`${service.id}-${editing}`} initialValues={{action:'publish',direction:'output',optionalConsumer:false}}>
         <Form.Item name="name" label={editing==='message'?'IDL Data Type 이름':editing==='topic'?'Topic 이름':'Operation 이름'} rules={[{required:true},{pattern:/^[A-Za-z_][A-Za-z0-9_]*$/}]}><Input placeholder={editing==='message'?'CustomSensorReportType':editing==='topic'?'CustomSensorReportType':'reportCustomSensor'}/></Form.Item>
         {editing==='topic'&&<Form.Item name="typeId" label="Topic에서 전달할 Data Type" rules={[{required:true}]}><Select showSearch optionFilterProp="label" options={ownMessageTypes.map(m=>({label:m.name,value:m.id}))}/></Form.Item>}
         {editing==='operation'&&<>
