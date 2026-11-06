@@ -28,7 +28,11 @@ const expectTreeStyle=(selector, declaration)=>{
 expectTreeStyle('.project-explorer-tree .ant-tree-node-content-wrapper', /display\s*:\s*flex/);
 expectTreeStyle('.project-explorer-tree .ant-tree-node-content-wrapper', /align-items\s*:\s*center/);
 expectTreeStyle('.project-explorer-tree .ant-tree-title', /flex\s*:\s*1/);
-expectTreeStyle('.project-explorer-tree .ant-tree-iconEle', /flex\s*:\s*0\s+0\s+auto/);
+// Keep the switcher (+) hit box intact; compact only the adjacent icon slot.
+expectTreeStyle('.project-explorer-tree .ant-tree-iconEle', /flex\s*:\s*0\s+0\s+18px/);
+expectTreeStyle('.project-explorer-tree .ant-tree-iconEle', /width\s*:\s*18px/);
+expectTreeStyle('.project-explorer-tree .ant-tree-iconEle', /justify-content\s*:\s*flex-start/);
+assert.doesNotMatch(styles, /\.project-explorer-tree \.ant-tree-switcher\s*\{/);
 expectTreeStyle('.project-explorer-row', /white-space\s*:\s*nowrap/);
 expectTreeStyle('.project-explorer-label', /text-overflow\s*:\s*ellipsis/);
 
