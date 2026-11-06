@@ -1,3 +1,4 @@
+import { MarkerType } from '@xyflow/react';
 import { useEffect, useMemo, useState } from 'react';
 import { Alert, Button, Form, Input, Modal, Segmented, Select, Space, Tag, Typography, message } from 'antd';
 import { PlusOutlined, ReloadOutlined } from '@ant-design/icons';
@@ -38,6 +39,7 @@ export function ContractGraph({serviceId}) {
   })),[graph,focus,mode]);
   const edges=useMemo(()=>graph.edges.map(e=>({
     ...e,type:'smoothstep',animated:false,
+    markerEnd:e.relationship==='illustrative-flow'?{type:MarkerType.ArrowClosed,color:'#379781'}:undefined,
     style:{
       stroke:e.relationship==='illustrative-flow'?'#379781':'#9baec4',
       strokeWidth:e.relationship==='illustrative-flow'?2.2:1.6,

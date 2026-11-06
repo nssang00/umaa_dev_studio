@@ -22,6 +22,9 @@ assert.ok(cancel && cancel.topicName,'Existing command topic is a reference, not
 const flow=serviceFlowGraph(s,svc.id);
 assert.equal(flow.nodes.filter(n=>n.kind==='interfaceCard').length,ops.length);
 assert.ok(flow.edges.some(e=>e.relationship==='illustrative-flow'));
+assert.ok(flow.edges.filter(e=>e.relationship==='illustrative-flow').every(e=>e.sourceHandle&&e.targetHandle));
+assert.equal(contract.nodes.find(n=>n.kind==='serviceContract').category,null);
+assert.match(read('../src/components/service/ContractGraph.jsx'),/MarkerType.ArrowClosed/);
 assert.ok(flow.edges.every(e=>!e.source.startsWith('interface:')&&!e.target.startsWith('operation:')));
 assert.equal(serviceContractGraph(s,svc.id).nodes.filter(n=>n.kind==='topic').length,4);
 const unknown={...s,services:[...s.services,{id:'unknown-svc',name:'Unknown',source:'custom'}],

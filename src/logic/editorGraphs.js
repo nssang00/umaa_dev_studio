@@ -94,7 +94,7 @@ export function serviceInterfaceGraph(snapshot, serviceId) {
   const counts = { input: groups.input.length, output: groups.output.length, unclassified: groups.unclassified.length };
   const nodes = [{
     id: 'service:' + svc.id, kind: 'serviceContract', title: svc.name,
-    category: svc.serviceCategory ?? 'other', area: svc.functionalArea, namespace: svc.namespace,
+    category: svc.serviceCategory ?? null, area: svc.functionalArea, namespace: svc.namespace,
     flowControl: svc.flowControl, source: svc.source, counts,
     position: { x: 350, y: 10 },
   }];
@@ -141,18 +141,18 @@ export function serviceFlowGraph(snapshot, serviceId) {
   if (!svc) return { nodes: [], edges: [] };
   const ops = snapshot.operations.filter(op => op.serviceId === serviceId);
   const nodes = [
-    { id: 'actor:consumer', kind: 'flowActor', title: 'Service Consumer', position: { x: 20, y: 145 } },
-    { id: 'actor:provider', kind: 'flowActor', title: 'Service Provider', position: { x: 800, y: 145 } },
-    { id: 'flow:request', kind: 'flowPattern', title: svc.flowControl === 'command-response' ? 'Command / Request' : 'Query / Subscribe',
+    { id: 'actor:consumer', kind: 'flowActor', role: 'consumer', title: 'Service Consumer', position: { x: 20, y: 145 } },
+    { id: 'actor:provider', kind: 'flowActor', role: 'provider', title: 'Service Provider', position: { x: 800, y: 145 } },
+    { id: 'flow:request', kind: 'flowPattern', flowType: 'request', title: svc.flowControl === 'command-response' ? 'Command / Request' : 'Query / Subscribe',
       detail: 'Conceptual consumer-to-provider interaction', position: { x: 412, y: 25 } },
-    { id: 'flow:report', kind: 'flowPattern', title: svc.flowControl === 'command-response' ? 'Status / Ack / Report' : 'Report / Status',
+    { id: 'flow:report', kind: 'flowPattern', flowType: 'report', title: svc.flowControl === 'command-response' ? 'Status / Ack / Report' : 'Report / Status',
       detail: 'Conceptual provider-to-consumer interaction', position: { x: 412, y: 270 } },
   ];
   const edges = [
-    { id: 'consumer-request', source: 'actor:consumer', target: 'flow:request', relationship: 'illustrative-flow' },
-    { id: 'request-provider', source: 'flow:request', target: 'actor:provider', relationship: 'illustrative-flow' },
-    { id: 'provider-report', source: 'actor:provider', target: 'flow:report', relationship: 'illustrative-flow' },
-    { id: 'report-consumer', source: 'flow:report', target: 'actor:consumer', relationship: 'illustrative-flow' },
+    { id: 'consumer-request', source: 'actor:consumer', sourceHandle:'flow-out', target: 'flow:request', targetHandle:'in', relationship: 'illustrative-flow' },
+    { id: 'request-provider', source: 'flow:request', sourceHandle:'out', target: 'actor:provider', targetHandle:'flow-in', relationship: 'illustrative-flow' },
+    { id: 'provider-report', source: 'actor:provider', sourceHandle:'flow-out', target: 'flow:report', targetHandle:'in', relationship: 'illustrative-flow' },
+    { id: 'report-consumer', source: 'flow:report', sourceHandle:'out', target: 'actor:consumer', targetHandle:'flow-in', relationship: 'illustrative-flow' },
   ];
   const counts = { consumer: 0, provider: 0 };
   ops.forEach(op => {
@@ -166,7 +166,7 @@ export function serviceFlowGraph(snapshot, serviceId) {
       position: { x: actor === 'consumer' ? 20 : 800, y: 420 + index * 150 },
     });
     edges.push({
-      id: 'role-operation:' + op.id, source: 'actor:' + actor, target: 'interface:' + op.id,
+      id: 'role-operation:' + op.id, source: 'actor:' + actor, sourceHandle:'operations', target: 'interface:' + op.id,
       relationship: 'membership',
     });
   });

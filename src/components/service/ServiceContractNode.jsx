@@ -11,14 +11,23 @@ export function ServiceContractNode({ data, selected }) {
     <strong>{data.title}</strong><span>{data.count} Operation interfaces</span>
     {handle('source', Position.Bottom)}
   </div>;
-  if (data.kind === 'flowActor') return <div className="service-contract-node flow-actor-node">
-    {handle('target', Position.Left)}<strong>{data.title}</strong>{handle('source', Position.Right)}
-    {handle('target', Position.Right)}{handle('source', Position.Left)}
-  </div>;
-  if (data.kind === 'flowPattern') return <div className="service-contract-node flow-pattern-node">
-    {handle('target', Position.Left)}<strong>{data.title}</strong>
-    <small>{data.detail}</small>{handle('source', Position.Right)}
-  </div>;
+  if (data.kind === 'flowActor') {
+    const side = data.role === 'consumer' ? Position.Right : Position.Left;
+    return <div className="service-contract-node flow-actor-node">
+      <Handle id="flow-in" type="target" position={side} className="contract-relationship-handle" isConnectable={false}/>
+      <strong>{data.title}</strong>
+      <Handle id="flow-out" type="source" position={side} className="contract-relationship-handle" isConnectable={false}/>
+      <Handle id="operations" type="source" position={Position.Bottom} className="contract-relationship-handle" isConnectable={false}/>
+    </div>;
+  }
+  if (data.kind === 'flowPattern') {
+    const reverse = data.flowType === 'report';
+    return <div className="service-contract-node flow-pattern-node">
+      <Handle id="in" type="target" position={reverse ? Position.Right : Position.Left} className="contract-relationship-handle" isConnectable={false}/>
+      <strong>{data.title}</strong><small>{data.detail}</small>
+      <Handle id="out" type="source" position={reverse ? Position.Left : Position.Right} className="contract-relationship-handle" isConnectable={false}/>
+    </div>;
+  }
   if (data.kind === 'serviceContract') return <div className={'service-contract-node service-root' + (selected ? ' is-selected' : '')}>
     {handle('target', Position.Top)}
     <div className="service-contract-eyebrow">{data.area} · SERVICE CONTRACT</div>
