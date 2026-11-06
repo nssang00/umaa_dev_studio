@@ -8,6 +8,7 @@ import { ContractGraph } from './ContractGraph.jsx';
 import { IcdFlowView } from './IcdFlowView.jsx';
 import { QosProfileDiagram } from './QosProfileDiagram.jsx';
 import { SERVICE_CATEGORIES, categoryForService, categoryLabel, flowLabel } from '../model/icdConcepts.js';
+import { serviceOperationDirection } from '../model/projectNavigation.js';
 const {Text}=Typography;
 const actionLabel={publish:'DDS Publish',subscribe:'DDS Subscribe',dispose:'DDS Dispose'};
 export function ServiceWorkbench({serviceId}) {
@@ -36,6 +37,7 @@ export function ServiceWorkbench({serviceId}) {
         <Space wrap style={{marginBottom:14}}>{actionStats.map(x=><Tag key={x.action}>{x.action.toUpperCase()} {x.count}</Tag>)}</Space>
         <Table size="small" rowKey="id" pagination={false} scroll={{x:720}} dataSource={operations} columns={[
           {title:'Operation',dataIndex:'name',width:240,render:(v,r)=><Button type="link" size="small" style={{padding:0}} onClick={()=>select({kind:'operation',id:r.id})}>{v}</Button>},
+                    {title:'Interface Direction',width:145,render:(_,op)=><Tag>{serviceOperationDirection(op)?.toUpperCase()??'—'}</Tag>},
           {title:'Actor',dataIndex:'actor',width:100,render:v=><Tag color={v==='provider'?'blue':'orange'}>{v}</Tag>},
           {title:'DDS Action',dataIndex:'action',width:115,render:v=><Tag>{actionLabel[v]??v}</Tag>},
           {title:'Topic → Data Type',render:(_,r)=><div><Button type="link" size="small" style={{padding:0}} onClick={()=>select({kind:'topic',id:r.topicId})}>{r.topicName}</Button><div><Text type="secondary" style={{fontSize:11}}>{r.typeName}</Text></div></div>}
@@ -86,7 +88,7 @@ export function OperationWorkbench({operationId}) {
   const op=s?.operations.find(o=>o.id===operationId); if(!op)return <Empty/>;
   const svc=s.services.find(v=>v.id===op.serviceId);const topic=s.topics.find(t=>t.id===op.topicId);const type=s.messages.find(t=>t.id===topic?.messageTypeId);
   return <div className="center-workbench"><div className="editor-heading"><div><Text type="secondary" className="editor-eyebrow">DDS ACTION / OPERATION</Text><h2>{op.name}</h2></div><Button icon={<ArrowLeftOutlined/>} onClick={()=>select({kind:'service',id:op.serviceId})}>Service</Button></div>
-    <Descriptions bordered column={1}><Descriptions.Item label="Service"><Button type="link" onClick={()=>select({kind:'service',id:svc?.id})}>{svc?.name}</Button></Descriptions.Item><Descriptions.Item label="Actor"><Tag>{op.actor}</Tag></Descriptions.Item><Descriptions.Item label="DDS Action"><Tag>{op.action}</Tag></Descriptions.Item><Descriptions.Item label="Topic"><Button type="link" onClick={()=>topic&&select({kind:'topic',id:topic.id})}>{topic?.name}</Button></Descriptions.Item><Descriptions.Item label="Data Type"><Button type="link" onClick={()=>type&&select({kind:'message',id:type.id})}>{type?.name}</Button></Descriptions.Item></Descriptions>
+    <Descriptions bordered column={1}><Descriptions.Item label="Service"><Button type="link" onClick={()=>select({kind:'service',id:svc?.id})}>{svc?.name}</Button></Descriptions.Item><Descriptions.Item label="Interface Direction">{serviceOperationDirection(op)?.toUpperCase()??'—'} · Provider 기준</Descriptions.Item><Descriptions.Item label="Actor"><Tag>{op.actor}</Tag></Descriptions.Item><Descriptions.Item label="DDS Action"><Tag>{op.action}</Tag></Descriptions.Item><Descriptions.Item label="Topic"><Button type="link" onClick={()=>topic&&select({kind:'topic',id:topic.id})}>{topic?.name}</Button></Descriptions.Item><Descriptions.Item label="Data Type"><Button type="link" onClick={()=>type&&select({kind:'message',id:type.id})}>{type?.name}</Button></Descriptions.Item></Descriptions>
     <Alert style={{marginTop:16}} type="info" showIcon message="Operation ≠ 새 DDS Topic" description="subscribe는 Topic 구독, dispose는 기존 Command 인스턴스 정리를 의미합니다. 별도 Query/Cancel Topic은 생성하지 않습니다."/>
   </div>;
 }

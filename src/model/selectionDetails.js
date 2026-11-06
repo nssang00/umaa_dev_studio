@@ -5,7 +5,9 @@
 const NAMES = Object.freeze({
   connection: 'DDS Communication',
   assetLibrary: 'Asset Library',
-  dataPatterns: 'Data Patterns',
+  dataPatterns: 'Topic Relationships',
+  ddsConfig: 'DDS Configuration',
+  flowRules: 'Flow Control Rules',
 });
 
 export function describeSelection(snapshot, selection, highlightedComponentId = null) {

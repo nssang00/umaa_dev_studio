@@ -27,7 +27,7 @@ for (const [kind, id, name] of [
   ['topic', 't1', 'Position'], ['message', 'm1', 'PositionType'],
   ['dataType', 'd1', 'Identifier'], ['qos', 'q1', 'Reliable'],
   ['functionalArea', 'f1', 'Motion'], ['connection', 'x', 'DDS Communication'],
-  ['assetLibrary', 'project', 'Asset Library'], ['dataPatterns', 'project', 'Data Patterns'],
+  ['assetLibrary', 'project', 'Asset Library'], ['ddsConfig', 'project', 'DDS Configuration'], ['flowRules', 'command-response', 'Flow Control Rules'], ['dataPatterns', 'project', 'Topic Relationships'],
 ]) {
   assert.equal(describeSelection(snapshot, { kind, id }).name, name, kind);
 }

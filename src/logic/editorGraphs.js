@@ -1,14 +1,23 @@
+import { serviceOperationDirection } from '../model/projectNavigation.js';
 /** Pure diagram projections. React Flow layout is NOT the source of UMAA contracts. */
 export function serviceContractGraph(snapshot, serviceId) {
   const service=snapshot.services.find(s=>s.id===serviceId);
   if(!service)return {nodes:[],edges:[]};
   const ops=snapshot.operations.filter(o=>o.serviceId===serviceId);
   const topicIds=[...new Set([...ops.map(o=>o.topicId),...(service.source==='custom'?snapshot.topics.filter(t=>snapshot.messages.some(m=>m.id===t.messageTypeId&&m.source==='custom'&&m.namespace===service.namespace)).map(t=>t.id):[])])];
-  const nodes=[{id:`service:${serviceId}`,kind:'service',title:service.name,detail:`${service.functionalArea} · ${service.flowControl}`,position:{x:20,y:-105}}];
+  const nodes=[{id:`service:${serviceId}`,kind:'service',title:service.name,detail:`${service.functionalArea} · ${service.flowControl}`,position:{x:20,y:-150}}];
   const edges=[];
-  ops.forEach((op,i)=>{
-    const y=i*100;
-    nodes.push({id:`operation:${op.id}`,kind:'operation',title:op.name,detail:`actor: ${op.actor}`,position:{x:20,y}});
+  const orderedOps=[
+    ...ops.filter(op=>serviceOperationDirection(op)==='input'),
+    ...ops.filter(op=>serviceOperationDirection(op)==='output'),
+    ...ops.filter(op=>!serviceOperationDirection(op)),
+  ];
+  const inputCount=ops.filter(op=>serviceOperationDirection(op)==='input').length;
+  nodes.push({id:'interface:input',kind:'interface',title:'INPUT · To Provider',detail:'Requests / Commands (provider-facing)',position:{x:20,y:-90}});
+  nodes.push({id:'interface:output',kind:'interface',title:'OUTPUT · From Provider',detail:'Reports / Subscriptions',position:{x:20,y:inputCount*105+15}});
+  orderedOps.forEach((op,i)=>{
+    const y=i*105 + (i>=inputCount ? 125 : 0);
+    nodes.push({id:`operation:${op.id}`,kind:'operation',title:op.name,detail:`${serviceOperationDirection(op)?.toUpperCase()??'UNCLASSIFIED'} · ${op.actor}`,position:{x:20,y}});
     nodes.push({id:`action:${op.id}`,kind:'action',title:op.action.toUpperCase(),detail:op.action==='dispose'?'Existing keyed instance':op.action==='subscribe'?'Query = subscription':'DDS write',position:{x:285,y}});
     edges.push({id:`op-action:${op.id}`,source:`operation:${op.id}`,target:`action:${op.id}`,label:'DDS action'});
     edges.push({id:`action-topic:${op.id}`,source:`action:${op.id}`,target:`topic:${op.topicId}`,label:op.action});

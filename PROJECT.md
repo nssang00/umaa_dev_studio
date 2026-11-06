@@ -12,7 +12,10 @@
 
 - UI composition: `src/layouts/workbenchPanels.config.js` registers feature views; `WorkbenchPanelRenderer.jsx` instantiates them through public props. `SelectionPropertiesPanel.jsx` owns right-panel composition. Keep StudioShell geometry-only.
 
-- QoS UI: six DDS QoS entity section concepts are a separate pure graph from real stored Profile references; diagram must not imply entity-level policy assignment where none is stored.
+- QoS UI: one editable Profile diagram with six nested entity-policy sections, shared with right Properties; project design-time policy values persist but no DDS SDK binding or Requested/Offered validation is implemented.
 - Struct Properties: all declared fields, name and UML parent edited in a single draft and committed via one validated `editStructDefinition` transaction; inherited fields remain parent-owned, mock baseline remains unmodified.
 
 - QoS Profiles: six nested policy object sections are editable inside one diagram node. Policy catalog in `src/model/qosPolicies.js` is a limited project-design schema; do not claim OMG DDS-JSON compliance. Legacy flat fields are preserved on import.
+
+- Model navigation: unified ProjectModelExplorer with three roots (curated UMAA ICD Catalog, Project Service Model, System Model). Catalog Interfaces are tool navigation projections, not authoritative model IDs.
+- Endpoint configuration: `endpointConfigs` is a design-only QoS override index keyed by Binding ID, Topic ID, DataWriter/DataReader direction. Inherit Component Runtime profile by default. No DDS SDK entity creation or full QoS compatibility assertion.

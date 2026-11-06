@@ -121,3 +121,29 @@
 - [PR head Actions 42054966263](https://github.com/nssang00/umaa_dev_studio/actions/runs/42054966263): **SUCCESS**.
 - [Post-merge Actions 42055125678](https://github.com/nssang00/umaa_dev_studio/actions/runs/42055125678): **SUCCESS**, complete `npm test` (including new `test:qos-interaction`), `npm run build` and artifact upload.
 - Browser-level direct click / input E2E is not run; pointer-event cause identified from React Flow source and regression statically checked against explicit wrapper-style override. Both QoS views share Zustand update actions and model.
+
+## 2026-11-06 — Model-workspace consolidation (checkpoint 1)
+
+- Unified default explorer into three independently scoped roots: curated read-only UMAA ICD Catalog; Project Service Model (custom and actively referenced standard Services); System Model (Components, Service Connections, DDS Configuration).
+- Pure `projectNavigation` builds tree, classifies Provider-facing INPUT/OUTPUT operations, and maps requested direction + DDS action to canonical actor without changing normative source data.
+- ContractGraph shows separate INPUT/OUTPUT interface headers while retaining operation→action→topic→type links; Custom Service creation now accepts Service Type and Flow Control as separate values.
+- Built-in Flow Control Rules view labels the curated reference as partial. Legacy Asset Library views are retained for old selections but not duplicated in normal navigation.
+- Test `test:project-model`; full CI pending.
+
+- Checkpoint 1 repair: updated existing selection label regression to `Topic Relationships` and completed both Custom Operation modals' explicit INPUT/OUTPUT direction controls; Service Type and Flow selection are now distinct in the create dialog.
+
+## 2026-11-06 — DDS Endpoint mapping (checkpoint 2)
+
+- Persist `endpointConfigs` as a backward-compatible optional project-design override keyed by Binding ID + Topic ID + writer/reader direction. QoS Profile is inherited from Component Runtime unless explicitly selected per Endpoint; null removes an override. Removing the Binding prunes endpoint overrides.
+- Enriched derived Endpoints with actual Topic IDs. DDS Communication Graph now shows Consumer/Provider, both DataWriter/DataReader endpoint nodes and Topic/Type reference. Selecting an Endpoint opens the same global Properties pane without leaving the connection view.
+- New DDS Configuration overview workbench lists all derived endpoints and offers direct inspector selection and per-Component Runtime editing.
+- Explicit validation for malformed QoS refs and orphaned Endpoint configs; JSON import/export round-trips, and design-only metadata `contracts/endpoint-qos-design.json` in generated scaffold.
+- New `test:endpoint-config`; full Actions CI pending, browser interaction E2E not run. No DDS SDK application or Requested/Offered check.
+
+- DDS checkpoint regression update: existing channel graph expectation now checks 3 nodes and 4 edges per Topic, including both endpoints; the old 1 Topic-node + 2 edges check no longer described the new projection.
+
+## 2026-11-06 — ICD / Service / System model documentation
+
+- Service Contract Operation table and right Properties display canonical Provider-facing Interface Direction; Service Properties list Service Type and Flow Control separately.
+- New `docs/ICD_SERVICE_SYSTEM_EXPLORER.md` documents model boundaries, read-only curated catalog status, logical DDS topology, Endpoint QoS inheritance and persistent schema, migration and missing DDS execution/compatibility layers.
+- Updated outdated QoS scope note in `PROJECT.md`; full CI pending.

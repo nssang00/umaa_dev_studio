@@ -1,4 +1,5 @@
 import { deriveEndpoints } from './endpoints.js';
+import { configuredEndpoints } from '../model/endpointConfiguration.js';
 import { validateWorkspace } from './validation.js';
 import { defaultRuntime } from '../model/workspaceSchema.js';
 const ident = (s) => s.replace(/[^a-zA-Z0-9_]/g, '_').replace(/^([^a-zA-Z_])/, '_$1');
@@ -147,6 +148,16 @@ set_target_properties(${target} PROPERTIES OUTPUT_NAME ${target})
         ...endpoints.map(e => [e.serviceName,e.role,e.direction,e.topicName,e.typeName,e.optional,
             e.relatedRule??''].map(csvEscape).join(','))
     ].join('\n')+'\n');
+    file('contracts/endpoint-qos-design.json', JSON.stringify({
+        implementation:'design-metadata-only',
+        componentId:component.id,
+        endpoints:configuredEndpoints(s,component.id).map(e=>({
+            endpointKey:e.key,bindingId:e.bindingId,topicId:e.topicId,
+            direction:e.direction,profileId:e.qosProfileId,
+            source:e.qosSource,
+        })),
+        note:'Not applied by generated scaffold. DDS SDK mapping and compatibility are developer responsibilities.',
+    },null,2)+'\n');
     file('contracts/project-assets.json', JSON.stringify({
         topics:(s.topics??[]).filter(t=>t.source==='custom'),
         dataTypes:(s.messages??[]).filter(m=>m.source==='custom').map(m=>({id:m.id,name:m.name,namespace:m.namespace,kind:m.kind??'struct',fields:m.fields})),

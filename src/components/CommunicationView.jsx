@@ -19,16 +19,24 @@ export function CommunicationView({ connectionId, onBack }) {
   if(!graph || !service) return <Empty description="연결을 선택하세요"/>;
   const error=pr && cr && (pr.domainId!==cr.domainId || pr.partition!==cr.partition);
   return <div className="center-workbench">
-    <div className="editor-heading"><div><Text type="secondary" className="editor-eyebrow">DDS COMMUNICATION VIEW · LOGICAL CONNECTION</Text><h2><SwapOutlined/> {service.name}</h2><Text type="secondary">{graph.consumer?.name} (Consumer) ↔ {graph.provider?.name} (Provider)</Text></div>
+    <div className="editor-heading"><div><Text type="secondary" className="editor-eyebrow">DDS ENDPOINT TOPOLOGY · LOGICAL CONNECTION</Text><h2><SwapOutlined/> {service.name}</h2><Text type="secondary">{graph.consumer?.name} (Consumer) ↔ {graph.provider?.name} (Provider)</Text></div>
       <Button icon={<ArrowLeftOutlined/>} onClick={onBack}>System Diagram</Button></div>
-    <Alert type="info" showIcon message="Service Connection은 DDS Point-to-Point 연결이 아닙니다." description="이 화면은 동일 Service의 P/C 바인딩으로부터 Reader/Writer와 Topic 흐름을 파생한 설계 투영입니다. 실제 매칭은 Domain, Partition, Topic 이름·Type 및 QoS 호환성에 따라 결정됩니다."/>
+    <Alert type="info" showIcon message="Service Connection은 DDS Point-to-Point 연결이 아닙니다." description="이 화면은 동일 Service의 P/C 바인딩으로부터 DataWriter / Topic / DataReader 흐름을 파생한 설계 투영입니다. 실제 매칭은 Domain, Partition, Topic 이름·Type 및 QoS 호환성에 따라 결정됩니다."/>
     {error && <Alert style={{marginTop:9}} showIcon type="warning" message="Domain 또는 Partition 설정이 서로 다릅니다." description="이 두 Component의 Runtime 설정을 확인하세요. (다른 정책과 QoS는 미검증)"/>}
-    <div className="dds-flow-canvas"><ReactFlow nodes={graph.nodes} edges={graph.edges.map(e=>({...e,markerEnd:{type:MarkerType.ArrowClosed,color:e.style.stroke}}))} fitView fitViewOptions={{padding:.18}} nodesDraggable={false} nodesConnectable={false} elementsSelectable minZoom={.2} onNodeClick={(_,node)=>setFocus(node.id)} maxZoom={1.5} proOptions={{hideAttribution:true}}><Background color="#dae4f1" gap={22}/><Controls showInteractive={false}/></ReactFlow></div>
+    <div className="dds-flow-canvas"><ReactFlow nodes={graph.nodes} edges={graph.edges.map(e=>({...e,markerEnd:{type:MarkerType.ArrowClosed,color:e.style.stroke}}))} fitView fitViewOptions={{padding:.18}} nodesDraggable={false} nodesConnectable={false} elementsSelectable minZoom={.2} onNodeClick={(_,node)=>{
+      setFocus(node.id);
+      if(node.data?.endpointKey)
+        select({kind:'connection',id:connectionId,endpointKey:node.data.endpointKey});
+      else if(useEditorStore.getState().selection?.endpointKey)
+        select({kind:'connection',id:connectionId});
+    }} maxZoom={1.5} proOptions={{hideAttribution:true}}><Background color="#dae4f1" gap={22}/><Controls showInteractive={false}/></ReactFlow></div>
     <div className="dds-focus-panel">
       <Typography.Text strong>선택한 DDS 요소</Typography.Text>
       {focus==='consumer'||focus==='provider'?<>
         <p>{focus==='consumer'?graph.consumer?.name:graph.provider?.name} · {focus==='consumer'?'Consumer':'Provider'} Runtime 설정</p>
         <RuntimeSettings componentId={focus==='consumer'?graph.consumer?.id:graph.provider?.id}/>
+      </>:focus?.startsWith('ep:')?<><p>DataWriter / DataReader Endpoint를 선택했습니다.</p>
+        <Text type="secondary">오른쪽 Properties에서 Endpoint별 QoS Profile을 지정할 수 있습니다.</Text>
       </>:focus?.startsWith('ch')?<>
         <p>{graph.channels[Number(focus.slice(2))]?.topicName}</p>
         <Space><Button size="small" onClick={()=>{
@@ -36,7 +44,7 @@ export function CommunicationView({ connectionId, onBack }) {
         }}>Topic 계약 열기</Button><Button size="small" onClick={()=>{
           const ch=graph.channels[Number(focus.slice(2))];const m=snapshot.messages.find(m=>m.name===ch?.typeName);if(m)select({kind:'message',id:m.id});
         }}>IDL Type 열기</Button></Space>
-      </>:<Text type="secondary">Consumer 또는 Provider 노드를 클릭하면 Domain·Partition·QoS·GUID 설정을 수정할 수 있습니다. Topic을 클릭하면 Type으로 이동합니다.</Text>}
+      </>:<Text type="secondary">Consumer 또는 Provider를 클릭하면 Component Runtime을, DataWriter/Reader를 클릭하면 오른쪽 Properties에서 QoS를 설정할 수 있습니다.</Text>}
     </div>
     <Space wrap className="editor-info-tags"><Tag color="blue">{service.flowControl}</Tag><Tag>{graph.channels.length} DDS Topics</Tag><Tag>Custom Wrapper / DDS Runtime: 미구현</Tag></Space>
     <Table size="small" rowKey="id" pagination={false} scroll={{x:700}} dataSource={graph.channels} columns={[

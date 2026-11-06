@@ -14,8 +14,10 @@ for(const row of commands.filter(c=>c!==cmd)) assert.deepEqual([row.writerRole,r
 const dispose=cmd.operations.find(o=>o.action==='dispose');
 assert.equal(dispose?.actor,'consumer');
 const graph=channelGraph(s,gv.id);
-assert.equal(graph.nodes.length,6);
-assert.equal(graph.edges.length,8);
+assert.equal(graph.nodes.length,2+commands.length*3, 'two Components + Writer / Topic / Reader per channel');
+assert.equal(graph.edges.length,commands.length*4,'four directional edges per channel');
+assert.equal(graph.nodes.filter(n=>n.data.endpointKey).length,commands.length*2);
+assert.ok(graph.nodes.filter(n=>n.data.endpointKey).every(n=>n.data.endpointKey.includes('|')));
 console.log('PASS MO Command/Response → 4 DDS channels, direction, dispose, React Flow nodes/edges');
 
 const gp=find('GlobalPoseStatus');
