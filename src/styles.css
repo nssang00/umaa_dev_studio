@@ -527,3 +527,8 @@ body { color: #26364a; }
 .contract-graph-legend {display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:11px;color:#647d97;}
 .contract-graph-legend .membership:before {content:'';display:inline-block;width:23px;border-top:2px solid #92a9c1;vertical-align:middle;margin-right:5px;}
 .contract-graph-legend .flow:before {content:'';display:inline-block;width:23px;border-top:2px dashed #429b87;vertical-align:middle;margin-right:5px;}
+
+/* Keep Component handle offsets stable while adding summary below existing ports. */
+.component-node-summary {height:26px;border-top:1px solid #e2eaf4;background:#f7fafe;
+  padding:5px 9px;display:flex;justify-content:space-between;gap:6px;
+  font-size:9px;color:#6d8299;border-radius:0 0 9px 9px;}

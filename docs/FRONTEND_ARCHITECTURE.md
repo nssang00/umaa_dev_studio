@@ -103,3 +103,17 @@ Each logical feature owns its model-specific interactions and store subscription
 Legacy `src/components/<Feature>.jsx` paths remain small re-export facades so external imports do not break. New/updated internal composition points import directly from feature folders. Remaining multi-feature coordinators (e.g. WorkspaceWorkbench, ContractWorkbench, DesignDetails, ContextProperties) stay at the root until they can be separated without circular imports. Avoid moving them merely to make a folder look tidy.
 
 The refactor has **no changes to domain snapshots, API contracts, Zustand state or repository storage**. Browser visual E2E should still validate modal dialogs, React Flow controls, nested QoS fields and workspace transitions before a production release.
+
+
+## Service and System diagrams (2026-11-06)
+
+Explorer uses two tabs, **Services** and **Components**. Both display the same `projectModelTree` projection, filtered by existing root key, with centralized entity-kind icon rendering. Component selections activate Components; Service/Operation/Topic/Type selections activate Services. Tab-specific expansions are local UI state.
+
+Service Diagram uses three React Flow modes:
+- **Contract (default):** Service summary → logical INPUT/OUTPUT lane → one Operation-as-Interface *display card* per operation. Existing single `interfaces` entry in the seed is a tool navigation grouping, **not** independently imported normative Interface identity. Unknown directions go into a review lane.
+- **Flow:** Consumer/Provider actors, their actual assigned Operations, and dotted *illustrative* pattern edges. This mode does not invent normative Command↔Response per-operation links, time semantics or a state machine. `IcdFlowView` retains the detailed conceptual text/table.
+- **DDS Mapping:** Reuses the old `serviceContractGraph` (Operation → action → Topic → Type), with the existing custom-only Action→Topic and Topic→Type edit path. Subscribe and Dispose are reference/instance actions, not fabricated Query/Cancel writes.
+
+`ComponentNode` now shows Provider/Consumer counts and derived endpoint / logical connection counts without changing endpoint, connectivity or model semantics. It preserves draggable binding handles and updates height estimates for Dagre.
+
+The project snapshot schema, standard immutable catalog, custom-only editing permissions, Zustand store, repository and codegen contracts are not changed. Static tests and GitHub Actions build can establish source and compile integrity, but live React Flow pointer/drag visual E2E is a separate verification step.
