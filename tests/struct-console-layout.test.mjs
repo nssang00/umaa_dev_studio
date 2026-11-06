@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 const read=(path)=>readFileSync(new URL(path, import.meta.url),'utf8');
-const workbench=read('../src/components/TypeWorkbench.jsx');
-const prop=read('../src/components/TypeProperties.jsx');
+const workbench=read('../src/components/types/TypeWorkbench.jsx');
+const prop=read('../src/components/types/TypeProperties.jsx');
 const context=read('../src/components/ContextProperties.jsx');
 const app=read('../src/App.jsx') + '\n' + read('../src/components/BottomPanel.jsx');
 const workspace=read('../src/components/WorkspaceWorkbench.jsx');

@@ -3,10 +3,10 @@ import { Alert, Button, Descriptions, Empty, Form, Select, Space, Table, Tabs, T
 import { ArrowLeftOutlined, ApiOutlined, CodeOutlined, LinkOutlined, PlusOutlined } from '@ant-design/icons';
 import { useEditorStore } from '../stores/useEditorStore.js';
 import { CustomServiceEditor, RuntimeSettings } from './DesignDetails.jsx';
-import { TypeWorkbench } from './TypeWorkbench.jsx';
-import { ContractGraph } from './ContractGraph.jsx';
+import { TypeWorkbench } from './types/TypeWorkbench.jsx';
+import { ContractGraph } from './service/ContractGraph.jsx';
 import { IcdFlowView } from './IcdFlowView.jsx';
-import { QosProfileDiagram } from './QosProfileDiagram.jsx';
+import { QosProfileDiagram } from './qos/QosProfileDiagram.jsx';
 import { SERVICE_CATEGORIES, categoryForService, categoryLabel, flowLabel } from '../model/icdConcepts.js';
 import { serviceOperationDirection } from '../model/projectNavigation.js';
 const {Text}=Typography;

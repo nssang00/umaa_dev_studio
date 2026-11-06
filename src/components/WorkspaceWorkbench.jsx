@@ -4,15 +4,15 @@ import { ApartmentOutlined, ArrowLeftOutlined, BuildOutlined, NodeIndexOutlined,
 import { useEditorStore } from '../stores/useEditorStore.js';
 import { Diagram } from './Diagram.jsx';
 import { RuntimeSettings } from './DesignDetails.jsx';
-import { CommunicationView } from './CommunicationView.jsx';
+import { CommunicationView } from './dds/CommunicationView.jsx';
 import { ServiceWorkbench, TopicWorkbench, OperationWorkbench, FunctionalAreaWorkbench, QosWorkbench } from './ContractWorkbench.jsx';
-import { TypeWorkbench } from './TypeWorkbench.jsx';
+import { TypeWorkbench } from './types/TypeWorkbench.jsx';
 import { BehaviorGraph } from './BehaviorGraph.jsx';
-import { ComponentJourney } from './ComponentJourney.jsx';
+import { ComponentJourney } from './assembly/ComponentJourney.jsx';
 import { AssetLibraryWorkbench } from './AssetLibraryWorkbench.jsx';
 import { DataPatternsWorkbench } from './DataPatternsWorkbench.jsx';
 import { FlowControlRulesWorkbench } from './FlowControlRulesWorkbench.jsx';
-import { DdsConfigurationWorkbench } from './DdsConfigurationWorkbench.jsx';
+import { DdsConfigurationWorkbench } from './dds/DdsConfigurationWorkbench.jsx';
 import { deriveEndpoints } from '../logic/endpoints.js';
 const {Text}=Typography;
 

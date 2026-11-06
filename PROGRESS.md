@@ -210,3 +210,41 @@
 - PR Actions [42146450134](https://github.com/nssang00/umaa_dev_studio/actions/runs/42146450134): **SUCCESS** for full test suite, build and artifact.
 - Post-merge Actions [42146595191](https://github.com/nssang00/umaa_dev_studio/actions/runs/42146595191): **SUCCESS** for the same checks on merged `main`.
 - Visual/keyboard E2E in an actual browser not run; behavior should remain the same because only composition and import paths changed.
+
+
+## 2026-11-06 — Feature component grouping and shared composition (checkpoint 1)
+
+- New `components/assembly/`: real `ComponentJourney`, extracted `ServicePicker` and reusable Provider/Consumer `ServiceBindingSection`. Original `ComponentJourney` import path remains a re-export.
+- New `components/service/`: real `ContractGraph` and shared `OperationFields` with explicit INPUT/OUTPUT contract direction and independent DDS Actor/Action, used by both ContractGraph and CustomServiceEditor.
+- New `components/types/` and `components/qos/`: actual `TypeGraph` / `QosProfileDiagram` implementations, old paths retained as re-exports for existing callers.
+- New `components/shared/graph/ModelGraphCanvas` handles React Flow chrome (background, controls, optional minimap) while each feature retains its own node/edge rules and interaction settings, including nested QoS pointerEvents.
+- Updated static checks and added `test:feature-components`. Full Actions test/build pending.
+
+
+## 2026-11-06 — QoS feature grouping (checkpoint 2a)
+- Moved nested QoS Section/Policy/Field controls, Profile metadata and QoS Properties implementations into `components/qos/`, maintaining root re-export paths.
+- QoS profile diagram now imports siblings; shared `ModelPropertiesPanel` owns common inspector eyebrow, title and content shell.
+- Added `tests/qos-components-architecture.test.mjs`; Actions full suite/build follows.
+
+
+## 2026-11-06 — Explorer and DDS feature grouping (checkpoint 2b)
+
+- Moved ProjectModelExplorer into `components/explorer/`; moved DDS configuration, communication visualization and Endpoint Properties into `components/dds/`.
+- Existing root import paths remain forwarding exports for incremental consumers.
+- DDS Communication now uses shared React Flow canvas; Endpoint Properties uses shared Inspector frame, preserving domain-specific QoS selection.
+- Updated source-wiring regressions and added `test:explorer-dds`; Actions full suite/build pending.
+
+
+## 2026-11-06 — Type/Struct feature grouping (checkpoint 3)
+
+- Moved TypeWorkbench, TypeProperties, StructPropertiesEditor, StructFieldAccordionList, StructFieldEditor implementations into `components/types/`, beside existing TypeGraph. Original imports now re-export including `renderIdlPreview`.
+- Preserved Form.List draft semantics and atomic Struct validation; only implementation paths and inter-feature imports changed.
+- Updated existing source-scanning tests and added `test:type-components`. Full test/build CI pending.
+
+
+## 2026-11-06 — Direct feature composition and shared node presentation (checkpoint 4)
+
+- Moved `StudioGraphNode` to `components/shared/graph/`; old GraphNodes import is a compatibility facade.
+- WorkspaceWorkbench, ContextProperties, ContractWorkbench and StudioNavigator now import the reorganized feature implementations directly; legacy root facades remain to protect external consumers.
+- Updated `docs/FRONTEND_ARCHITECTURE.md` with the feature tree and props/composition contract; `test:feature-composition` checks the new direct imports.
+- No model/schema changes. GitHub Actions test and build pending.

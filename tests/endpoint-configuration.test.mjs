@@ -53,9 +53,9 @@ const parsed=JSON.parse(manifest.content);
 assert.equal(parsed.implementation,'design-metadata-only');
 assert.equal(parsed.endpoints.find(e=>e.endpointKey===chosen.key).profileId,otherProfile.id);
 const ui=[
-  read('../src/components/DdsConfigurationWorkbench.jsx'),
-  read('../src/components/EndpointProperties.jsx'),
-  read('../src/components/CommunicationView.jsx'),
+  read('../src/components/dds/DdsConfigurationWorkbench.jsx'),
+  read('../src/components/dds/EndpointProperties.jsx'),
+  read('../src/components/dds/CommunicationView.jsx'),
   read('../src/components/ContextProperties.jsx'),
   read('../src/components/WorkspaceWorkbench.jsx'),
 ].join('\n');

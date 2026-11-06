@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 const read=x=>readFileSync(new URL(x,import.meta.url),'utf8');
 const navigator=read('../src/components/StudioNavigator.jsx');
-const explorer=read('../src/components/ProjectModelExplorer.jsx');
+const explorer=read('../src/components/explorer/ProjectModelExplorer.jsx');
 const workspace=read('../src/components/WorkspaceWorkbench.jsx');
 const app=read('../src/App.jsx');
 const library=read('../src/components/AssetLibraryWorkbench.jsx');
@@ -20,6 +20,6 @@ assert.ok(patterns.includes('ReactFlow')&&patterns.includes('addTopicRelation'))
 assert.ok(flow.includes('Status / Report는 Flow Control 종류가 아닙니다.'));
 assert.ok(service.includes('IcdFlowView') && service.includes('QosProfileDiagram'));
 assert.ok(qos.includes('ReactFlow'));
-assert.ok(read('../src/components/QosProfileDiagram.jsx').includes('ReactFlow'));
-assert.ok(read('../src/components/QosEntitySections.jsx').includes('QosPolicyAccordion'));
+assert.ok(read('../src/components/qos/QosProfileDiagram.jsx').includes('ModelGraphCanvas'));
+assert.ok(read('../src/components/qos/QosEntitySections.jsx').includes('QosPolicyAccordion'));
 console.log('PASS: unified ICD / Service / System Explorer, ICD Flow Control, Topic Relations and QoS editor wired');
