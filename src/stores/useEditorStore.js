@@ -8,6 +8,7 @@ import { defaultRuntime, isValidIdlName } from '../model/workspaceSchema.js';
 import { editTypeField, editTypeDefinition, restoreTypeMock, editStructDefinition } from '../model/typeEditing.js';
 import { canCreateTopic, canCreateTopicRelation, canAssignServiceCategory, isQosAncestor } from '../model/assetRules.js';
 import { editQosEntityField, withQosEntitySections } from '../model/qosPolicies.js';
+import { editEndpointQosProfile, removeBindingEndpointConfigs } from '../model/endpointConfiguration.js';
 const projectId = 'demo-usv';
 const update = (set, transform) => {
     set(s => s.snapshot ? { snapshot: transform(s.snapshot), dirty: true } : {});
@@ -128,6 +129,7 @@ export const useEditorStore = create((set, get) => ({
             ...s,
             bindings: s.bindings.filter(b => b.id !== bindingId),
             connections: s.connections.filter(c => c.providerBindingId !== bindingId && c.consumerBindingId !== bindingId),
+            endpointConfigs:removeBindingEndpointConfigs(s.endpointConfigs,bindingId),
         }));
         if (!options.stayOnComponent) set({ selection: null });
     },
@@ -222,6 +224,13 @@ export const useEditorStore = create((set, get) => ({
         const next = snapshot && editQosEntityField(snapshot, profileId, sectionKey, policyKey, fieldKey, value);
         if (!next) return false;
         if (next !== snapshot) set({ snapshot: next, dirty: true });
+        return true;
+    },
+    updateEndpointQosProfile(componentId, key, qosProfileId) {
+        const snapshot=get().snapshot;
+        const next=snapshot&&editEndpointQosProfile(snapshot,componentId,key,qosProfileId);
+        if(!next)return false;
+        if(next!==snapshot)set({snapshot:next,dirty:true});
         return true;
     },
     updateComponentRuntime(id, patch) {

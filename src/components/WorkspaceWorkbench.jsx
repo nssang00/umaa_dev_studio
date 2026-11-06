@@ -12,6 +12,7 @@ import { ComponentJourney } from './ComponentJourney.jsx';
 import { AssetLibraryWorkbench } from './AssetLibraryWorkbench.jsx';
 import { DataPatternsWorkbench } from './DataPatternsWorkbench.jsx';
 import { FlowControlRulesWorkbench } from './FlowControlRulesWorkbench.jsx';
+import { DdsConfigurationWorkbench } from './DdsConfigurationWorkbench.jsx';
 import { deriveEndpoints } from '../logic/endpoints.js';
 const {Text}=Typography;
 
@@ -99,6 +100,7 @@ export function WorkspaceWorkbench({onNewComponent,onNewService,onGenerate,onCre
   if(kind==='assetLibrary')return <AssetLibraryWorkbench onCreate={onCreate} onNewService={onNewService}/>;
   if(kind==='dataPatterns')return <DataPatternsWorkbench/>;
   if(kind==='flowRules')return <FlowControlRulesWorkbench ruleId={selection.id==='catalog'?null:selection.id}/>;
+  if(kind==='ddsConfig')return <DdsConfigurationWorkbench/>;
   if(kind==='connection')return <CommunicationView connectionId={selection.id} onBack={()=>select({kind:'diagram',id:'system'})}/>;
   if(kind==='service')return <ServiceWorkbench key={selection.id} serviceId={selection.id}/>;
   if(kind==='interface')return <ServiceWorkbench key={selection.id} serviceId={snapshot.interfaces.find(i=>i.id===selection.id)?.serviceId}/>;

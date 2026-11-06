@@ -4,6 +4,7 @@ import { deriveEndpoints } from '../logic/endpoints.js';
 import { Inspector } from './Inspector.jsx';
 import { TypeProperties } from './TypeProperties.jsx';
 import { QosProperties } from './QosProperties.jsx';
+import { EndpointProperties } from './EndpointProperties.jsx';
 const {Text}=Typography;
 export function ContextProperties() {
   const { snapshot:s, selection, select, details } = useSelectionDetails();
@@ -19,6 +20,8 @@ export function ContextProperties() {
     return type ? <TypeProperties key={type.id} snapshot={s} type={type} kind={kind} selection={selection}/> : null;
   }
   if (kind==='qos') return details.qos ? <QosProperties key={details.qos.id} snapshot={s} profile={details.qos}/> : null;
+  if (selection?.endpointKey && ['connection','ddsConfig'].includes(kind))
+    return <EndpointProperties snapshot={s} endpointKey={selection.endpointKey}/>;
   return <div className="inspector context-properties"><Text type="secondary" className="side-label">SELECTION PROPERTIES</Text><h3>{name}</h3>
     {svc&&<><Space wrap><Tag>{svc.functionalArea}</Tag><Tag color={svc.source==='custom'?'purple':'blue'}>{svc.source}</Tag></Space>
       <Descriptions size="small" bordered column={1} style={{marginTop:14}}><Descriptions.Item label="Namespace">{svc.namespace}</Descriptions.Item><Descriptions.Item label="Pattern template">{svc.flowControl}</Descriptions.Item><Descriptions.Item label="Operations">{s.operations.filter(o=>o.serviceId===svc.id).length}</Descriptions.Item><Descriptions.Item label="Usage">{s.bindings.filter(b=>b.serviceId===svc.id).length} bindings</Descriptions.Item></Descriptions></>}

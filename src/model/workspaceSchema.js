@@ -21,6 +21,7 @@ export function upgradeWorkspace(value) {
   s.qosProfiles ??= [structuredClone(DEFAULT_QOS_PROFILE)];
   s.qosProfiles = s.qosProfiles.map(q=>withQosEntitySections({libraryName:'Project QoS',baseProfileId:null,presentationAccessScope:'topic',orderedAccess:false,coherentAccess:false,...q}));
   if (!s.qosProfiles.some(q => q.id === DEFAULT_QOS_PROFILE.id)) s.qosProfiles.unshift(withQosEntitySections(structuredClone(DEFAULT_QOS_PROFILE)));
+  s.endpointConfigs ??= {};
   s.componentRuntime ??= {};
   s.behaviorDiagrams ??= {};
   for (const c of s.components ?? []) {

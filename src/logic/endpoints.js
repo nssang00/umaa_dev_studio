@@ -25,7 +25,7 @@ export function deriveEndpoints(snapshot, componentId) {
                 direction = op.actor === binding.role ? 'writer' : 'reader';
             if (!direction)
                 continue;
-            const prev = endpoints.find(e => e.bindingId === binding.id && e.direction === direction && e.topicName === topic.name);
+            const prev = endpoints.find(e => e.bindingId === binding.id && e.direction === direction && e.topicId === topic.id);
             if (prev) {
                 if (!prev.operations.includes(op.name))
                     prev.operations.push(op.name);
@@ -33,7 +33,8 @@ export function deriveEndpoints(snapshot, componentId) {
             }
             else {
                 endpoints.push({
-                    bindingId: binding.id, serviceId: service.id, serviceName: service.name,
+                    bindingId: binding.id, componentId, serviceId: service.id, serviceName: service.name,
+                    topicId:topic.id,
                     role: binding.role, direction, topicName: topic.name,
                     typeName: msg.name, messageTypeId: msg.id, operations: [op.name],
                     optional: Boolean(op.optionalConsumer && binding.role === 'consumer'),
@@ -53,7 +54,7 @@ export function deriveEndpoints(snapshot, componentId) {
         for (const e of parents) {
             if (endpoints.some(existing => existing.bindingId === e.bindingId && existing.topicName === element.name && existing.direction === e.direction))
                 continue;
-            endpoints.push({ ...e, topicName: element.name, typeName: type.name,
+            endpoints.push({ ...e, topicId:element.id, topicName: element.name, typeName: type.name,
                 messageTypeId: type.id, operations: [`[${relation.kind}]`], relatedRule: relation.kind });
         }
     }

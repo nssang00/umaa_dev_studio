@@ -1,5 +1,6 @@
 import { isLargeCollection, isSpecialization } from '../model/icdConcepts.js';
 import { findInvalidQosEntityValues } from '../model/qosPolicies.js';
+import { configuredEndpoints } from '../model/endpointConfiguration.js';
 export function validateWorkspace(s) {
     const issues = [];
     const error = (code, message, entityId) => issues.push({ severity: 'error', code, message, entityId });
@@ -97,6 +98,14 @@ export function validateWorkspace(s) {
             error('INVALID_DOMAIN', `${component.name}의 DDS Domain ID가 유효하지 않습니다.`, component.id);
         if (runtime.commandArbitration==='user-implementation' && s.bindings.some(b=>b.componentId===component.id && b.role==='provider' && s.services.some(v=>v.id===b.serviceId && v.flowControl==='command-response')))
             warn('COMMAND_POLICY_TODO', `${component.name}의 Command 충돌 처리 구현 정책이 미확정입니다.`, component.id);
+    }
+    const validEndpointKeys=new Set(s.components.flatMap(c=>configuredEndpoints(s,c.id).map(e=>e.key)));
+    for(const [key,config] of Object.entries(s.endpointConfigs??{})) {
+        if(!validEndpointKeys.has(key))
+            warn('ORPHAN_ENDPOINT_CONFIG', `더 이상 존재하지 않는 Endpoint 설정 ${key}입니다.`,key);
+        if(!config || typeof config!=='object' || typeof config.qosProfileId!=='string' ||
+            !s.qosProfiles?.some(q=>q.id===config.qosProfileId))
+            error('ENDPOINT_QOS_MISSING', `Endpoint ${key}의 QoS Profile 참조가 유효하지 않습니다.`,key);
     }
     for (const c of s.connections) {
         const p = s.bindings.find(b => b.id === c.providerBindingId);

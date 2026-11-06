@@ -131,3 +131,11 @@
 - Test `test:project-model`; full CI pending.
 
 - Checkpoint 1 repair: updated existing selection label regression to `Topic Relationships` and completed both Custom Operation modals' explicit INPUT/OUTPUT direction controls; Service Type and Flow selection are now distinct in the create dialog.
+
+## 2026-11-06 — DDS Endpoint mapping (checkpoint 2)
+
+- Persist `endpointConfigs` as a backward-compatible optional project-design override keyed by Binding ID + Topic ID + writer/reader direction. QoS Profile is inherited from Component Runtime unless explicitly selected per Endpoint; null removes an override. Removing the Binding prunes endpoint overrides.
+- Enriched derived Endpoints with actual Topic IDs. DDS Communication Graph now shows Consumer/Provider, both DataWriter/DataReader endpoint nodes and Topic/Type reference. Selecting an Endpoint opens the same global Properties pane without leaving the connection view.
+- New DDS Configuration overview workbench lists all derived endpoints and offers direct inspector selection and per-Component Runtime editing.
+- Explicit validation for malformed QoS refs and orphaned Endpoint configs; JSON import/export round-trips, and design-only metadata `contracts/endpoint-qos-design.json` in generated scaffold.
+- New `test:endpoint-config`; full Actions CI pending, browser interaction E2E not run. No DDS SDK application or Requested/Offered check.
