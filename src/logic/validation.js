@@ -2,6 +2,7 @@ import { isLargeCollection, isSpecialization } from '../model/icdConcepts.js';
 import { findInvalidQosEntityValues } from '../model/qosPolicies.js';
 import { configuredEndpoints } from '../model/endpointConfiguration.js';
 import { INTERFACE_DIRECTIONS } from '../model/interfaceDirection.js';
+import { ddsDesignPreflight } from './ddsDesignPreflight.js';
 export function validateWorkspace(s) {
     const issues = [];
     const error = (code, message, entityId) => issues.push({ severity: 'error', code, message, entityId });
@@ -133,7 +134,7 @@ export function validateWorkspace(s) {
             warn('UNUSED_PROVIDER', `${svc?.name || b.serviceId} Provider에 연결된 Consumer가 없습니다.`, b.id);
         }
     }
-    return issues;
+    return [...issues,...ddsDesignPreflight(s)];
 }
 export function canConnect(s, sourceBindingId, targetBindingId) {
     const a = s.bindings.find(b => b.id === sourceBindingId);

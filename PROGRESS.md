@@ -162,3 +162,9 @@
 - Curated seed stores explicit provider-facing INPUT/OUTPUT (seed naming classification, not a certified full ICD import). Legacy workspaces are upgraded from recognized operation names only, with provenance `legacy-name`; unrecognized operations remain null and are warned, invalid values are errors.
 - Both Custom Operation creation dialogs now capture independent Interface Direction and DDS Actor. Existing programmatic creation calls are supported via limited naming fallback; new UI always passes explicit direction.
 - New model, migration and UI regression test `test:interface-direction`; CI pending.
+
+## 2026-11-06 — Limited DDS static preflight (checkpoint 2)
+
+- New `ddsDesignPreflight()` checks Domain, simple Component Partition, and selected Writer/Reader Reliability, Durability and Deadline cases on existing logical connections.
+- Findings are design warnings only and do not claim full DDS Requested/Offered compatibility; no SDK or Participant instances.
+- Added `test:dds-preflight`; deployment-centered UI updates follow in this PR.
