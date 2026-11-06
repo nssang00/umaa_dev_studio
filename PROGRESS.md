@@ -141,3 +141,9 @@
 - New `test:endpoint-config`; full Actions CI pending, browser interaction E2E not run. No DDS SDK application or Requested/Offered check.
 
 - DDS checkpoint regression update: existing channel graph expectation now checks 3 nodes and 4 edges per Topic, including both endpoints; the old 1 Topic-node + 2 edges check no longer described the new projection.
+
+## 2026-11-06 — ICD / Service / System model documentation
+
+- Service Contract Operation table and right Properties display canonical Provider-facing Interface Direction; Service Properties list Service Type and Flow Control separately.
+- New `docs/ICD_SERVICE_SYSTEM_EXPLORER.md` documents model boundaries, read-only curated catalog status, logical DDS topology, Endpoint QoS inheritance and persistent schema, migration and missing DDS execution/compatibility layers.
+- Updated outdated QoS scope note in `PROJECT.md`; full CI pending.

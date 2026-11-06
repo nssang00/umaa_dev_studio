@@ -47,3 +47,11 @@ for (const source of [sourceGraph,sourceDetails]) {
   assert.match(source,/actorForOperation\(v.direction,v.action\)/);
   assert.doesNotMatch(source,/name="actor" label="Actor/);
 }
+
+const operationEditor=readFileSync(new URL('../src/components/ContractWorkbench.jsx',import.meta.url),'utf8');
+const inspector=readFileSync(new URL('../src/components/ContextProperties.jsx',import.meta.url),'utf8');
+assert.match(operationEditor,/Interface Direction/);
+assert.match(operationEditor,/serviceOperationDirection/);
+assert.match(inspector,/Service Type/);
+assert.match(inspector,/Flow Control/);
+assert.match(inspector,/serviceOperationDirection/);
