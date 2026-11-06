@@ -34,3 +34,13 @@ jobs:
           name: umaa-ui-dist
           path: dist/
           retention-days: 7
+      - name: Create reproducible source snapshot
+        run: |
+          mkdir -p handoff-artifact
+          git archive --format=zip --output=handoff-artifact/umaa-source-snapshot.zip HEAD
+      - name: Upload handoff source snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: umaa-source-snapshot
+          path: handoff-artifact/umaa-source-snapshot.zip
+          retention-days: 7
