@@ -136,11 +136,11 @@ export function CustomServiceEditor({service}) {
           <Form.Item name="direction" label="Interface Direction · Provider 기준" rules={[{required:true}]}><Select options={[
             {label:'INPUT · Consumer → Provider',value:'input'},
             {label:'OUTPUT · Provider → Consumer',value:'output'},
-          ]}/></Form.Ite
+          ]}/></Form.Item>
           <Form.Item name="actor" label="DDS Actor (독립 지정)" rules={[{required:true}]}><Select options={[
             {label:'Consumer',value:'consumer'},{label:'Provider',value:'provider'},
           ]}/></Form.Item>
-          <Text type="secondary" className="small-hint">INPUT/OUTPUT은 계약 방향이며 DDS Publish/Subscribe와 별도로 지정합니다.</Text>m>
+          <Text type="secondary" className="small-hint">INPUT/OUTPUT은 계약 방향이며 DDS Publish/Subscribe와 별도로 지정합니다.</Text>
         </>}
       </Form>
     </Modal>
