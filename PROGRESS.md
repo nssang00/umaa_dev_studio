@@ -201,4 +201,12 @@
 - Registered explicit View components `ExplorerView`, `WorkbenchView`, `PropertiesView`, `ConsoleView` in the existing panel registry. Each View composes existing feature components; Explorer owns its footer. Removed layout slot markup from `App.jsx`.
 - No domain/state/Repo schema change, preserving Studio pane width preferences, bottom Console placement, behavior and project data.
 - Documented `model/`, `logic/`, `repository/`, `stores/` and UI layering in `docs/FRONTEND_ARCHITECTURE.md`.
-- Added architecture test `test:studio-views`; full CI/build pending.
+- Added architecture test `test:studio-views`; full CI and build validated after merge.
+
+
+## 2026-11-06 — Studio view architecture merged and verified
+
+- [PR #8](https://github.com/nssang00/umaa_dev_studio/pull/8) squash merged to `main` as [f0b47de](https://github.com/nssang00/umaa_dev_studio/commit/f0b47de744564350a6b5ceb26fdb0573faaa8c73).
+- PR Actions [42146450134](https://github.com/nssang00/umaa_dev_studio/actions/runs/42146450134): **SUCCESS** for full test suite, build and artifact.
+- Post-merge Actions [42146595191](https://github.com/nssang00/umaa_dev_studio/actions/runs/42146595191): **SUCCESS** for the same checks on merged `main`.
+- Visual/keyboard E2E in an actual browser not run; behavior should remain the same because only composition and import paths changed.
