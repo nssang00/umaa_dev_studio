@@ -219,3 +219,9 @@
 - New `components/types/` and `components/qos/`: actual `TypeGraph` / `QosProfileDiagram` implementations, old paths retained as re-exports for existing callers.
 - New `components/shared/graph/ModelGraphCanvas` handles React Flow chrome (background, controls, optional minimap) while each feature retains its own node/edge rules and interaction settings, including nested QoS pointerEvents.
 - Updated static checks and added `test:feature-components`. Full Actions test/build pending.
+
+
+## 2026-11-06 — QoS feature grouping (checkpoint 2a)
+- Moved nested QoS Section/Policy/Field controls, Profile metadata and QoS Properties implementations into `components/qos/`, maintaining root re-export paths.
+- QoS profile diagram now imports siblings; shared `ModelPropertiesPanel` owns common inspector eyebrow, title and content shell.
+- Added `tests/qos-components-architecture.test.mjs`; Actions full suite/build follows.

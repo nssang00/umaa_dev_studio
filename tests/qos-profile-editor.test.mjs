@@ -56,9 +56,9 @@ assert.equal(persisted.qosProfiles.find(q=>q.id===id).datareader_qos.deadline.pe
 const upgraded=upgradeWorkspace({ ...snap,qosProfiles:[legacy] });
 assert.equal(upgraded.qosProfiles.find(q=>q.id==='old').topic_qos.reliability.kind,'best_effort');
 const diagram=read('../src/components/qos/QosProfileDiagram.jsx');
-const acc=read('../src/components/QosEntitySections.jsx');
-const nested=read('../src/components/QosPolicyAccordion.jsx');
-const controls=read('../src/components/QosPolicyFieldControl.jsx');
+const acc=read('../src/components/qos/QosEntitySections.jsx');
+const nested=read('../src/components/qos/QosPolicyAccordion.jsx');
+const controls=read('../src/components/qos/QosPolicyFieldControl.jsx');
 const workbench=read('../src/components/ContractWorkbench.jsx');
 const store=read('../src/stores/useEditorStore.js');
 assert.match(diagram,/ModelGraphCanvas/);

@@ -6,10 +6,10 @@ import { editQosEntityField } from '../src/model/qosPolicies.js';
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 
 const diagram=read('../src/components/qos/QosProfileDiagram.jsx');
-const properties=read('../src/components/QosProperties.jsx');
-const metadata=read('../src/components/QosProfileFields.jsx');
+const properties=read('../src/components/qos/QosProperties.jsx');
+const metadata=read('../src/components/qos/QosProfileFields.jsx');
 const context=read('../src/components/ContextProperties.jsx');
-const sections=read('../src/components/QosEntitySections.jsx');
+const sections=read('../src/components/qos/QosEntitySections.jsx');
 const css=read('../src/styles.css');
 
 // @xyflow/react v12: when selectable AND draggable are both false,

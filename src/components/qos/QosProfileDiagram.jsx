@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import { Alert, Typography } from 'antd';
 import { ModelGraphCanvas } from '../shared/graph/ModelGraphCanvas.jsx';
 import { useEditorStore } from '../../stores/useEditorStore.js';
-import { QosEntitySections } from '../QosEntitySections.jsx';
-import { QosProfileFields } from '../QosProfileFields.jsx';
+import { QosEntitySections } from './QosEntitySections.jsx';
+import { QosProfileFields } from './QosProfileFields.jsx';
 const { Text } = Typography;
 
 function QosProfileNode({ data }) {
