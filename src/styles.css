@@ -491,3 +491,44 @@ body { color: #26364a; }
 .journey-advanced-dds .ant-typography {flex:1;min-width:200px;}
 .dds-central-tabs {margin-top:16px;}
 .dds-central-tabs .ant-tabs-content-holder {min-height:280px;}
+
+/* Two-mode Explorer: category icons and search are view-only, no data duplication. */
+.project-explorer-tabs .ant-tabs-nav {margin:0 4px 6px;}
+.project-explorer-tabs .ant-tabs-tab {font-size:12px;padding:7px 5px!important;}
+.project-explorer-search {display:flex;align-items:center;gap:6px;margin:5px 4px 9px;}
+.project-explorer-search .ant-input-search {flex:1;min-width:0;margin:0;}
+.project-explorer-tree .ant-tree-iconEle {color:#6485a9;display:inline-flex;align-items:center;justify-content:center;}
+.project-explorer-tree .ant-tree-title {vertical-align:middle;}
+/* Service-first Contract and Flow node presentation (DDS Mapping keeps legacy graph). */
+.contract-graph-mode-tabs {margin:0 0 4px;}
+.service-contract-node {background:#fff;border:1px solid #a9c4df;border-radius:11px;
+  box-shadow:0 5px 16px rgba(39,71,107,.10);padding:12px 14px;display:flex;flex-direction:column;gap:7px;
+  color:#2b425c;min-width:0;}
+.service-contract-node.is-selected {outline:3px solid #93c4f7;}
+.service-contract-node.service-root {width:340px;border-top:5px solid #376da8;}
+.service-contract-node.service-root strong {font-size:18px;line-height:1.3;}
+.service-contract-eyebrow {font-size:10px;letter-spacing:.7px;color:#5d7b9d;font-weight:750;}
+.service-contract-node small {color:#71849b;font-size:10px;overflow-wrap:anywhere;}
+.service-contract-chips,.service-contract-card-chips {display:flex;gap:4px;flex-wrap:wrap;}
+.service-contract-node .ant-tag {font-size:10px;margin:0;}
+.service-contract-summary {padding-top:6px;border-top:1px solid #edf2f8;color:#5d7087;font-size:11px;}
+.service-contract-node.lane {width:300px;background:#eff6ff;min-height:65px;border-color:#93badf;}
+.service-contract-node.lane.output {background:#e9f7f2;border-color:#89cbb6;}
+.service-contract-node.lane.unclassified {background:#fff5e7;border-color:#deb87f;}
+.service-contract-node.lane strong {font-size:13px;}
+.service-contract-node.lane span {font-size:11px;color:#67839c;}
+.service-contract-node.interface-card {width:310px;min-height:116px;border-left:5px solid #4684be;}
+.service-contract-node.interface-card:has(.ant-tag-blue) {border-left-color:#33987b;}
+.service-contract-card-meta {display:flex;justify-content:space-between;gap:6px;font-size:10px;font-weight:750;color:#68819b;}
+.service-contract-node.interface-card strong {font-size:13px;overflow-wrap:anywhere;}
+.service-contract-node.flow-actor-node {width:230px;background:#eaf2fc;font-size:14px;text-align:center;}
+.service-contract-node.flow-pattern-node {width:265px;background:#e8f6f0;text-align:center;}
+.contract-relationship-handle {width:9px!important;height:9px!important;background:#83a6c9!important;border:2px solid #fff!important;}
+.contract-graph-legend {display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:11px;color:#647d97;}
+.contract-graph-legend .membership:before {content:'';display:inline-block;width:23px;border-top:2px solid #92a9c1;vertical-align:middle;margin-right:5px;}
+.contract-graph-legend .flow:before {content:'';display:inline-block;width:23px;border-top:2px dashed #429b87;vertical-align:middle;margin-right:5px;}
+
+/* Keep Component handle offsets stable while adding summary below existing ports. */
+.component-node-summary {height:26px;border-top:1px solid #e2eaf4;background:#f7fafe;
+  padding:5px 9px;display:flex;justify-content:space-between;gap:6px;
+  font-size:9px;color:#6d8299;border-radius:0 0 9px 9px;}

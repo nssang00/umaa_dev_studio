@@ -30,8 +30,8 @@ export function ServiceWorkbench({serviceId}) {
     <Text type="secondary">{service.namespace} · {service.description}</Text>
     {isCustom&&<div style={{maxWidth:400,margin:'12px 0'}}><Text type="secondary">Service Category · ICD §3.4 명명 분류 (Flow Control과 별개)</Text><Select style={{width:'100%'}} size="small" value={categoryForService(service)} onChange={v=>updateCategory(service.id,v)} options={SERVICE_CATEGORIES}/></div>}
     <Tabs activeKey={tab} onChange={setTab} items={[
-      {key:'graph',label:'Service Interface Diagram',children:<ContractGraph serviceId={serviceId}/>},
-      {key:'flow',label:'Flow Control / Report',children:<IcdFlowView serviceId={serviceId}/>},
+      {key:'graph',label:'Service Diagram · Contract / Flow / DDS',children:<ContractGraph serviceId={serviceId}/>},
+      {key:'flow',label:'Flow Rules / Details',children:<IcdFlowView serviceId={serviceId}/>},
       {key:'contract',label:'Operations / DDS Actions',children:<>
         <Alert type="info" showIcon message="통신 패턴은 Service의 계약입니다." description="실제 DDS 동작은 Operation별 Publish / Subscribe / Dispose 매핑으로 결정됩니다. Component는 같은 계약을 Provider/Consumer로 사용합니다. 일부 Query와 Cancel에는 독립 Topic이 없습니다." style={{marginBottom:14}}/>
         <Space wrap style={{marginBottom:14}}>{actionStats.map(x=><Tag key={x.action}>{x.action.toUpperCase()} {x.count}</Tag>)}</Space>

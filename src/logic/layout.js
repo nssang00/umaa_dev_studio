@@ -9,9 +9,10 @@ const COMPONENT_TITLE_HEIGHT = 48;
 const SERVICE_PORT_HEIGHT = 33;
 const EMPTY_PORTS_HEIGHT = 45;
 const NODE_BORDER = 2;
+const SUMMARY_HEIGHT = 26;
 export function componentNodeHeight(snapshot, componentId) {
     const count = snapshot.bindings.filter(b => b.componentId === componentId).length;
-    return COMPONENT_TITLE_HEIGHT + Math.max(EMPTY_PORTS_HEIGHT, count * SERVICE_PORT_HEIGHT) + NODE_BORDER;
+    return COMPONENT_TITLE_HEIGHT + Math.max(EMPTY_PORTS_HEIGHT, count * SERVICE_PORT_HEIGHT) + SUMMARY_HEIGHT + NODE_BORDER;
 }
 /**
  * Place providers to the left of their consumers (LR direction).

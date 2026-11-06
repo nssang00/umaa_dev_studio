@@ -2,6 +2,7 @@ import { useMemo, useCallback, useEffect, useRef, useState } from 'react';
 import { ReactFlow, Background, Controls, MiniMap, MarkerType } from '@xyflow/react';
 import { message, Modal, Select, Typography } from 'antd';
 import { canConnect } from '../logic/validation.js';
+import { deriveEndpoints } from '../logic/endpoints.js';
 import { useEditorStore } from '../stores/useEditorStore.js';
 import { ComponentNode } from './ComponentNode.jsx';
 import '@xyflow/react/dist/style.css';
@@ -28,7 +29,14 @@ export function Diagram() {
         data: {
             title: component.name,
             description: component.description,
-            ports: snapshot.bindings.filter(b => b.componentId === component.id).map(b => ({
+            connectionCount: snapshot.connections.filter(link => {
+                const provider = snapshot.bindings.find(b => b.id === link.providerBindingId);
+                const consumer = snapshot.bindings.find(b => b.id === link.consumerBindingId);
+                return provider?.componentId === component.id || consumer?.componentId === component.id;
+            }).length,
+            endpointCount: deriveEndpoints(snapshot, component.id).length,
+            ports: snapshot.bindings.filter(b => b.componentId === component.id)
+              .sort((a,b) => (a.role === 'provider' ? 0 : 1) - (b.role === 'provider' ? 0 : 1)).map(b => ({
                 id: b.id, role: b.role,
                 name: snapshot.services.find(s => s.id === b.serviceId)?.name ?? 'Unknown',
                 origin: snapshot.services.find(s => s.id === b.serviceId)?.source ?? 'custom',
@@ -86,7 +94,7 @@ export function Diagram() {
         const xy = flowRef.current.screenToFlowPosition({ x:e.clientX,y:e.clientY });
         const target = flowRef.current.getNodes().find(node=>{
           const w=node.measured?.width??266;
-          const h=node.measured?.height??(52+33*(snapshot.bindings.filter(b=>b.componentId===node.id).length||1));
+          const h=node.measured?.height??(48+Math.max(45,33*snapshot.bindings.filter(b=>b.componentId===node.id).length)+26+2);
           return xy.x>=node.position.x && xy.x<=node.position.x+w && xy.y>=node.position.y && xy.y<=node.position.y+h;
         });
         if(!target){message.info('Service를 Component 노드 위로 드롭하세요.');return;}
