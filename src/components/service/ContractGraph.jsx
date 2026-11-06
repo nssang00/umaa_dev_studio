@@ -6,7 +6,7 @@ import { OperationFields, OPERATION_DEFAULT_VALUES } from './OperationFields.jsx
 import { useEditorStore } from '../../stores/useEditorStore.js';
 
 import { serviceContractGraph, validateCustomContractLink } from '../../logic/editorGraphs.js';
-import { StudioGraphNode } from '../GraphNodes.jsx';
+import { StudioGraphNode } from '../shared/graph/StudioGraphNode.jsx';
 const nodeTypes={studio:StudioGraphNode};
 const idRx=/^[A-Za-z_][A-Za-z0-9_]*$/;
 export function ContractGraph({serviceId}) {

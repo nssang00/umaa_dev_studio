@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { ModelGraphCanvas } from '../shared/graph/ModelGraphCanvas.jsx';
 import { useEditorStore } from '../../stores/useEditorStore.js';
 import { typeDependencyGraph } from '../../logic/editorGraphs.js';
-import { StudioGraphNode } from '../GraphNodes.jsx';
+import { StudioGraphNode } from '../shared/graph/StudioGraphNode.jsx';
 const nodeTypes={studio:StudioGraphNode};
 const primitives=['boolean','short','long','unsigned long','long long','float','double','string','char','octet'];
 export function TypeGraph({kind,id}) {

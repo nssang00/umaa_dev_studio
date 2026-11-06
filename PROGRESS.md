@@ -240,3 +240,11 @@
 - Moved TypeWorkbench, TypeProperties, StructPropertiesEditor, StructFieldAccordionList, StructFieldEditor implementations into `components/types/`, beside existing TypeGraph. Original imports now re-export including `renderIdlPreview`.
 - Preserved Form.List draft semantics and atomic Struct validation; only implementation paths and inter-feature imports changed.
 - Updated existing source-scanning tests and added `test:type-components`. Full test/build CI pending.
+
+
+## 2026-11-06 — Direct feature composition and shared node presentation (checkpoint 4)
+
+- Moved `StudioGraphNode` to `components/shared/graph/`; old GraphNodes import is a compatibility facade.
+- WorkspaceWorkbench, ContextProperties, ContractWorkbench and StudioNavigator now import the reorganized feature implementations directly; legacy root facades remain to protect external consumers.
+- Updated `docs/FRONTEND_ARCHITECTURE.md` with the feature tree and props/composition contract; `test:feature-composition` checks the new direct imports.
+- No model/schema changes. GitHub Actions test and build pending.
