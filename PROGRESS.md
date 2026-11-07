@@ -262,3 +262,11 @@
 - Left Ant Design's switcher size, indentation, selection, title ellipsis and right-side create (+) buttons untouched. No model, persistence or endpoint changes.
 - Updated `test:explorer-dds` source/style regression expectations. Full `npm test` and `npm run build` require CI verification before merge.
 - The exact apparent spacing and clicking at narrow Explorer widths remain unverified in a live browser; static CSS assertions alone are not browser visual/E2E proof.
+
+## 2026-11-07 — Explorer switcher-to-icon gap: browser-measured correction
+
+- Verified PR #13's actual built React/Ant Design 5.29.3 UI in headless Chromium: expand glyph to node-icon glyph gap was 22px, because the switcher retains 4px inline-end margin and content wrapper retains 8px inline-start padding; the previous icon-slot override also lost its `display` to a more-specific Ant Design rule.
+- In browser with the candidate CSS applied, removing only those gutters and applying a scoped, higher-specificity icon flex rule measured a 6.5px visual gap at Explorer widths 210px, 300px and 480px.
+- The 24px switcher width, expand/collapse click behavior, one-line titles and 24px title height were confirmed in Chromium; no JS errors occurred. Ant Design's switcher sizing and tree indentation are unchanged.
+- Updated Explorer style regression checks to assert the actual gutter rules and maintain the existing single-row/ellipsis behavior. No model, schema, or persistence changes.
+- Final pull request CI and a follow-up visual inspection of its *newly built* bundle are required before merging.
