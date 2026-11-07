@@ -28,11 +28,20 @@ const expectTreeStyle=(selector, declaration)=>{
 expectTreeStyle('.project-explorer-tree .ant-tree-node-content-wrapper', /display\s*:\s*flex/);
 expectTreeStyle('.project-explorer-tree .ant-tree-node-content-wrapper', /align-items\s*:\s*center/);
 expectTreeStyle('.project-explorer-tree .ant-tree-title', /flex\s*:\s*1/);
-// Keep the switcher (+) hit box intact; compact only the adjacent icon slot.
-expectTreeStyle('.project-explorer-tree .ant-tree-iconEle', /flex\s*:\s*0\s+0\s+18px/);
-expectTreeStyle('.project-explorer-tree .ant-tree-iconEle', /width\s*:\s*18px/);
-expectTreeStyle('.project-explorer-tree .ant-tree-iconEle', /justify-content\s*:\s*flex-start/);
-assert.doesNotMatch(styles, /\.project-explorer-tree \.ant-tree-switcher\s*\{/);
+// Ant Design reserves 4px switcher margin + 8px content padding by default.
+// Narrow both gutters without shrinking the 24px expand/collapse click target.
+const switcherSelector='.project-model-explorer .project-explorer-tree .ant-tree-switcher';
+const wrapperSelector='.project-model-explorer .project-explorer-tree .ant-tree-node-content-wrapper';
+const iconSelector=wrapperSelector+' .ant-tree-iconEle';
+expectTreeStyle(switcherSelector, /margin-inline-end\s*:\s*0\b/);
+expectTreeStyle(wrapperSelector, /padding-inline-start\s*:\s*0\b/);
+expectTreeStyle(iconSelector, /flex\s*:\s*0\s+0\s+18px/);
+expectTreeStyle(iconSelector, /width\s*:\s*18px/);
+expectTreeStyle(iconSelector, /display\s*:\s*inline-flex/);
+expectTreeStyle(iconSelector, /justify-content\s*:\s*flex-start/);
+const switcherRule=styles.split(switcherSelector+' {')[1]?.split('}')[0]??'';
+assert.doesNotMatch(switcherRule, /(?:^|;)\s*(?:width|flex)\s*:/,
+  'Expand control dimensions must stay with Ant Design defaults');
 expectTreeStyle('.project-explorer-row', /white-space\s*:\s*nowrap/);
 expectTreeStyle('.project-explorer-label', /text-overflow\s*:\s*ellipsis/);
 
